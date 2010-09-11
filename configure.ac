@@ -1,4 +1,3 @@
-AC_PREREQ([2.65])
 AC_INIT([slapt-src], [01], [slapt-get-devel@software.jaos.org])
 AC_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([src/])
