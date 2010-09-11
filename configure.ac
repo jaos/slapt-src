@@ -2,7 +2,7 @@ AC_INIT([slapt-src], [01], [slapt-get-devel@software.jaos.org])
 AM_INIT_AUTOMAKE([-Wall foreign])
 AC_CONFIG_SRCDIR([src/])
 AC_CONFIG_HEADERS([config.h])
-IT_PROG_INTLTOOL([0.35.0])
+dnl IT_PROG_INTLTOOL([0.35.0])
 
 AC_CANONICAL_HOST
 
@@ -28,9 +28,9 @@ AC_CHECK_LIB(gpgme,gpgme_new, [
 ], [AC_MSG_WARN(gpg support disabled)])
 AC_CHECK_LIB(slapt,slapt_disk_space_check, [], [AC_MSG_ERROR(libslapt 0.10.2b or greater is required)])
 
-GETTEXT_PACKAGE=slapt-src
-AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package.])
+dnl GETTEXT_PACKAGE=slapt-src
+dnl AC_SUBST(GETTEXT_PACKAGE)
+dnl AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package.])
 
 AC_CONFIG_FILES([
   Makefile
