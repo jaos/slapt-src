@@ -1,5 +1,5 @@
 AC_INIT([slapt-src], [01], [slapt-get-devel@software.jaos.org])
-AC_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([-Wall foreign])
 AC_CONFIG_SRCDIR([src/])
 AC_CONFIG_HEADERS([config.h])
 IT_PROG_INTLTOOL([0.35.0])
