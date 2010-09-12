@@ -16,7 +16,6 @@ pkg: all
 	install slapt-src.8 $(PKGDIR)/usr/man/man8/
 	gzip -f $(PKGDIR)/usr/man/man8/slapt-src.8
 	-chown -R $$(stat --format "%u:%g" $(bindir)) $(PKGDIR)/$(bindir)
-	-chown -R $$(stat --format "%u:%g" $(sbindir)) $(PKGDIR)/$(sbindir)
-	-find $(PKGDIR)/$(bindir) $(PKGDIR)/$(sbindir)/ -type f -exec strip --strip-unneeded {} \;
+	-find $(PKGDIR)/$(bindir) -type f -exec strip --strip-unneeded {} \;
 	( cd $(PKGDIR) && /sbin/makepkg -l y -c n ../@PACKAGE@-@PACKAGE_VERSION@-@host_cpu@-1.tgz )
 
