@@ -531,7 +531,7 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
 {
   char *cwd = NULL;
   char *command = NULL;
-  int name_len = strlen(sb->name), command_len = 15, r = 0;
+  int name_len = strlen(sb->name), command_len = 14, r = 0;
 
   if (chdir (sb->location) != 0) {}
 
@@ -544,12 +544,12 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
   setenv ("OUTPUT", cwd, 1);
   setenv ("PKGTYPE", config->pkgext, 1);
 
-  /* run slackbuild, sh {name}.Slackbuild (strlen(name) + 15)*/
+  /* run slackbuild, sh {name}.Slackbuild (strlen(name) + 14)*/
   command_len += name_len;
   command = slapt_malloc (sizeof *command * command_len);
-  r = printf (command, "sh %s.SlackBuild", sb->name);
+  r = sprintf (command, "sh %s.SlackBuild", sb->name);
   if (r != command_len) { 
-    printf ("Failed to construct command string\n");
+    printf ("Failed to construct command string (%d,%d,%s\n", r, command_len, command);
     exit (EXIT_FAILURE);
   }
 
