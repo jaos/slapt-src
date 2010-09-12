@@ -1,6 +1,6 @@
 SUBDIRS = src
 
-SLACK_FILES = slack-desc slack-required
+SLACK_FILES = slack-desc slack-required slapt-srcrc
 EXTRA_DIST = $(SLACK_FILES)
 
 PKGDIR=`pwd`/pkg
@@ -9,6 +9,9 @@ pkg: all
 	$(mkinstalldirs) $(PKGDIR)/install
 	install slack-desc $(PKGDIR)/install/
 	install slack-required $(PKGDIR)/install/
+	@echo "if [ ! -d etc/slapt-get ]; then mkdir -p etc/slapt-get; fi; if [ ! -f etc/slapt-get/slapt-srcrc ]; then mv -f etc/slapt-get/slapt-srcrc.new etc/slapt-get/slapt-srcrc; diff -q etc/slapt-get/slapt-srcrc etc/slapt-get/slapt-srcrc.new >/dev/null 2>&1 && rm etc/slapt-get/slapt-srcrc.new; fi;" > $(PKGDIR)/install/doinst.sh
+	$(mkinstalldirs) $(PKGDIR)/etc/slapt-get
+	install slapt-srcrc $(PKGDIR)/etc/slapt-get/slapt-srcrc.new
 	-chown -R $$(stat --format "%u:%g" $(bindir)) $(PKGDIR)/$(bindir)
 	-chown -R $$(stat --format "%u:%g" $(sbindir)) $(PKGDIR)/$(sbindir)
 	-find $(PKGDIR)/$(bindir) $(PKGDIR)/$(sbindir)/ -type f -exec strip --strip-unneeded {} \;
