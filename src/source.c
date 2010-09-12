@@ -555,7 +555,8 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
 
   r = system (command);
   if (r != 0) {
-    printf ("%s returned %d\n", command, r);
+    printf ("%s FAILED\n", command);
+    exit (EXIT_FAILURE);
   }
 
   free (command);
