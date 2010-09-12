@@ -1,13 +1,17 @@
 #define _GNU_SOURCE
 #include "source.h"
 
-extern struct utsname u;
+extern struct utsname uname_v;
+
+static char *filename_from_url (char *url);
+static char *add_part_to_url (char *url, char *part);
 
 slapt_src_config *slapt_src_config_init (void)
 {
   slapt_src_config *config = slapt_malloc (sizeof *config);
   config->sources = slapt_init_list ();
   config->builddir = NULL;
+  config->pkgext = NULL;
   return config;
 }
 
@@ -16,6 +20,8 @@ void slapt_src_config_free (slapt_src_config *config)
   slapt_free_list (config->sources);
   if (config->builddir != NULL)
     free (config->builddir);
+  if (config->pkgext != NULL)
+    free (config->pkgext);
   free (config);
 }
 
@@ -40,11 +46,28 @@ slapt_src_config *slapt_src_read_config (const char *filename)
       continue;
 
     if ( (token_ptr = strstr (buffer,SLAPT_SRC_SOURCE_TOKEN)) != NULL ) {
-      if ( strlen (token_ptr) > strlen (SLAPT_SRC_SOURCE_TOKEN) )
-        slapt_add_list_item (config->sources, token_ptr + strlen (SLAPT_SRC_SOURCE_TOKEN));
+
+      if ( strlen (token_ptr) > strlen (SLAPT_SRC_SOURCE_TOKEN) ) {
+        char *source = strdup (token_ptr + strlen (SLAPT_SRC_SOURCE_TOKEN));
+        if (source[strlen (source)-1] != '/') {
+          char *fixed = add_part_to_url (source, "/");
+          free (source);
+          source = fixed;
+        }
+        slapt_add_list_item (config->sources, source);
+        free (source);
+      }
+
     } else if ( (token_ptr = strstr (buffer,SLAPT_SRC_BUILDDIR_TOKEN)) != NULL ) {
+
       if ( strlen (token_ptr) > strlen (SLAPT_SRC_BUILDDIR_TOKEN) )
-      config->builddir = strdup (token_ptr + strlen (SLAPT_SRC_BUILDDIR_TOKEN));
+        config->builddir = strdup (token_ptr + strlen (SLAPT_SRC_BUILDDIR_TOKEN));
+
+    } else if ( (token_ptr = strstr (buffer,SLAPT_SRC_PKGEXT_TOKEN)) != NULL ) {
+
+      if ( strlen (token_ptr) > strlen (SLAPT_SRC_PKGEXT_TOKEN) )
+        config->pkgext = strdup (token_ptr + strlen (SLAPT_SRC_PKGEXT_TOKEN));
+
     }
 
   }
@@ -104,16 +127,18 @@ slapt_src_slackbuild_list *slapt_src_slackbuild_list_init (void)
   slapt_src_slackbuild_list *sbs = slapt_malloc (sizeof *sbs);
   sbs->slackbuilds = slapt_malloc (sizeof *sbs->slackbuilds);
   sbs->count = 0;
+  sbs->free_slackbuilds = SLAPT_FALSE;
 
   return sbs;
 }
 
 void slapt_src_slackbuild_list_free (slapt_src_slackbuild_list *sbs)
 {
-  int i;
-
-  for (i = 0; i < sbs->count; i++) {
-    slapt_src_slackbuild_free (sbs->slackbuilds[i]);
+  if (sbs->free_slackbuilds == SLAPT_TRUE) {
+    int i;
+    for (i = 0; i < sbs->count; i++) {
+      slapt_src_slackbuild_free (sbs->slackbuilds[i]);
+    }
   }
 
   free (sbs->slackbuilds);
@@ -179,10 +204,11 @@ int slapt_src_update_slackbuild_cache (slapt_src_config *config)
     if (sbs != NULL) {
       int c;
       for (c = 0; c < sbs->count; c++) {
-        sbs->slackbuilds[c]->sb_source_url = strdup (url);
+        if (sbs->slackbuilds[c]->sb_source_url == NULL)
+          sbs->slackbuilds[c]->sb_source_url = strdup (url);
         slapt_src_slackbuild_list_add (slackbuilds, sbs->slackbuilds[c]);
       }
-      sbs->count = 0;
+      sbs->free_slackbuilds = SLAPT_FALSE;
       slapt_src_slackbuild_list_free (sbs);
     }
 
@@ -202,7 +228,7 @@ static int sb_cmp (const void *a, const void *b)
   slapt_src_slackbuild *sb1 = *(slapt_src_slackbuild * const *)a;
   slapt_src_slackbuild *sb2 = *(slapt_src_slackbuild * const *)b;
 
-  return strcmp(sb1->name, sb2->name);
+  return strcmp (sb1->name, sb2->name);
 }
 
 void slapt_src_write_slackbuilds_to_file (slapt_src_slackbuild_list *sbs, const char *datafile)
@@ -210,13 +236,34 @@ void slapt_src_write_slackbuilds_to_file (slapt_src_slackbuild_list *sbs, const 
   int i;
   FILE *f = slapt_open_file (datafile, "w+b");
 
-  qsort( sbs->slackbuilds, sbs->count, sizeof(sbs->slackbuilds[0]), sb_cmp );
+  qsort ( sbs->slackbuilds, sbs->count, sizeof (sbs->slackbuilds[0]), sb_cmp );
 
   for (i = 0; i < sbs->count; i++) {
     int c;
     /* write out package data */
     fprintf (f, "SLACKBUILD NAME: %s\n", sbs->slackbuilds[i]->name);
-    fprintf (f, "SLACKBUILD LOCATION: %s\n", sbs->slackbuilds[i]->location);
+    fprintf (f, "SLACKBUILD SOURCEURL: %s\n", sbs->slackbuilds[i]->sb_source_url);
+
+    /* fixup locations so they are easier to work with later */
+    {
+      char *location = strdup (sbs->slackbuilds[i]->location);
+
+      if (location[strlen (location)-1] != '/') {
+        char *fixed = add_part_to_url (location, "/");
+        free (location);
+        location = fixed;
+      }
+
+      if (strncmp (location, "./", 2) == 0) {
+        char *fixed = strdup (location + 2);
+        free (location);
+        location = fixed;
+      }
+
+      fprintf (f, "SLACKBUILD LOCATION: %s\n", location);
+      free (location);
+    }
+
     fprintf (f, "SLACKBUILD FILES: ");
     for (c = 0; c < sbs->slackbuilds[i]->files->count; c++) {
       if (c == (sbs->slackbuilds[i]->files->count - 1))
@@ -224,12 +271,14 @@ void slapt_src_write_slackbuilds_to_file (slapt_src_slackbuild_list *sbs, const 
       else
         fprintf (f, "%s ", sbs->slackbuilds[i]->files->items[c]);
     }
+
     fprintf (f, "SLACKBUILD INFO:\n");
     fprintf (f, "VERSION=\"%s\"\n", sbs->slackbuilds[i]->version);
     fprintf (f, "DOWNLOAD=\"%s\"\n", sbs->slackbuilds[i]->download ? sbs->slackbuilds[i]->download : "");
     fprintf (f, "DOWNLOAD_x86_64=\"%s\"\n", sbs->slackbuilds[i]->download_x86_64 ? sbs->slackbuilds[i]->download_x86_64 : "");
     fprintf (f, "MD5SUM=\"%s\"\n", sbs->slackbuilds[i]->md5sum ? sbs->slackbuilds[i]->md5sum : "");
     fprintf (f, "MD5SUM_x86_64=\"%s\"\n", sbs->slackbuilds[i]->md5sum_x86_64 ? sbs->slackbuilds[i]->md5sum_x86_64 : "");
+
     fprintf (f, "SLACKBUILD README:\n");
     if (sbs->slackbuilds[i]->readme != NULL)  
       fprintf (f, "%s\n", sbs->slackbuilds[i]->readme);
@@ -285,6 +334,11 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
           free (token);
         }
 
+        if ( (sscanf (buffer, "SLACKBUILD SOURCEURL: %as", &token)) == 1) {
+          sb->sb_source_url = strdup (token);
+          free (token);
+        }
+
         if ( (sscanf (buffer, "SLACKBUILD LOCATION: %as", &token)) == 1) {
           sb->location = strdup (token);
           free (token);
@@ -325,7 +379,7 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
       break;
 
       case SLAPT_SRC_PARSING_README:
-        if (strncmp (buffer, sb->name, strlen(sb->name)) == 0) {
+        if (strncmp (buffer, sb->name, strlen (sb->name)) == 0) {
           if (sb->readme != NULL) {
             sb->readme = realloc (sb->readme, sizeof *sb->readme * (strlen (sb->readme) + strlen (buffer) + 2));
             sb->readme = strcat (sb->readme, "\n");
@@ -347,6 +401,8 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
     free (buffer);
 
   fclose (f);
+
+  sbs->free_slackbuilds = SLAPT_TRUE;
   return sbs;
 }
 
@@ -355,32 +411,159 @@ slapt_src_slackbuild_list *slapt_src_get_available_slackbuilds ()
   return slapt_src_get_slackbuilds_from_file (SLAPT_SRC_DATA_FILE);
 }
 
+static char *filename_from_url (char *url)
+{
+  char *filename = NULL;
+  slapt_list_t *parts = slapt_parse_delimited_list (url, '/');
+  if (parts->count > 0) {
+    filename = strdup (parts->items[parts->count-1]);
+  }
+  slapt_free_list (parts);
+
+  return filename;
+}
+
+static char *add_part_to_url (char *url, char *part)
+{
+  char *new = malloc (sizeof *new * (strlen (url) + strlen (part) + 1));
+  if (new != NULL) {
+    new = strcpy (new, url);
+    new = strcat (new, part);
+  }
+
+  return new;
+}
+
 int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *sb)
 {
-  /* create working directory within build dir */
-  /* fetch source and extra files into working directory */
+  int i;
+  slapt_list_t *download_parts = NULL, *md5sum_parts = NULL;
+  slapt_rc_config *slapt_config = slapt_init_config ();
+  char *sb_location = add_part_to_url (sb->sb_source_url, sb->location);
+
+  /*
   printf ("fetching %s\n", sb->name);
+  printf ("url %s\n", sb->sb_source_url);
+  printf ("location %s\n", sb->location);
+  printf ("real location %s\n", sb_location);
+  */
+
+  /* need to mkdir and chdir to sb->location */
+  slapt_create_dir_structure (sb->location);
+  if (chdir (sb->location) != 0) {}
+
+  /* download slackbuild files */
+  for (i = 0; i < sb->files->count; i++) {
+    int curl_rv = 0;
+    FILE *f = slapt_open_file (sb->files->items[i], "w+b");
+    char *url = add_part_to_url (sb_location, sb->files->items[i]);
+
+    /* TODO support file resume */
+    printf ("Fetching %s...", sb->files->items[i]);
+    curl_rv = slapt_download_data (f, url, 0, NULL, slapt_config);
+    if (curl_rv == 0) {
+      printf ("Done\n");
+    } else {
+      printf ("Failed\n");
+      exit (EXIT_FAILURE);
+    }
+
+    free (url);
+    fclose (f);
+  }
+
+  /* TODO fetch download || download_x86_64 */
+  /* can check uname_v.machine to see if we are x86_64 */
+  download_parts = slapt_parse_delimited_list (sb->download, ' ');
+  md5sum_parts   = slapt_parse_delimited_list (sb->md5sum, ' ');
+  if (download_parts->count != md5sum_parts->count) {
+    printf ("Mismatch between download files and md5sums\n");
+    exit (EXIT_FAILURE);
+  }
+
+  for (i = 0; i < download_parts->count; i++) {
+    int curl_rv     = 0;
+    char *md5sum    = md5sum_parts->items[i];
+    char *filename  = filename_from_url (download_parts->items[i]);
+    FILE *f         = slapt_open_file (filename, "w+b");
+    char md5sum_to_prove[SLAPT_MD5_STR_LEN];
+
+    if (f == NULL) {
+      perror ("Cannot open file for writing");
+      exit (EXIT_FAILURE);
+    }
+
+    printf ("Fetching %s...", download_parts->items[i]);
+    /* TODO support file resume */
+    curl_rv = slapt_download_data (f, download_parts->items[i], 0, NULL, slapt_config);
+    if (curl_rv == 0) {
+      printf ("Done\n");
+    } else {
+      printf ("Failed\n");
+      exit (EXIT_FAILURE);
+    }
+
+    slapt_gen_md5_sum_of_file (f, md5sum_to_prove);
+    fclose (f);
+
+    if (strcmp (md5sum_to_prove, md5sum) != 0 ) {
+      printf ("MD5SUM mismatch for %s\n", filename);
+      exit (EXIT_FAILURE);
+    }
+
+    free (filename);
+  }
+
+  if (download_parts != NULL)
+    slapt_free_list (download_parts);
+  if (md5sum_parts != NULL)
+    slapt_free_list (md5sum_parts);
+
+  slapt_free_rc_config (slapt_config);
+  free (sb_location);
+
+  /* go back */
+  if (chdir (config->builddir) != 0) {}
   return 0;
 }
 
 int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *sb)
 {
-  /* change to working directory */
-  /* make sure slackbuild file is +x */
+  char *cwd = NULL;
+  char *command = NULL;
+  int name_len = strlen(sb->name), command_len = 15, r = 0;
+
+  if (chdir (sb->location) != 0) {}
+
+  cwd = get_current_dir_name ();
 
   /*
-    make sure we set the locations for the slackbuilds to honor
-  setenv ("TMP", "", 1);
-  setenv ("OUTPUT", "", 1);
-  setenv ("PKGTYPE", "", 1);
+    make sure we set locations and other env vars for the slackbuilds to honor
   */
+  setenv ("TMP", cwd, 1);
+  setenv ("OUTPUT", cwd, 1);
+  setenv ("PKGTYPE", config->pkgext, 1);
 
-  /* run slackbuild */
+  /* run slackbuild, sh {name}.Slackbuild (strlen(name) + 15)*/
+  command_len += name_len;
+  command = slapt_malloc (sizeof *command * command_len);
+  r = printf (command, "", sb->name);
+  if (r != command_len) { 
+    printf ("Failed to construct command string\n");
+    exit (EXIT_FAILURE);
+  }
+
+  r = system (command);
+  if (r != 0) {
+    printf ("%s returned %d\n", command, r);
+  }
+
+  free (command);
+  free (cwd);
 
   /* go back */
   if (chdir (config->builddir) != 0) {}
 
-  printf ("building %s\n", sb->name);
   return 0;
 }
 
@@ -392,39 +575,38 @@ int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild
   return 0;
 }
 
+slapt_src_slackbuild *slapt_src_get_slackbuild (slapt_src_slackbuild_list *sbs, const char *name)
+{
+  int min = 0, max = sbs->count - 1;
+
+  while (max >= min) {
+    int pivot    = (min + max) / 2;
+    int name_cmp  = strcmp (sbs->slackbuilds[pivot]->name, name); 
+
+    if ( name_cmp == 0 ) {
+      return sbs->slackbuilds[pivot];   
+    } else {
+      if ( name_cmp < 0 )
+        min = pivot + 1;
+      else
+        max = pivot - 1;
+    }
+  }
+
+  return NULL;
+}
+
 slapt_src_slackbuild_list *slapt_src_names_to_slackbuilds (slapt_src_config *config, slapt_src_slackbuild_list *available, slapt_list_t *names)
 {
   int i;
   slapt_src_slackbuild_list *sbs = slapt_src_slackbuild_list_init ();
 
   for (i = 0; i < names->count; i++) {
-    int c;
-    slapt_list_t *search_names = slapt_init_list ();
+    slapt_src_slackbuild *sb = slapt_src_get_slackbuild (available, names->items[i]);
 
-    slapt_add_list_item(search_names, names->items[i]);
-    slapt_src_slackbuild_list *search = slapt_src_search_slackbuild_cache (available, search_names);
-/* FIXME
-==27390==  Address 0x8e279a8 is 0 bytes after a block of size 8 alloc'd
-==27390==    at 0x4C285A2: realloc (vg_replace_malloc.c:525)
-==27390==    by 0x4022C5: slapt_src_slackbuild_list_add (source.c:125)
-==27390==    by 0x402423: slapt_src_search_slackbuild_cache (source.c:458)
-==27390==    by 0x4024C1: slapt_src_names_to_slackbuilds (source.c:405)
-==27390==    by 0x401BAC: main (main.c:147)
-*/
-
-    /* TODO dep check here */
-    for (c = 0; c < search->count; c++) {
-      slapt_src_slackbuild_list_add (sbs, search->slackbuilds[i]);
-/* FIXME
-==27390== Invalid read of size 8
-==27390==    at 0x4024DE: slapt_src_names_to_slackbuilds (source.c:417)
-==27390==    by 0x401BAC: main (main.c:147)
-*/
-    }
-
-    search->count = 0;
-    slapt_src_slackbuild_list_free(search);
-    slapt_free_list(search_names);
+    /* TODO handle dependencies here */
+    if (sb != NULL)
+      slapt_src_slackbuild_list_add (sbs, sb);
   }
 
   return sbs;
@@ -456,7 +638,6 @@ slapt_src_slackbuild_list *slapt_src_search_slackbuild_cache (slapt_src_slackbui
 
       if (name_r == 0 || version_r == 0 || readme_r == 0)
         slapt_src_slackbuild_list_add (sbs, remote_sbs->slackbuilds[i]);
-        
 
     }
 

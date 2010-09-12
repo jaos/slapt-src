@@ -43,9 +43,9 @@ void help (void)
   printf ("Usage: %s [action] [slackbuild(s)]\n", PACKAGE);
   printf ("  --search |-s  - %s\n","search available slackbuilds");
   printf ("  --show   |-w  - %s\n","show specified slackbuilds");
-  printf ("  --install|-i  - %s\n","fetches, builds, and installs the specified slackbuild(s)");
-  printf ("  --build  |-b  - %s\n","fetches and builds the specified slackbuild(s)");
-  printf ("  --fetch  |-f  - %s\n","fetches the specified slackbuild(s)");
+  printf ("  --install|-i  - %s\n","fetch, build, and install the specified slackbuild(s)");
+  printf ("  --build  |-b  - %s\n","only fetch and build the specified slackbuild(s)");
+  printf ("  --fetch  |-f  - %s\n","only fetch the specified slackbuild(s)");
 }
 
 #define VERSION_OPT 'v'
@@ -58,7 +58,7 @@ void help (void)
 #define BUILD_OPT 'b'
 #define INSTALL_OPT 'i'
 
-struct utsname u; /* for .machine */
+struct utsname uname_v; /* for .machine */
 
 int main (int argc, char *argv[])
 {
@@ -95,7 +95,7 @@ int main (int argc, char *argv[])
   #endif
   #endif
   curl_global_init (CURL_GLOBAL_ALL);
-  uname(&u);
+  uname(&uname_v);
 
   /* stop early */
   if (argc < 2) {
@@ -186,7 +186,6 @@ int main (int argc, char *argv[])
           if (short_desc != NULL)
             free (short_desc);
         }
-        search->count = 0;
         slapt_src_slackbuild_list_free (search);
       }
     break;
@@ -207,10 +206,8 @@ int main (int argc, char *argv[])
   }
 
   slapt_free_list (names);
-  if (sbs != NULL) {
-    sbs->count = 0;
+  if (sbs != NULL)
     slapt_src_slackbuild_list_free (sbs);
-  }
   slapt_src_slackbuild_list_free (remote_sbs);
   slapt_src_config_free (config);
 

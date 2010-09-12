@@ -6,12 +6,14 @@
 #define SLAPT_SRC_DATA_FILE "slackbuilds_data"
 #define SLAPT_SRC_SOURCE_TOKEN "SOURCE="
 #define SLAPT_SRC_BUILDDIR_TOKEN "BUILDDIR="
+#define SLAPT_SRC_PKGEXT_TOKEN "PKGEXT="
 #define SLAPT_SRC_SOURCES_LIST "SOURCES.TXT"
 
 typedef struct _slapt_src_config_
 {
   slapt_list_t *sources;
   char *builddir;
+  char *pkgext;
 } slapt_src_config;
 slapt_src_config *slapt_src_config_init (void);
 void slapt_src_config_free (slapt_src_config *config);
@@ -37,6 +39,7 @@ typedef struct _slapt_src_slackbuilds_
 {
   slapt_src_slackbuild **slackbuilds;
   unsigned int count;
+  SLAPT_BOOL_T free_slackbuilds;
 } slapt_src_slackbuild_list;
 slapt_src_slackbuild_list *slapt_src_slackbuild_list_init (void);
 void slapt_src_slackbuild_list_free (slapt_src_slackbuild_list *);
@@ -51,5 +54,6 @@ slapt_src_slackbuild_list *slapt_src_names_to_slackbuilds (slapt_src_config *, s
 slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *);
 void slapt_src_write_slackbuilds_to_file (slapt_src_slackbuild_list *, const char *);
 slapt_src_slackbuild_list *slapt_src_search_slackbuild_cache (slapt_src_slackbuild_list *, slapt_list_t *);
+slapt_src_slackbuild *slapt_src_get_slackbuild (slapt_src_slackbuild_list *, const char *);
 
 #endif

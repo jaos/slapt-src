@@ -1,2 +1,3 @@
 SOURCE=http://www.slackbuild.org/slackbuilds/13.1/
 BUILDDIR=/usr/src/slapt-src
+PKGEXT=txz
