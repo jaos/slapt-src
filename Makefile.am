@@ -1,7 +1,7 @@
 SUBDIRS = src
 
 SLACK_FILES = slack-desc slack-required slapt-srcrc
-EXTRA_DIST = $(SLACK_FILES) slapt-srcrc.8
+EXTRA_DIST = $(SLACK_FILES) slapt-src.8
 
 PKGDIR=`pwd`/pkg
 pkg: all
@@ -13,8 +13,8 @@ pkg: all
 	$(mkinstalldirs) $(PKGDIR)/etc/slapt-get
 	install slapt-srcrc $(PKGDIR)/etc/slapt-get/slapt-srcrc.new
 	$(mkinstalldirs) $(PKGDIR)/usr/man/man8
-	install slapt-srcrc.8 $(PKGDIR)/usr/man/man8/
-	gzip -f $(PKGDIR)/usr/man/man8/slapt-srcrc.8
+	install slapt-src.8 $(PKGDIR)/usr/man/man8/
+	gzip -f $(PKGDIR)/usr/man/man8/slapt-src.8
 	-chown -R $$(stat --format "%u:%g" $(bindir)) $(PKGDIR)/$(bindir)
 	-chown -R $$(stat --format "%u:%g" $(sbindir)) $(PKGDIR)/$(sbindir)
 	-find $(PKGDIR)/$(bindir) $(PKGDIR)/$(sbindir)/ -type f -exec strip --strip-unneeded {} \;
