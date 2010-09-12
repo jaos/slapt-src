@@ -11,7 +11,7 @@ pkg: all
 	install slack-required $(PKGDIR)/install/
 	@echo "if [ ! -d etc/slapt-get ]; then mkdir -p etc/slapt-get; fi; if [ ! -f etc/slapt-get/slapt-srcrc ]; then mv -f etc/slapt-get/slapt-srcrc.new etc/slapt-get/slapt-srcrc; diff -q etc/slapt-get/slapt-srcrc etc/slapt-get/slapt-srcrc.new >/dev/null 2>&1 && rm etc/slapt-get/slapt-srcrc.new; fi;" > $(PKGDIR)/install/doinst.sh
 	$(mkinstalldirs) $(PKGDIR)/etc/slapt-get
-	install slapt-srcrc $(PKGDIR)/etc/slapt-get/slapt-srcrc.new
+	install --mode=0644 slapt-srcrc $(PKGDIR)/etc/slapt-get/slapt-srcrc.new
 	$(mkinstalldirs) $(PKGDIR)/usr/man/man8
 	install slapt-src.8 $(PKGDIR)/usr/man/man8/
 	gzip -f $(PKGDIR)/usr/man/man8/slapt-src.8
