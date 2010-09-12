@@ -5,6 +5,8 @@
 #include <unistd.h>
 #include <slapt.h>
 #include <sys/utsname.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <config.h>
 #include "source.h"
 
@@ -59,6 +61,23 @@ void help (void)
 #define INSTALL_OPT 'i'
 
 struct utsname uname_v; /* for .machine */
+
+static void init_builddir (slapt_src_config *config)
+{
+  DIR *builddir = NULL;
+  mode_t mode = S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH;
+
+  if ( (builddir = opendir (config->builddir)) == NULL ) {
+    if ( mkdir (config->builddir, mode) == -1 ) {
+      printf ("Failed to create build  directory [%s]\n", config->builddir);
+
+      if (errno)
+        perror (config->builddir);
+
+      exit (EXIT_FAILURE);
+    }
+  }
+}
 
 int main (int argc, char *argv[])
 {
@@ -130,7 +149,7 @@ int main (int argc, char *argv[])
     exit (EXIT_FAILURE);
   }
 
-  slapt_create_dir_structure (config->builddir);
+  init_builddir (config);
   if ( (chdir (config->builddir)) != 0) {
     perror ("Failed to chdir to build directory");
     exit (EXIT_FAILURE);
