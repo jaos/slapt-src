@@ -5,5 +5,7 @@ In no particular order:
 * fix parser (see above first)
 * handle compressed meta files
 * more/better error handling
+* determine state of prior downloads, builds
+* management of existing built/installed packages?
 * write docs
 * translations
