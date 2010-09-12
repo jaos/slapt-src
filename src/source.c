@@ -570,9 +570,57 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
 
 int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild *sb)
 {
-  /* change to working directory */
-  /* install built package using SLAPT_UPGRADE_CMD */
-  printf ("installing %s\n", sb->name);
+  DIR *d = NULL;
+  struct dirent *file = NULL;
+  struct stat stat_buf;
+  slapt_regex_t *pkg_regex = NULL;
+  if (chdir (sb->location) != 0) {}
+
+  d = opendir(".");
+  if (d == NULL) {
+    printf ("failed to open current directory\n");
+    exit (EXIT_FAILURE);
+  }
+
+  if ((pkg_regex = slapt_init_regex(SLAPT_PKG_PARSE_REGEX)) == NULL) {
+    exit(EXIT_FAILURE);
+  }
+
+  while ((file = readdir(d)) != NULL) {
+    char *command = NULL;
+    int command_len = 37, r = 0;
+
+    if (strcmp (file->d_name, "..") == 0 || strcmp (file->d_name, ".") == 0)
+      continue;
+
+    if (lstat (file->d_name, &stat_buf) == -1)
+        continue;
+
+    if (!S_ISREG(stat_buf.st_mode))
+      continue;
+
+    slapt_execute_regex (pkg_regex,file->d_name);
+    if (pkg_regex->reg_return != 0)
+      continue;
+
+    command_len += strlen(file->d_name);
+    command = slapt_malloc (sizeof *command * command_len);
+    r = sprintf (command, "upgradepkg --reinstall --install-new %s", file->d_name);
+    if (r != command_len) {
+      printf ("Failed to build command\n");
+      exit (EXIT_FAILURE);
+    }
+
+    r = system (command);
+    if (r != 0) {
+      printf ("%s FAILED\n", command);
+      exit (EXIT_FAILURE);
+    }
+
+    free (command);
+  }
+
+  slapt_free_regex(pkg_regex);
   return 0;
 }
 
