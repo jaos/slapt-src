@@ -1,0 +1,109 @@
+Copyright (C) 2010 Jason Woodward <woodwardj at jaos dot org>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Library General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+
+Table of Contents:
+ 1. About
+ 2. Features
+ 3. Requirements
+ 4. Installation
+ 5. slapt-getrc
+ 6. SOURCES.TXT
+ 7. Troubleshooting
+ 8. Thanks and contributions
+
+
+1. About
+
+slapt-src is a utility to make querying, retrieving, and building slackbuilds as
+easily as working with binary packages with slapt-get.
+
+
+2. Features
+
+  * Remote and local SlackBuild repository support
+  * fast
+  * more
+
+3. Requirements
+
+  * slapt-get
+  * curl
+
+4. Installation
+
+Currently slapt-src is only available via git.  See
+http://software.jaos.org/git/slapt-src/
+
+After unpacking, run ./autogen.sh.  After the configure script is built, run
+the usual ./configure && make.
+
+5. slapt-srcrc
+
+The slapt-srcrc file consists of the following keys:
+  * SOURCE
+  * BUILDDIR
+  * PKGEXT
+
+Source should point to a local or remote SlackBuild repository that contains
+the necessary meta data.  See SOURCES.TXT below.
+
+6. SOURCES.TXT
+
+The following script can generate the currently supported format of SOURCES.TXT.
+The filename and format are likely to change.
+
+#!/bin/bash
+
+for sb in $(find . -name '*.SlackBuild')
+do
+  name=$(basename $sb | sed -re 's/\.SlackBuild$//')
+  location=$(dirname $sb)
+  files=$(ls $location | xargs)
+  echo "SLACKBUILD NAME: $name"
+  echo "SLACKBUILD LOCATION: $location"
+  echo "SLACKBUILD FILES: $files"
+  if [ -f $location/$name.info ]; then
+    echo "SLACKBUILD INFO:"
+    # remove those pesky multi line listings
+    cat $location/$name.info | sed ':a;N;$!ba;s/\\\n\s*//g'
+  fi
+  if [ $location/README ]; then
+    echo "SLACKBUILD README:"
+    while read readmeline; do
+      echo "$name: $readmeline"
+    done < $location/README
+  fi
+  echo
+
+done
+# END
+
+The output of this script should be redirected to SOURCES.TXT.
+
+7. Troubleshooting
+
+There are likely a lot of bugs.  Email bug reports to me:
+    Jason Woodward <woodwardj at jaos dot org>
+
+or directly to the mailing lists:
+    slapt-get-user at software dot jaos dot org
+    slapt-get-devel at software dot jaos dot org
+
+8. Thanks and contributions
+
+Thanks to the guys from #gsb on freenode for ideas and conceptual discussions.
+
