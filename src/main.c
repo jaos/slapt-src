@@ -155,12 +155,18 @@ int main (int argc, char *argv[])
     exit (EXIT_FAILURE);
   }
 
-  remote_sbs = slapt_src_get_available_slackbuilds ();
-
   switch (action) {
+    case SEARCH_OPT:
+      remote_sbs = slapt_src_get_available_slackbuilds ();
+    break;
     case FETCH_OPT:
     case BUILD_OPT:
     case INSTALL_OPT:
+    case LIST_OPT:
+    case SHOW_OPT:
+      remote_sbs = slapt_src_get_available_slackbuilds ();
+        printf ("remote_sbs count %d\n", remote_sbs->count);
+        printf ("names count %d\n", names->count);
       /* convert all names to slackbuilds */
       if (names->count > 0) {
         sbs = slapt_src_names_to_slackbuilds (config, remote_sbs, names);
@@ -224,10 +230,13 @@ int main (int argc, char *argv[])
     break;
   }
 
-  slapt_free_list (names);
+  if (names != NULL)
+    slapt_free_list (names);
   if (sbs != NULL)
     slapt_src_slackbuild_list_free (sbs);
-  slapt_src_slackbuild_list_free (remote_sbs);
+  if (remote_sbs != NULL)
+    slapt_src_slackbuild_list_free (remote_sbs);
+
   slapt_src_config_free (config);
 
   return 0;
