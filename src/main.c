@@ -165,8 +165,6 @@ int main (int argc, char *argv[])
     case LIST_OPT:
     case SHOW_OPT:
       remote_sbs = slapt_src_get_available_slackbuilds ();
-        printf ("remote_sbs count %d\n", remote_sbs->count);
-        printf ("names count %d\n", names->count);
       /* convert all names to slackbuilds */
       if (names->count > 0) {
         sbs = slapt_src_names_to_slackbuilds (config, remote_sbs, names);
@@ -190,11 +188,14 @@ int main (int argc, char *argv[])
     break;
     case BUILD_OPT:
       for (i = 0; i < sbs->count; i++) {
+        slapt_src_fetch_slackbuild (config, sbs->slackbuilds[i]);
         slapt_src_build_slackbuild (config, sbs->slackbuilds[i]);
       }
     break;
     case INSTALL_OPT:
       for (i = 0; i < sbs->count; i++) {
+        slapt_src_fetch_slackbuild (config, sbs->slackbuilds[i]);
+        slapt_src_build_slackbuild (config, sbs->slackbuilds[i]);
         slapt_src_install_slackbuild (config, sbs->slackbuilds[i]);
       }
     break;
