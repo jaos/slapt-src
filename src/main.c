@@ -237,6 +237,37 @@ int main (int argc, char *argv[])
     break;
 
     case SHOW_OPT:
+      {
+        int c;
+        for (i = 0; i < names->count; i++) {
+          slapt_src_slackbuild *sb = slapt_src_get_slackbuild (remote_sbs, names->items[i]);
+
+          if (sb != NULL) {
+            char *short_desc = gen_short_pkg_description (sb);
+            char *desc = strdup(sb->readme);
+
+            slapt_clean_description (desc, sb->name);
+
+            printf ("SlackBuild Name: %s\n", sb->name);
+            printf ("SlackBuild Version: %s\n", sb->version);
+            printf ("SlackBuild Category: %s\n", sb->location);
+            printf ("SlackBuild Files:\n");
+
+            for (c = 0; c < sb->files->count; c++) {
+              printf (" %s\n", sb->files->items[c]);
+            }
+
+            printf ("SlackBuild README:\n%s\n", desc);
+
+            if (i+1 != names->count)
+              printf ("\n");
+
+            free (desc);
+            free (short_desc);
+            /* slapt_src_slackbuild_free (sb); NO FREE */
+          }
+        }
+      }
     break;
   }
 
