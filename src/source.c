@@ -166,39 +166,54 @@ int slapt_src_update_slackbuild_cache (slapt_src_config *config)
 
   for (i = 0; i < config->sources->count; i++) {
     const char *url = config->sources->items[i];
-    FILE *f = NULL;
-    const char *err = NULL;
     slapt_src_slackbuild_list *sbs = NULL;
-    char *filename = NULL, *local_head = NULL, *head = NULL;
+    char *files[] = { SLAPT_SRC_SOURCES_LIST_GZ, SLAPT_SRC_SOURCES_LIST, NULL };
+    int fc;
 
     printf ("Fetching slackbuild list from %s...", url);
 
-    filename = slapt_gen_filename_from_url (url, SLAPT_SRC_SOURCES_LIST);
-    local_head = slapt_read_head_cache (filename);
-    head = slapt_head_mirror_data (url, SLAPT_SRC_SOURCES_LIST);
+    for (fc = 0; files[fc] != NULL; fc++) {
+      char *filename = NULL, *local_head = NULL, *head = NULL;
+      const char *err = NULL;
+      FILE *f = NULL;
 
-    /* is it cached ? */
-    if (head != NULL && local_head != NULL && strcmp (head, local_head) == 0) {
-      printf ("Cached\n");
-      sbs = slapt_src_get_slackbuilds_from_file (filename);
-    } else {
+      filename = slapt_gen_filename_from_url (url, files[fc]);
+      local_head = slapt_read_head_cache (filename);
+      head = slapt_head_mirror_data (url, files[fc]);
 
-      if ((f = slapt_open_file (filename,"w+b")) == NULL)
-        exit (EXIT_FAILURE);
-
-      err = slapt_get_mirror_data_from_source (f, slapt_config, url, SLAPT_SRC_SOURCES_LIST);
-      fclose (f);
-
-      if (!err) {
-        printf ("Done\n");
+      /* is it cached ? */
+      if (head != NULL && local_head != NULL && strcmp (head, local_head) == 0) {
+        printf ("Cached\n");
         sbs = slapt_src_get_slackbuilds_from_file (filename);
+      } else if (head != NULL) {
 
-        slapt_write_head_cache (head, filename);
+        if ((f = slapt_open_file (filename,"w+b")) == NULL)
+          exit (EXIT_FAILURE);
 
+        err = slapt_get_mirror_data_from_source (f, slapt_config, url, files[fc]);
+        fclose (f);
+
+        if (!err) {
+          printf ("Done\n");
+          sbs = slapt_src_get_slackbuilds_from_file (filename);
+
+          slapt_write_head_cache (head, filename);
+
+        } else {
+          fprintf (stderr, "Download failed: %s\n", err);
+          slapt_clear_head_cache (filename);
+        }
       } else {
-        fprintf (stderr, "Download failed: %s\n", err);
-        slapt_clear_head_cache (filename);
+        if (strcmp (files[fc], SLAPT_SRC_SOURCES_LIST_GZ) != 0)
+          fprintf (stderr, "Download failed: %s\n", "404");
       }
+
+      free (filename);
+      free (local_head);
+      free (head);
+
+      if (sbs != NULL)
+        break;
     }
 
     if (sbs != NULL) {
@@ -212,9 +227,6 @@ int slapt_src_update_slackbuild_cache (slapt_src_config *config)
       slapt_src_slackbuild_list_free (sbs);
     }
 
-    free (filename);
-    free (local_head);
-    free (head);
   }
 
   slapt_src_write_slackbuilds_to_file (slackbuilds, SLAPT_SRC_DATA_FILE);
@@ -300,10 +312,29 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
   enum { SLAPT_SRC_NOT_PARSING, SLAPT_SRC_PARSING, SLAPT_SRC_PARSING_INFO, SLAPT_SRC_PARSING_README } parse_state;
   parse_state = SLAPT_SRC_NOT_PARSING;
 
-  f = fopen (datafile, "r");
-  if (f == NULL) {
-    printf ("Failed to open %s for reading\n", datafile);
-    return sbs;
+  /* support reading from gzip'd files */
+  if (strstr (datafile, ".gz") != NULL) {
+    gzFile *data = NULL;
+    char gzbuffer[SLAPT_MAX_ZLIB_BUFFER];
+
+    if ((f = tmpfile ()) == NULL)
+      exit (EXIT_FAILURE);
+
+    if ((data = gzopen (datafile,"rb")) == NULL) 
+      exit(EXIT_FAILURE);
+
+    while (gzgets (data, gzbuffer, SLAPT_MAX_ZLIB_BUFFER) != Z_NULL) {
+      fprintf (f, "%s", gzbuffer);
+    }
+    gzclose(data);
+    rewind(f);
+
+  } else {
+    f = fopen (datafile, "r");
+    if (f == NULL) {
+      printf ("Failed to open %s for reading\n", datafile);
+      return sbs;
+    }
   }
 
   while ( (g_size = getline (&buffer, &gb_length, f) ) != EOF ) {
