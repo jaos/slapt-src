@@ -3,8 +3,10 @@ In no particular order:
 * finalize the SOURCES.TXT file format, naming, and general adoption with
   sbo and gsb guys
 * fix parser (see above first)
-* more/better error handling
-* determine state of prior downloads, builds
-* management of existing built/installed packages?
-* write docs
+* handle *_x86_64
+* handle UNSUPPORTED/UNTESTED
 * translations
+* determine state of prior downloads, builds?
+* management of existing built/installed packages?
+* more/better error handling
+* improve docs
