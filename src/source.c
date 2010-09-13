@@ -208,7 +208,7 @@ int slapt_src_update_slackbuild_cache (slapt_src_config *config)
           sbs->slackbuilds[c]->sb_source_url = strdup (url);
         slapt_src_slackbuild_list_add (slackbuilds, sbs->slackbuilds[c]);
       }
-      sbs->free_slackbuilds = SLAPT_FALSE;
+      sbs->free_slackbuilds = SLAPT_FALSE; /* don't free the slackbuilds here */
       slapt_src_slackbuild_list_free (sbs);
     }
 
@@ -219,6 +219,7 @@ int slapt_src_update_slackbuild_cache (slapt_src_config *config)
 
   slapt_src_write_slackbuilds_to_file (slackbuilds, SLAPT_SRC_DATA_FILE);
   slapt_free_rc_config (slapt_config);
+  slackbuilds->free_slackbuilds = SLAPT_TRUE; /* free here */
   slapt_src_slackbuild_list_free (slackbuilds);
   return 0;
 }
@@ -307,7 +308,6 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
 
   while ( (g_size = getline (&buffer, &gb_length, f) ) != EOF ) {
     char *token = NULL;
-    buffer[g_size - 1] = '\0';
 
     if (strstr (buffer, "SLACKBUILD NAME:") != NULL) {
       parse_state = SLAPT_SRC_PARSING;
@@ -318,7 +318,7 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
     if (strstr (buffer, "SLACKBUILD README:") != NULL)
       parse_state = SLAPT_SRC_PARSING_README;
 
-    if ((strcmp (buffer, "") == 0) && (parse_state == SLAPT_SRC_PARSING_README)) {
+    if ((strcmp (buffer, "\n") == 0) && (parse_state == SLAPT_SRC_PARSING_README)) {
       slapt_src_slackbuild_list_add (sbs, sb);
       /* do not free, in use in sbs list
       slapt_src_slackbuild_free (sb);
@@ -380,6 +380,7 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
 
       case SLAPT_SRC_PARSING_README:
         if (strncmp (buffer, sb->name, strlen (sb->name)) == 0) {
+          buffer[g_size - 1] = '\0';
           if (sb->readme != NULL) {
             sb->readme = realloc (sb->readme, sizeof *sb->readme * (strlen (sb->readme) + strlen (buffer) + 2));
             sb->readme = strcat (sb->readme, "\n");
