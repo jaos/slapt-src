@@ -4,6 +4,12 @@ SLACK_FILES = slack-desc slack-required slapt-srcrc
 EXTRA_DIST = $(SLACK_FILES) slapt-src.8
 
 PKGDIR=`pwd`/pkg
+
+clean-local: rmpkg
+rmpkg:
+	-@rm -rf pkg
+	-@rm -rf @PACKAGE@-@PACKAGE_VERSION@-@host_cpu@-1.tgz
+
 pkg: all
 	$(MAKE) install DESTDIR=$(PKGDIR)
 	$(mkinstalldirs) $(PKGDIR)/install
