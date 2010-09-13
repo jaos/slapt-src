@@ -76,6 +76,8 @@ static void init_builddir (slapt_src_config *config)
 
       exit (EXIT_FAILURE);
     }
+  } else {
+    closedir (builddir);
   }
 }
 

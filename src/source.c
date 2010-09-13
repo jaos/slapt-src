@@ -531,24 +531,24 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
 {
   char *cwd = NULL;
   char *command = NULL;
-  int name_len = strlen(sb->name), command_len = 14, r = 0;
+  int command_len = 15, r = 0;
 
   if (chdir (sb->location) != 0) {}
-
-  cwd = get_current_dir_name ();
 
   /*
     make sure we set locations and other env vars for the slackbuilds to honor
   */
+  cwd = get_current_dir_name ();
   setenv ("TMP", cwd, 1);
   setenv ("OUTPUT", cwd, 1);
   setenv ("PKGTYPE", config->pkgext, 1);
+  free (cwd);
 
   /* run slackbuild, sh {name}.Slackbuild (strlen(name) + 14)*/
-  command_len += name_len;
+  command_len += strlen(sb->name);
   command = slapt_malloc (sizeof *command * command_len);
-  r = sprintf (command, "sh %s.SlackBuild", sb->name);
-  if (r != command_len) { 
+  r = snprintf (command, command_len, "ls %s.SlackBuild", sb->name);
+  if (r+1 != command_len) { 
     printf ("Failed to construct command string (%d,%d,%s\n", r, command_len, command);
     exit (EXIT_FAILURE);
   }
@@ -560,7 +560,6 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
   }
 
   free (command);
-  free (cwd);
 
   /* go back */
   if (chdir (config->builddir) != 0) {}
@@ -588,7 +587,7 @@ int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild
 
   while ((file = readdir(d)) != NULL) {
     char *command = NULL;
-    int command_len = 37, r = 0;
+    int command_len = 38, r = 0;
 
     if (strcmp (file->d_name, "..") == 0 || strcmp (file->d_name, ".") == 0)
       continue;
@@ -605,8 +604,8 @@ int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild
 
     command_len += strlen(file->d_name);
     command = slapt_malloc (sizeof *command * command_len);
-    r = sprintf (command, "upgradepkg --reinstall --install-new %s", file->d_name);
-    if (r != command_len) {
+    r = snprintf (command, command_len, "upgradepkg --reinstall --install-new %s", file->d_name);
+    if (r+1 != command_len) {
       printf ("Failed to build command\n");
       exit (EXIT_FAILURE);
     }
