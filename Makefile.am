@@ -5,8 +5,9 @@ EXTRA_DIST = $(SLACK_FILES) slapt-src.8
 
 PKGDIR=`pwd`/pkg
 
-clean-local: rmpkg
-rmpkg:
+clean-local: clean-pkg
+.PHONY: clean-pkg
+clean-pkg:
 	-@rm -rf pkg
 	-@rm -rf @PACKAGE@-@PACKAGE_VERSION@-@host_cpu@-1.tgz
 
