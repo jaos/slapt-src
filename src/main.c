@@ -180,20 +180,24 @@ int main (int argc, char *argv[])
 
 
   switch (action) {
+
     case UPDATE_OPT:
       slapt_src_update_slackbuild_cache (config);
     break;
+
     case FETCH_OPT:
       for (i = 0; i < sbs->count; i++) {
         slapt_src_fetch_slackbuild (config, sbs->slackbuilds[i]);
       }
     break;
+
     case BUILD_OPT:
       for (i = 0; i < sbs->count; i++) {
         slapt_src_fetch_slackbuild (config, sbs->slackbuilds[i]);
         slapt_src_build_slackbuild (config, sbs->slackbuilds[i]);
       }
     break;
+
     case INSTALL_OPT:
       for (i = 0; i < sbs->count; i++) {
         slapt_src_fetch_slackbuild (config, sbs->slackbuilds[i]);
@@ -201,6 +205,7 @@ int main (int argc, char *argv[])
         slapt_src_install_slackbuild (config, sbs->slackbuilds[i]);
       }
     break;
+
     case SEARCH_OPT:
       {
         slapt_src_slackbuild_list *search = slapt_src_search_slackbuild_cache (remote_sbs, names);
@@ -217,6 +222,7 @@ int main (int argc, char *argv[])
         slapt_src_slackbuild_list_free (search);
       }
     break;
+
     case LIST_OPT:
       for (i = 0; i < remote_sbs->count; i++) {
         char *short_desc = gen_short_pkg_description (remote_sbs->slackbuilds[i]);
@@ -229,6 +235,7 @@ int main (int argc, char *argv[])
           free (short_desc);
       }
     break;
+
     case SHOW_OPT:
     break;
   }
