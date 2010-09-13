@@ -360,18 +360,22 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
           sb->version = strdup (token);
           free (token);
         }
+
         if ( (sscanf (buffer, "DOWNLOAD=\"%a[^\"]\"", &token)) == 1) {
           sb->download = strdup (token);
           free (token);
         }
+
         if ( (sscanf (buffer, "DOWNLOAD_x86_64=\"%a[^\"]\"", &token)) == 1) {
           sb->download_x86_64 = strdup (token);
           free (token);
         }
+
         if ( (sscanf (buffer, "MD5SUM=\"%a[^\"]\"", &token)) == 1) {
           sb->md5sum = strdup (token);
           free (token);
         }
+
         if ( (sscanf (buffer, "MD5SUM_x86_64=\"%a[^\"]\"", &token)) == 1) {
           sb->md5sum_x86_64 = strdup (token);
           free (token);
