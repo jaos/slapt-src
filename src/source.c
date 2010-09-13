@@ -321,13 +321,13 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
       exit (EXIT_FAILURE);
 
     if ((data = gzopen (datafile,"rb")) == NULL) 
-      exit(EXIT_FAILURE);
+      exit (EXIT_FAILURE);
 
     while (gzgets (data, gzbuffer, SLAPT_MAX_ZLIB_BUFFER) != Z_NULL) {
       fprintf (f, "%s", gzbuffer);
     }
-    gzclose(data);
-    rewind(f);
+    gzclose (data);
+    rewind (f);
 
   } else {
     f = fopen (datafile, "r");
