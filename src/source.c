@@ -442,16 +442,12 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
   slapt_rc_config *slapt_config = slapt_init_config ();
   char *sb_location = add_part_to_url (sb->sb_source_url, sb->location);
 
-  /*
-  printf ("fetching %s\n", sb->name);
-  printf ("url %s\n", sb->sb_source_url);
-  printf ("location %s\n", sb->location);
-  printf ("real location %s\n", sb_location);
-  */
-
   /* need to mkdir and chdir to sb->location */
   slapt_create_dir_structure (sb->location);
-  if (chdir (sb->location) != 0) {}
+  if (chdir (sb->location) != 0) {
+    printf ("Failed to chdir to %s\n", sb->location);
+    exit (EXIT_FAILURE);
+  }
 
   /* download slackbuild files */
   for (i = 0; i < sb->files->count; i++) {
@@ -524,7 +520,10 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
   free (sb_location);
 
   /* go back */
-  if (chdir (config->builddir) != 0) {}
+  if (chdir (config->builddir) != 0) {
+    printf ("Failed to chdir to %s\n", config->builddir);
+    exit (EXIT_FAILURE);
+  }
   return 0;
 }
 
@@ -534,7 +533,10 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
   char *command = NULL;
   int command_len = 15, r = 0;
 
-  if (chdir (sb->location) != 0) {}
+  if (chdir (sb->location) != 0) {
+    printf ("Failed to chdir to %s\n", sb->location);
+    exit (EXIT_FAILURE);
+  }
 
   /*
     make sure we set locations and other env vars for the slackbuilds to honor
@@ -545,8 +547,7 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
   setenv ("PKGTYPE", config->pkgext, 1);
   free (cwd);
 
-  /* run slackbuild, sh {name}.Slackbuild (strlen(name) + 14)*/
-  command_len += strlen(sb->name);
+  command_len += strlen (sb->name);
   command = slapt_malloc (sizeof *command * command_len);
   r = snprintf (command, command_len, "sh %s.SlackBuild", sb->name);
   if (r+1 != command_len) { 
@@ -563,7 +564,10 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
   free (command);
 
   /* go back */
-  if (chdir (config->builddir) != 0) {}
+  if (chdir (config->builddir) != 0) {
+    printf ("Failed to chdir to %s\n", config->builddir);
+    exit (EXIT_FAILURE);
+  }
 
   return 0;
 }
@@ -574,19 +578,22 @@ int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild
   struct dirent *file = NULL;
   struct stat stat_buf;
   slapt_regex_t *pkg_regex = NULL;
-  if (chdir (sb->location) != 0) {}
+  if (chdir (sb->location) != 0) {
+    printf ("Failed to chdir to %s\n", sb->location);
+    exit (EXIT_FAILURE);
+  }
 
-  d = opendir(".");
+  d = opendir (".");
   if (d == NULL) {
     printf ("failed to open current directory\n");
     exit (EXIT_FAILURE);
   }
 
-  if ((pkg_regex = slapt_init_regex(SLAPT_PKG_PARSE_REGEX)) == NULL) {
-    exit(EXIT_FAILURE);
+  if ((pkg_regex = slapt_init_regex (SLAPT_PKG_PARSE_REGEX)) == NULL) {
+    exit (EXIT_FAILURE);
   }
 
-  while ((file = readdir(d)) != NULL) {
+  while ((file = readdir (d)) != NULL) {
     char *command = NULL;
     int command_len = 38, r = 0;
 
@@ -603,7 +610,7 @@ int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild
     if (pkg_regex->reg_return != 0)
       continue;
 
-    command_len += strlen(file->d_name);
+    command_len += strlen (file->d_name);
     command = slapt_malloc (sizeof *command * command_len);
     r = snprintf (command, command_len, "upgradepkg --reinstall --install-new %s", file->d_name);
     if (r+1 != command_len) {
@@ -620,7 +627,7 @@ int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild
     free (command);
   }
 
-  slapt_free_regex(pkg_regex);
+  slapt_free_regex (pkg_regex);
   return 0;
 }
 

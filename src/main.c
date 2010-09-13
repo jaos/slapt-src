@@ -116,7 +116,7 @@ int main (int argc, char *argv[])
   #endif
   #endif
   curl_global_init (CURL_GLOBAL_ALL);
-  uname(&uname_v);
+  uname (&uname_v);
 
   /* stop early */
   if (argc < 2) {
