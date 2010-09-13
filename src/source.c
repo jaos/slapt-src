@@ -547,7 +547,7 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
   /* run slackbuild, sh {name}.Slackbuild (strlen(name) + 14)*/
   command_len += strlen(sb->name);
   command = slapt_malloc (sizeof *command * command_len);
-  r = snprintf (command, command_len, "ls %s.SlackBuild", sb->name);
+  r = snprintf (command, command_len, "sh %s.SlackBuild", sb->name);
   if (r+1 != command_len) { 
     printf ("Failed to construct command string (%d,%d,%s\n", r, command_len, command);
     exit (EXIT_FAILURE);
