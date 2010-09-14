@@ -1,6 +1,6 @@
 In no particular order:
 
-* finalize the SOURCES.TXT file format, naming, and general adoption with
+* finalize the SLACKBUILDS.TXT file format, naming, and general adoption with
   sbo and gsb guys
 * fix parser (see above first)
 * handle *_x86_64

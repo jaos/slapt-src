@@ -21,7 +21,7 @@ Table of Contents:
  3. Requirements
  4. Installation
  5. slapt-getrc
- 6. SOURCES.TXT
+ 6. SLACKBUILDS.TXT
  7. Troubleshooting
  8. Thanks and contributions
 
@@ -59,11 +59,11 @@ The slapt-srcrc file consists of the following keys:
   * PKGEXT
 
 Source should point to a local or remote SlackBuild repository that contains
-the necessary meta data.  See SOURCES.TXT below.
+the necessary meta data.  See SLACKBUILDS.TXT below.
 
-6. SOURCES.TXT
+6. SLACKBUILDS.TXT
 
-The following script can generate the currently supported format of SOURCES.TXT.
+The following script can generate the currently supported format of SLACKBUILDS.TXT.
 The filename and format are likely to change.
 
 #!/bin/bash
@@ -92,7 +92,7 @@ do
 done
 # END
 
-The output of this script should be redirected to SOURCES.TXT.
+The output of this script should be redirected to SLACKBUILDS.TXT.
 
 7. Troubleshooting
 
