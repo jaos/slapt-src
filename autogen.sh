@@ -2,4 +2,4 @@
 
 aclocal
 autoreconf --install
-#intltoolize --copy --force
+intltoolize --copy --force

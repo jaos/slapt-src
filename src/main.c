@@ -18,7 +18,7 @@ static char *gen_short_pkg_description (slapt_src_slackbuild *);
 
 void version (void)
 {
-  printf (gettext ("%s version %s\n"), PACKAGE, VERSION);
+  printf (gettext("%s version %s\n"), PACKAGE, VERSION);
   printf ("Jason Woodward <woodwardj at jaos dot org>\n");
   printf ("\n");
   printf ("This program is free software; you can redistribute it and/or modify\n");
@@ -38,16 +38,16 @@ void version (void)
 
 void help (void)
 {
-  printf ("%s - A SlackBuild utility\n", PACKAGE);
-  printf ("Usage: %s [action]\n", PACKAGE);
-  printf ("  --update |-u  - %s\n","update local cache of remote slackbuilds");
-  printf ("  --list   |-l  - %s\n","list available slackbuilds");
-  printf ("Usage: %s [action] [slackbuild(s)]\n", PACKAGE);
-  printf ("  --search |-s  - %s\n","search available slackbuilds");
-  printf ("  --show   |-w  - %s\n","show specified slackbuilds");
-  printf ("  --install|-i  - %s\n","fetch, build, and install the specified slackbuild(s)");
-  printf ("  --build  |-b  - %s\n","only fetch and build the specified slackbuild(s)");
-  printf ("  --fetch  |-f  - %s\n","only fetch the specified slackbuild(s)");
+  printf (gettext("%s - A SlackBuild utility\n"), PACKAGE);
+  printf (gettext("Usage: %s [action]\n"), PACKAGE);
+  printf ("  --update |-u  - %s\n", "update local cache of remote slackbuilds");
+  printf ("  --list   |-l  - %s\n", "list available slackbuilds");
+  printf (gettext("Usage: %s [action] [slackbuild(s)]\n"), PACKAGE);
+  printf ("  --search |-s  - %s\n", gettext("search available slackbuilds"));
+  printf ("  --show   |-w  - %s\n", gettext("show specified slackbuilds"));
+  printf ("  --install|-i  - %s\n", gettext("fetch, build, and install the specified slackbuild(s)"));
+  printf ("  --build  |-b  - %s\n", gettext("only fetch and build the specified slackbuild(s)"));
+  printf ("  --fetch  |-f  - %s\n", gettext("only fetch the specified slackbuild(s)"));
 }
 
 #define VERSION_OPT 'v'
@@ -106,7 +106,6 @@ int main (int argc, char *argv[])
   setbuf (stdout, NULL);
   #ifdef ENABLE_NLS
   setlocale (LC_ALL,"");
-  bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
   textdomain (GETTEXT_PACKAGE);
   #endif
   #ifdef SLAPT_HAS_GPGME
@@ -171,7 +170,7 @@ int main (int argc, char *argv[])
       if (names->count > 0) {
         sbs = slapt_src_names_to_slackbuilds (config, remote_sbs, names);
         if (sbs == NULL || sbs->count == 0) {
-          printf ("Unable to find all specified slackbuilds.\n");
+          printf (gettext("Unable to find all specified slackbuilds.\n"));
           exit (EXIT_FAILURE);
         }
       }
@@ -248,16 +247,16 @@ int main (int argc, char *argv[])
 
             slapt_clean_description (desc, sb->name);
 
-            printf ("SlackBuild Name: %s\n", sb->name);
-            printf ("SlackBuild Version: %s\n", sb->version);
-            printf ("SlackBuild Category: %s\n", sb->location);
-            printf ("SlackBuild Files:\n");
+            printf (gettext("SlackBuild Name: %s\n"), sb->name);
+            printf (gettext("SlackBuild Version: %s\n"), sb->version);
+            printf (gettext("SlackBuild Category: %s\n"), sb->location);
+            printf (gettext("SlackBuild Files:\n"));
 
             for (c = 0; c < sb->files->count; c++) {
               printf (" %s\n", sb->files->items[c]);
             }
 
-            printf ("SlackBuild README:\n%s\n", desc);
+            printf (gettext("SlackBuild README:\n%s\n"), desc);
 
             if (i+1 != names->count)
               printf ("\n");

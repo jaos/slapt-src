@@ -170,7 +170,7 @@ int slapt_src_update_slackbuild_cache (slapt_src_config *config)
     char *files[] = { SLAPT_SRC_SOURCES_LIST_GZ, SLAPT_SRC_SOURCES_LIST, NULL };
     int fc;
 
-    printf ("Fetching slackbuild list from %s...", url);
+    printf (gettext("Fetching slackbuild list from %s..."), url);
 
     for (fc = 0; files[fc] != NULL; fc++) {
       char *filename = NULL, *local_head = NULL, *head = NULL;
@@ -183,7 +183,7 @@ int slapt_src_update_slackbuild_cache (slapt_src_config *config)
 
       /* is it cached ? */
       if (head != NULL && local_head != NULL && strcmp (head, local_head) == 0) {
-        printf ("Cached\n");
+        printf (gettext("Cached\n"));
         sbs = slapt_src_get_slackbuilds_from_file (filename);
       } else if (head != NULL) {
 
@@ -194,18 +194,18 @@ int slapt_src_update_slackbuild_cache (slapt_src_config *config)
         fclose (f);
 
         if (!err) {
-          printf ("Done\n");
+          printf (gettext("Done\n"));
           sbs = slapt_src_get_slackbuilds_from_file (filename);
 
           slapt_write_head_cache (head, filename);
 
         } else {
-          fprintf (stderr, "Download failed: %s\n", err);
+          fprintf (stderr, gettext("Download failed: %s\n"), err);
           slapt_clear_head_cache (filename);
         }
       } else {
         if (strcmp (files[fc], SLAPT_SRC_SOURCES_LIST_GZ) != 0)
-          fprintf (stderr, "Download failed: %s\n", "404");
+          fprintf (stderr, gettext("Download failed: %s\n"), "404");
       }
 
       free (filename);
@@ -332,7 +332,7 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
   } else {
     f = fopen (datafile, "r");
     if (f == NULL) {
-      printf ("Failed to open %s for reading\n", datafile);
+      printf (gettext("Failed to open %s for reading\n"), datafile);
       return sbs;
     }
   }
@@ -480,7 +480,7 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
   /* need to mkdir and chdir to sb->location */
   slapt_create_dir_structure (sb->location);
   if (chdir (sb->location) != 0) {
-    printf ("Failed to chdir to %s\n", sb->location);
+    printf (gettext("Failed to chdir to %s\n"), sb->location);
     exit (EXIT_FAILURE);
   }
 
@@ -491,12 +491,12 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
     char *url = add_part_to_url (sb_location, sb->files->items[i]);
 
     /* TODO support file resume */
-    printf ("Fetching %s...", sb->files->items[i]);
+    printf (gettext("Fetching %s..."), sb->files->items[i]);
     curl_rv = slapt_download_data (f, url, 0, NULL, slapt_config);
     if (curl_rv == 0) {
-      printf ("Done\n");
+      printf (gettext("Done\n"));
     } else {
-      printf ("Failed\n");
+      printf (gettext("Failed\n"));
       exit (EXIT_FAILURE);
     }
 
@@ -509,7 +509,7 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
   download_parts = slapt_parse_delimited_list (sb->download, ' ');
   md5sum_parts   = slapt_parse_delimited_list (sb->md5sum, ' ');
   if (download_parts->count != md5sum_parts->count) {
-    printf ("Mismatch between download files and md5sums\n");
+    printf (gettext("Mismatch between download files and md5sums\n"));
     exit (EXIT_FAILURE);
   }
 
@@ -525,13 +525,13 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
       exit (EXIT_FAILURE);
     }
 
-    printf ("Fetching %s...", download_parts->items[i]);
+    printf (gettext("Fetching %s..."), download_parts->items[i]);
     /* TODO support file resume */
     curl_rv = slapt_download_data (f, download_parts->items[i], 0, NULL, slapt_config);
     if (curl_rv == 0) {
-      printf ("Done\n");
+      printf (gettext("Done\n"));
     } else {
-      printf ("Failed\n");
+      printf (gettext("Failed\n"));
       exit (EXIT_FAILURE);
     }
 
@@ -539,7 +539,7 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
     fclose (f);
 
     if (strcmp (md5sum_to_prove, md5sum) != 0 ) {
-      printf ("MD5SUM mismatch for %s\n", filename);
+      printf (gettext("MD5SUM mismatch for %s\n"), filename);
       exit (EXIT_FAILURE);
     }
 
@@ -556,7 +556,7 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
 
   /* go back */
   if (chdir (config->builddir) != 0) {
-    printf ("Failed to chdir to %s\n", config->builddir);
+    printf (gettext("Failed to chdir to %s\n"), config->builddir);
     exit (EXIT_FAILURE);
   }
   return 0;
@@ -569,7 +569,7 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
   int command_len = 15, r = 0;
 
   if (chdir (sb->location) != 0) {
-    printf ("Failed to chdir to %s\n", sb->location);
+    printf (gettext("Failed to chdir to %s\n"), sb->location);
     exit (EXIT_FAILURE);
   }
 
@@ -592,7 +592,7 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
 
   r = system (command);
   if (r != 0) {
-    printf ("%s FAILED\n", command);
+    printf ("%s %s\n", command, gettext("Failed\n"));
     exit (EXIT_FAILURE);
   }
 
@@ -600,7 +600,7 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
 
   /* go back */
   if (chdir (config->builddir) != 0) {
-    printf ("Failed to chdir to %s\n", config->builddir);
+    printf (gettext("Failed to chdir to %s\n"), config->builddir);
     exit (EXIT_FAILURE);
   }
 
@@ -614,7 +614,7 @@ int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild
   struct stat stat_buf;
   slapt_regex_t *pkg_regex = NULL;
   if (chdir (sb->location) != 0) {
-    printf ("Failed to chdir to %s\n", sb->location);
+    printf (gettext("Failed to chdir to %s\n"), sb->location);
     exit (EXIT_FAILURE);
   }
 
@@ -655,7 +655,7 @@ int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild
 
     r = system (command);
     if (r != 0) {
-      printf ("%s FAILED\n", command);
+      printf ("%s %s\n", command, gettext("Failed\n"));
       exit (EXIT_FAILURE);
     }
 

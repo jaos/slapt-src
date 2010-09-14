@@ -1,4 +1,4 @@
-SUBDIRS = src
+SUBDIRS = src po
 
 SLACK_FILES = slack-desc slack-required slapt-srcrc
 EXTRA_DIST = $(SLACK_FILES) slapt-src.8

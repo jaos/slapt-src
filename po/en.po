@@ -1,0 +1,115 @@
+# Copyright (C) 2010 Jason Woodward
+# This file is distributed under the same license as the slapt-src package.
+# Jason Woodward <woodwardj at jaos dot org>, 2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: slapt-src 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-09-14 00:07+0000\n"
+"PO-Revision-Date: 2010-09-13 11:50+0500\n"
+"Last-Translator: Jason Woodward <woodwardj at jaos dot org>\n"
+"Language-Team: slapt-get-devel@jaos.org\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, c-format
+msgid "%s - A SlackBuild utility\n"
+msgstr "%s - A SlackBuild utility\n"
+
+#, c-format
+msgid "%s version %s\n"
+msgstr "%s version %s\n"
+
+#, c-format
+msgid "Cached\n"
+msgstr "Cached\n"
+
+#, c-format
+msgid "Done\n"
+msgstr "Done\n"
+
+#, c-format
+msgid "Download failed: %s\n"
+msgstr "Download failed: %s\n"
+
+#, c-format
+msgid "Failed\n"
+msgstr "Failed\n"
+
+#, c-format
+msgid "Failed to chdir to %s\n"
+msgstr "Failed to chdir to %s\n"
+
+#, c-format
+msgid "Failed to open %s for reading\n"
+msgstr "Failed to open %s for reading\n"
+
+#, c-format
+msgid "Fetching %s..."
+msgstr "Fetching %s..."
+
+#, c-format
+msgid "Fetching slackbuild list from %s..."
+msgstr "Fetching slackbuild list from %s..."
+
+#, c-format
+msgid "MD5SUM mismatch for %s\n"
+msgstr "MD5SUM mismatch for %s\n"
+
+#, c-format
+msgid "Mismatch between download files and md5sums\n"
+msgstr "Mismatch between download files and md5sums\n"
+
+#, c-format
+msgid "SlackBuild Category: %s\n"
+msgstr "SlackBuild Category: %s\n"
+
+#, c-format
+msgid "SlackBuild Files:\n"
+msgstr "SlackBuild Files:\n"
+
+#, c-format
+msgid "SlackBuild Name: %s\n"
+msgstr "SlackBuild Name: %s\n"
+
+#, c-format
+msgid ""
+"SlackBuild README:\n"
+"%s\n"
+msgstr ""
+"SlackBuild README:\n"
+"%s\n"
+
+#, c-format
+msgid "SlackBuild Version: %s\n"
+msgstr "SlackBuild Version: %s\n"
+
+#, c-format
+msgid "Unable to find all specified slackbuilds.\n"
+msgstr "Unable to find all specified slackbuilds.\n"
+
+#, c-format
+msgid "Usage: %s [action]\n"
+msgstr "Usage: %s [action]\n"
+
+#, c-format
+msgid "Usage: %s [action] [slackbuild(s)]\n"
+msgstr "Usage: %s [action] [slackbuild(s)]\n"
+
+msgid "fetch, build, and install the specified slackbuild(s)"
+msgstr "fetch, build, and install the specified slackbuild(s)"
+
+msgid "only fetch and build the specified slackbuild(s)"
+msgstr "only fetch and build the specified slackbuild(s)"
+
+msgid "only fetch the specified slackbuild(s)"
+msgstr "only fetch the specified slackbuild(s)"
+
+msgid "search available slackbuilds"
+msgstr "search available slackbuilds"
+
+msgid "show specified slackbuilds"
+msgstr "show specified slackbuilds"
