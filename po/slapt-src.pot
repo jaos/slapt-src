@@ -1,0 +1,114 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-09-14 23:19+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, c-format
+msgid "%s - A SlackBuild utility\n"
+msgstr ""
+
+#, c-format
+msgid "%s version %s\n"
+msgstr ""
+
+#, c-format
+msgid "Cached\n"
+msgstr ""
+
+#, c-format
+msgid "Done\n"
+msgstr ""
+
+#, c-format
+msgid "Download failed: %s\n"
+msgstr ""
+
+#, c-format
+msgid "Failed\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to chdir to %s\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to open %s for reading\n"
+msgstr ""
+
+#, c-format
+msgid "Fetching %s..."
+msgstr ""
+
+#, c-format
+msgid "Fetching slackbuild list from %s..."
+msgstr ""
+
+#, c-format
+msgid "MD5SUM mismatch for %s\n"
+msgstr ""
+
+#, c-format
+msgid "Mismatch between download files and md5sums\n"
+msgstr ""
+
+#, c-format
+msgid "SlackBuild Category: %s\n"
+msgstr ""
+
+#, c-format
+msgid "SlackBuild Files:\n"
+msgstr ""
+
+#, c-format
+msgid "SlackBuild Name: %s\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"SlackBuild README:\n"
+"%s\n"
+msgstr ""
+
+#, c-format
+msgid "SlackBuild Version: %s\n"
+msgstr ""
+
+#, c-format
+msgid "Unable to find all specified slackbuilds.\n"
+msgstr ""
+
+#, c-format
+msgid "Usage: %s [action]\n"
+msgstr ""
+
+#, c-format
+msgid "Usage: %s [action] [slackbuild(s)]\n"
+msgstr ""
+
+msgid "fetch, build, and install the specified slackbuild(s)"
+msgstr ""
+
+msgid "only fetch and build the specified slackbuild(s)"
+msgstr ""
+
+msgid "only fetch the specified slackbuild(s)"
+msgstr ""
+
+msgid "search available slackbuilds"
+msgstr ""
+
+msgid "show specified slackbuilds"
+msgstr ""
