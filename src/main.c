@@ -227,7 +227,7 @@ int main (int argc, char *argv[])
     case LIST_OPT:
       for (i = 0; i < remote_sbs->count; i++) {
         char *short_desc = gen_short_pkg_description (remote_sbs->slackbuilds[i]);
-        printf ("%s - %s: %s\n",
+        printf ("%s-%s: %s\n",
           remote_sbs->slackbuilds[i]->name,
           remote_sbs->slackbuilds[i]->version,
           short_desc != NULL ? short_desc : ""
