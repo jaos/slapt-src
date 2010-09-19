@@ -212,7 +212,7 @@ int main (int argc, char *argv[])
         slapt_src_slackbuild_list *search = slapt_src_search_slackbuild_cache (remote_sbs, names);
         for (i = 0; i < search->count; i++) {
           char *short_desc = gen_short_pkg_description (search->slackbuilds[i]);
-          printf ("%s - %s: %s\n",
+          printf ("%s-%s: %s\n",
             search->slackbuilds[i]->name,
             search->slackbuilds[i]->version,
             short_desc != NULL ? short_desc : ""
