@@ -285,12 +285,11 @@ void slapt_src_write_slackbuilds_to_file (slapt_src_slackbuild_list *sbs, const 
         fprintf (f, "%s ", sbs->slackbuilds[i]->files->items[c]);
     }
 
-    fprintf (f, "SLACKBUILD INFO:\n");
-    fprintf (f, "VERSION=\"%s\"\n", sbs->slackbuilds[i]->version);
-    fprintf (f, "DOWNLOAD=\"%s\"\n", sbs->slackbuilds[i]->download ? sbs->slackbuilds[i]->download : "");
-    fprintf (f, "DOWNLOAD_x86_64=\"%s\"\n", sbs->slackbuilds[i]->download_x86_64 ? sbs->slackbuilds[i]->download_x86_64 : "");
-    fprintf (f, "MD5SUM=\"%s\"\n", sbs->slackbuilds[i]->md5sum ? sbs->slackbuilds[i]->md5sum : "");
-    fprintf (f, "MD5SUM_x86_64=\"%s\"\n", sbs->slackbuilds[i]->md5sum_x86_64 ? sbs->slackbuilds[i]->md5sum_x86_64 : "");
+    fprintf (f, "SLACKBUILD VERSION: %s\n", sbs->slackbuilds[i]->version);
+    fprintf (f, "SLACKBUILD DOWNLOAD: %s\n", sbs->slackbuilds[i]->download ? sbs->slackbuilds[i]->download : "");
+    fprintf (f, "SLACKBUILD DOWNLOAD_x86_64: %s\n", sbs->slackbuilds[i]->download_x86_64 ? sbs->slackbuilds[i]->download_x86_64 : "");
+    fprintf (f, "SLACKBUILD MD5SUM: %s\n", sbs->slackbuilds[i]->md5sum ? sbs->slackbuilds[i]->md5sum : "");
+    fprintf (f, "SLACKBUILD MD5SUM_x86_64: %s\n", sbs->slackbuilds[i]->md5sum_x86_64 ? sbs->slackbuilds[i]->md5sum_x86_64 : "");
 
     fprintf (f, "SLACKBUILD README:\n");
     if (sbs->slackbuilds[i]->readme != NULL)  
@@ -309,7 +308,7 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
   ssize_t g_size;
   slapt_src_slackbuild_list *sbs = slapt_src_slackbuild_list_init ();
   slapt_src_slackbuild *sb = NULL;
-  enum { SLAPT_SRC_NOT_PARSING, SLAPT_SRC_PARSING, SLAPT_SRC_PARSING_INFO, SLAPT_SRC_PARSING_README } parse_state;
+  enum { SLAPT_SRC_NOT_PARSING, SLAPT_SRC_PARSING, SLAPT_SRC_PARSING_README } parse_state;
   parse_state = SLAPT_SRC_NOT_PARSING;
 
   /* support reading from gzip'd files */
@@ -344,8 +343,6 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
       parse_state = SLAPT_SRC_PARSING;
       sb = slapt_src_slackbuild_init ();
     }
-    if (strstr (buffer, "SLACKBUILD INFO:") != NULL)
-      parse_state = SLAPT_SRC_PARSING_INFO;
     if (strstr (buffer, "SLACKBUILD README:") != NULL)
       parse_state = SLAPT_SRC_PARSING_README;
 
@@ -360,6 +357,11 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
 
     switch (parse_state) {
       case SLAPT_SRC_PARSING:
+
+        /* we skip empty fields for odd sscanf bug in older glibcs */
+        if (strstr(buffer,": \n") != NULL)
+          continue;
+
         if ( (sscanf (buffer, "SLACKBUILD NAME: %as", &token)) == 1) {
           sb->name = strdup (token);
           free (token);
@@ -384,30 +386,28 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
           slapt_free_list (files);
           free (token);
         }
-      break;
 
-      case SLAPT_SRC_PARSING_INFO:
-        if ( (sscanf (buffer, "VERSION=\"%a[^\"]\"", &token)) == 1) {
+        if ( (sscanf (buffer, "SLACKBUILD VERSION: %a[^\n]", &token)) == 1) {
           sb->version = strdup (token);
           free (token);
         }
 
-        if ( (sscanf (buffer, "DOWNLOAD=\"%a[^\"]\"", &token)) == 1) {
+        if ( (sscanf (buffer, "SLACKBUILD DOWNLOAD: %a[^\n]", &token)) == 1) {
           sb->download = strdup (token);
           free (token);
         }
 
-        if ( (sscanf (buffer, "DOWNLOAD_x86_64=\"%a[^\"]\"", &token)) == 1) {
+        if ( (sscanf (buffer, "SLACKBUILD DOWNLOAD_x86_64: %a[^\n]", &token)) == 1) {
           sb->download_x86_64 = strdup (token);
           free (token);
         }
 
-        if ( (sscanf (buffer, "MD5SUM=\"%a[^\"]\"", &token)) == 1) {
+        if ( (sscanf (buffer, "SLACKBUILD MD5SUM: %a[^\n]", &token)) == 1) {
           sb->md5sum = strdup (token);
           free (token);
         }
 
-        if ( (sscanf (buffer, "MD5SUM_x86_64=\"%a[^\"]\"", &token)) == 1) {
+        if ( (sscanf (buffer, "SLACKBUILD MD5SUM_x86_64: %a[^\n]", &token)) == 1) {
           sb->md5sum_x86_64 = strdup (token);
           free (token);
         }

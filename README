@@ -67,32 +67,49 @@ The following script can generate the currently supported format of SLACKBUILDS.
 The filename and format are likely to change.
 
 #!/bin/bash
+set -e
 
-for sb in $(find . -name '*.SlackBuild')
+for sb in $(find . -name '*.SlackBuild' | sort)
 do
   name=$(basename $sb | sed -re 's/\.SlackBuild$//')
   location=$(dirname $sb)
-  files=$(ls $location | xargs)
-  echo "SLACKBUILD NAME: $name"
-  echo "SLACKBUILD LOCATION: $location"
-  echo "SLACKBUILD FILES: $files"
   if [ -f $location/$name.info ]; then
-    echo "SLACKBUILD INFO:"
-    # remove those pesky multi line listings
-    cat $location/$name.info | sed ':a;N;$!ba;s/\\\n\s*//g'
-  fi
-  if [ $location/README ]; then
+    echo "SLACKBUILD NAME: $name"
+    echo "SLACKBUILD LOCATION: $location"
+    files=$(ls $location | xargs)
+    echo "SLACKBUILD FILES: $files"
+
+    # remove those pesky multi line listings for each interesting field
+    TMP=$(mktemp)
+    sed ':a;N;$!ba;s/\\\n*\s*//g' $location/$name.info > $TMP
+
+    DOWNLOAD=$(grep ^DOWNLOAD= $TMP | cut -f2 -d\" )
+    DOWNLOAD_x86_64=$(grep ^DOWNLOAD_x86_64= $TMP | cut -f2 -d\" )
+    MD5SUM=$(grep ^MD5SUM= $TMP | cut -f2 -d\" )
+    MD5SUM_x86_64=$(grep ^MD5SUM_x86_64= $TMP | cut -f2 -d\" )
+    VERSION=$(grep ^VERSION= $TMP | cut -f2 -d\" )
+
+    echo "SLACKBUILD VERSION: $VERSION"
+    echo "SLACKBUILD DOWNLOAD: $DOWNLOAD"
+    echo "SLACKBUILD DOWNLOAD_x86_64: $DOWNLOAD_x86_64"
+    echo "SLACKBUILD MD5SUM: $MD5SUM"
+    echo "SLACKBUILD MD5SUM_x86_64: $MD5SUM_x86_64"
+
     echo "SLACKBUILD README:"
-    while read readmeline; do
-      echo "$name: $readmeline"
-    done < $location/README
+    if [ -f $location/README ]; then
+      while read readmeline; do
+        echo "$name: $readmeline"
+      done < $location/README
+    fi
+
+    echo
+    rm -f $TMP
   fi
-  echo
 
-done
+done > SLACKBUILDS.TXT
+gzip -9 SLACKBUILDS.TXT -c > SLACKBUILDS.TXT.gz
+
 # END
-
-The output of this script should be redirected to SLACKBUILDS.TXT.
 
 7. Troubleshooting
 
