@@ -258,6 +258,11 @@ int main (int argc, char *argv[])
               printf (" %s\n", sb->files->items[c]);
             }
 
+            if (sb->requires != NULL)
+              printf (gettext("SlackBuild Build Requires: %s\n"), sb->requires);
+            if (sb->runtime_requires != NULL)
+              printf (gettext("SlackBuild Requires: %s\n"), sb->runtime_requires);
+
             printf (gettext("SlackBuild README:\n%s\n"), desc);
 
             if (i+1 != names->count)

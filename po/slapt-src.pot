@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-14 23:19+0000\n"
+"POT-Creation-Date: 2010-09-26 21:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,6 +65,10 @@ msgid "Mismatch between download files and md5sums\n"
 msgstr ""
 
 #, c-format
+msgid "SlackBuild Build Requires: %s\n"
+msgstr ""
+
+#, c-format
 msgid "SlackBuild Category: %s\n"
 msgstr ""
 
@@ -80,6 +84,10 @@ msgstr ""
 msgid ""
 "SlackBuild README:\n"
 "%s\n"
+msgstr ""
+
+#, c-format
+msgid "SlackBuild Requires: %s\n"
 msgstr ""
 
 #, c-format

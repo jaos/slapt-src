@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-14 00:07+0000\n"
-"PO-Revision-Date: 2010-09-13 11:50+0500\n"
+"PO-Revision-Date: 2010-09-26 21:16+0000\n"
 "Last-Translator: Jason Woodward <woodwardj at jaos dot org>\n"
 "Language-Team: slapt-get-devel@jaos.org\n"
 "MIME-Version: 1.0\n"
@@ -64,6 +64,10 @@ msgid "Mismatch between download files and md5sums\n"
 msgstr "Mismatch between download files and md5sums\n"
 
 #, c-format
+msgid "SlackBuild Build Requires: %s\n"
+msgstr "SlackBuild Build Requires: %s\n"
+
+#, c-format
 msgid "SlackBuild Category: %s\n"
 msgstr "SlackBuild Category: %s\n"
 
@@ -82,6 +86,10 @@ msgid ""
 msgstr ""
 "SlackBuild README:\n"
 "%s\n"
+
+#, c-format
+msgid "SlackBuild Requires: %s\n"
+msgstr "SlackBuild Requires: %s\n"
 
 #, c-format
 msgid "SlackBuild Version: %s\n"
