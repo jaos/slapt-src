@@ -65,10 +65,6 @@ msgid "Mismatch between download files and md5sums\n"
 msgstr ""
 
 #, c-format
-msgid "SlackBuild Build Requires: %s\n"
-msgstr ""
-
-#, c-format
 msgid "SlackBuild Category: %s\n"
 msgstr ""
 

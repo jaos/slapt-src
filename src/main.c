@@ -259,7 +259,7 @@ int main (int argc, char *argv[])
             }
 
             if (sb->requires != NULL)
-              printf (gettext("SlackBuild Build Requires: %s\n"), sb->requires);
+              printf (gettext("SlackBuild Requires: %s\n"), sb->requires);
 
             printf (gettext("SlackBuild README:\n%s\n"), desc);
 
