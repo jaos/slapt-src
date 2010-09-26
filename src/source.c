@@ -92,7 +92,6 @@ slapt_src_slackbuild *slapt_src_slackbuild_init (void)
   sb->md5sum = NULL;
   sb->md5sum_x86_64 = NULL;
   sb->requires = NULL;
-  sb->runtime_requires = NULL;
   sb->files = slapt_init_list ();
 
   return sb;
@@ -120,8 +119,6 @@ void slapt_src_slackbuild_free (slapt_src_slackbuild *sb)
     free (sb->readme);
   if (sb->requires != NULL)
     free (sb->requires);
-  if (sb->runtime_requires != NULL)
-    free (sb->runtime_requires);
 
   slapt_free_list (sb->files);
 
@@ -297,7 +294,6 @@ void slapt_src_write_slackbuilds_to_file (slapt_src_slackbuild_list *sbs, const 
     fprintf (f, "SLACKBUILD MD5SUM: %s\n", sbs->slackbuilds[i]->md5sum ? sbs->slackbuilds[i]->md5sum : "");
     fprintf (f, "SLACKBUILD MD5SUM_x86_64: %s\n", sbs->slackbuilds[i]->md5sum_x86_64 ? sbs->slackbuilds[i]->md5sum_x86_64 : "");
     fprintf (f, "SLACKBUILD REQUIRES: %s\n", sbs->slackbuilds[i]->requires ? sbs->slackbuilds[i]->requires : "");
-    fprintf (f, "SLACKBUILD RUNTIME REQUIRES: %s\n", sbs->slackbuilds[i]->runtime_requires ? sbs->slackbuilds[i]->runtime_requires : "");
 
     fprintf (f, "SLACKBUILD README:\n");
     if (sbs->slackbuilds[i]->readme != NULL)  
@@ -422,11 +418,6 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
 
         if ( (sscanf (buffer, "SLACKBUILD REQUIRES: %a[^\n]", &token)) == 1) {
           sb->requires = strdup (token);
-          free (token);
-        }
-
-        if ( (sscanf (buffer, "SLACKBUILD RUNTIME REQUIRES: %a[^\n]", &token)) == 1) {
-          sb->runtime_requires = strdup (token);
           free (token);
         }
 
