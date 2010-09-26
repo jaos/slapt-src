@@ -91,6 +91,8 @@ slapt_src_slackbuild *slapt_src_slackbuild_init (void)
   sb->download_x86_64 = NULL;
   sb->md5sum = NULL;
   sb->md5sum_x86_64 = NULL;
+  sb->requires = NULL;
+  sb->runtime_requires = NULL;
   sb->files = slapt_init_list ();
 
   return sb;
@@ -116,6 +118,10 @@ void slapt_src_slackbuild_free (slapt_src_slackbuild *sb)
     free (sb->md5sum_x86_64);
   if (sb->readme != NULL)
     free (sb->readme);
+  if (sb->requires != NULL)
+    free (sb->requires);
+  if (sb->runtime_requires != NULL)
+    free (sb->runtime_requires);
 
   slapt_free_list (sb->files);
 
