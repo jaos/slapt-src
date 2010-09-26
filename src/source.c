@@ -425,7 +425,6 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
           free (token);
         }
 
-      break;
         if ( (sscanf (buffer, "SLACKBUILD RUNTIME REQUIRES: %a[^\n]", &token)) == 1) {
           sb->runtime_requires = strdup (token);
           free (token);
