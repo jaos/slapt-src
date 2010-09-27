@@ -18,8 +18,7 @@ install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(mandir)/man8
 	install slapt-src.8 $(DESTDIR)$(mandir)/man8/
 	gzip -f $(DESTDIR)$(mandir)/man8/slapt-src.8
-	-chown -R $$(stat --format "%u:%g" $(bindir)) $(DESTDIR)/$(bindir)
-	-find $(DESTDIR)/$(bindir) -type f -exec strip --strip-unneeded {} \;
+	strip --strip-unneeded $(DESTDIR)/$(bindir)/@PACKAGE@
 
 pkg: all
 	$(MAKE) install DESTDIR=$(PKGDIR)
