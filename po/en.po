@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-14 00:07+0000\n"
+"POT-Creation-Date: 2010-09-27 23:47+0000\n"
 "PO-Revision-Date: 2010-09-27 01:34+0000\n"
 "Last-Translator: Jason Woodward <woodwardj at jaos dot org>\n"
 "Language-Team: slapt-get-devel@jaos.org\n"
@@ -21,15 +21,22 @@ msgstr "%s - A SlackBuild utility\n"
 
 #, c-format
 msgid "%s requires %s\n"
-msgstr ""
+msgstr "%s requires %s\n"
 
 #, c-format
 msgid "%s version %s\n"
 msgstr "%s version %s\n"
 
 #, c-format
+msgid "Abort.\n"
+msgstr "Abort.\n"
+
+#, c-format
 msgid "Cached\n"
 msgstr "Cached\n"
+
+msgid "Do you want to continue? [y/N] "
+msgstr "Do you want to continue? [y/N] "
 
 #, c-format
 msgid "Done\n"
@@ -107,8 +114,17 @@ msgstr "Usage: %s [action]\n"
 msgid "Usage: %s [action] [slackbuild(s)]\n"
 msgstr "Usage: %s [action] [slackbuild(s)]\n"
 
+msgid "built"
+msgstr "built"
+
 msgid "fetch, build, and install the specified slackbuild(s)"
 msgstr "fetch, build, and install the specified slackbuild(s)"
+
+msgid "fetched"
+msgstr "fetched"
+
+msgid "installed"
+msgstr "installed"
 
 msgid "only fetch and build the specified slackbuild(s)"
 msgstr "only fetch and build the specified slackbuild(s)"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-27 01:34+0000\n"
+"POT-Creation-Date: 2010-09-27 23:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,14 @@ msgid "%s version %s\n"
 msgstr ""
 
 #, c-format
+msgid "Abort.\n"
+msgstr ""
+
+#, c-format
 msgid "Cached\n"
+msgstr ""
+
+msgid "Do you want to continue? [y/N] "
 msgstr ""
 
 #, c-format
@@ -106,7 +113,16 @@ msgstr ""
 msgid "Usage: %s [action] [slackbuild(s)]\n"
 msgstr ""
 
+msgid "built"
+msgstr ""
+
 msgid "fetch, build, and install the specified slackbuild(s)"
+msgstr ""
+
+msgid "fetched"
+msgstr ""
+
+msgid "installed"
 msgstr ""
 
 msgid "only fetch and build the specified slackbuild(s)"

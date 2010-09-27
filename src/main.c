@@ -14,6 +14,7 @@
 extern char *optarg;
 extern int optind, opterr, optopt;
 
+static int show_summary (slapt_src_slackbuild_list *, slapt_list_t *, int);
 static char *gen_short_pkg_description (slapt_src_slackbuild *);
 
 void version (void)
@@ -179,6 +180,8 @@ int main (int argc, char *argv[])
           exit (EXIT_FAILURE);
         }
       }
+      /* provide summary */
+      action = show_summary (sbs, names, action);
     break;
   }
 
@@ -198,16 +201,25 @@ int main (int argc, char *argv[])
 
     case BUILD_OPT:
       for (i = 0; i < sbs->count; i++) {
-        slapt_src_fetch_slackbuild (config, sbs->slackbuilds[i]);
-        slapt_src_build_slackbuild (config, sbs->slackbuilds[i]);
+        slapt_src_slackbuild *sb = sbs->slackbuilds[i];
+
+        slapt_src_fetch_slackbuild (config, sb);
+        slapt_src_build_slackbuild (config, sb);
+
+        /* XXX we assume if we didn't request the slackbuild, then
+           it is a dependency, and needs to be installed */
+        if (slapt_search_list (names, sb->name) == NULL)
+          slapt_src_install_slackbuild (config, sbs->slackbuilds[i]);
       }
     break;
 
     case INSTALL_OPT:
       for (i = 0; i < sbs->count; i++) {
-        slapt_src_fetch_slackbuild (config, sbs->slackbuilds[i]);
-        slapt_src_build_slackbuild (config, sbs->slackbuilds[i]);
-        slapt_src_install_slackbuild (config, sbs->slackbuilds[i]);
+        slapt_src_slackbuild *sb = sbs->slackbuilds[i];
+
+        slapt_src_fetch_slackbuild (config, sb);
+        slapt_src_build_slackbuild (config, sb);
+        slapt_src_install_slackbuild (config, sb);
       }
     break;
 
@@ -249,7 +261,7 @@ int main (int argc, char *argv[])
 
           if (sb != NULL) {
             char *short_desc = gen_short_pkg_description (sb);
-            char *desc = strdup(sb->readme);
+            char *desc = strdup (sb->readme);
 
             slapt_clean_description (desc, sb->name);
 
@@ -314,3 +326,69 @@ static char *gen_short_pkg_description (slapt_src_slackbuild *sb)
 
   return short_readme;
 }
+
+static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, int action)
+{
+  int i, line_len = 0;
+
+  printf ("The following packages will be %s:\n",
+    action == INSTALL_OPT ? gettext("installed")
+    : action == BUILD_OPT ? gettext("built")
+    : gettext("fetched")
+  );
+
+  for (i = 0; i < names->count; i++) {
+    const char *name = names->items[i];
+    int name_len = strlen (name);
+
+    if (line_len == 0) {
+      printf (" %s ", name);
+      line_len += name_len + 1;
+    } else if (line_len < 80 - name_len) {
+      printf ("%s ", name);
+      line_len += name_len + 1;
+    } else {
+      printf ("\n %s ", name);
+      line_len = name_len + 2;
+    }
+
+  }
+  printf ("\n");
+
+  if (names->count < sbs->count) {
+    line_len = 0;
+
+    printf ("The following dependent slackbuilds will be built and installed:\n");
+
+    for (i = 0; i < sbs->count; i++) {
+      const char *name = sbs->slackbuilds[i]->name;
+
+      if (slapt_search_list (names, name) == NULL) {
+        int name_len = strlen (name);
+
+        if (line_len == 0) {
+          printf (" %s ", name);
+          line_len += name_len + 2;
+        } else if (line_len < 80 - name_len) {
+          printf ("%s ", name);
+          line_len += name_len + 1;
+        } else {
+          printf ("\n %s ", name);
+          line_len = name_len + 2;
+        }
+
+      }
+
+    }
+    printf ("\n");
+
+  }
+
+  if (slapt_ask_yes_no (gettext("Do you want to continue? [y/N] ")) != 1) {
+    printf (gettext("Abort.\n"));
+    return 0;
+  }
+
+  return action;
+}
+
