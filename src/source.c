@@ -712,8 +712,8 @@ static int slapt_src_resolve_dependencies (
     slapt_src_slackbuild_list *available,
     slapt_src_slackbuild *sb,
     slapt_src_slackbuild_list *deps,
-    struct slapt_pkg_list *installed,
-    struct slapt_pkg_err_list *errors)
+    slapt_pkg_list_t *installed,
+    slapt_pkg_err_list_t *errors)
 {
   int r = 0;
   slapt_list_t *requires = NULL;
@@ -761,7 +761,7 @@ static int slapt_src_resolve_dependencies (
 slapt_src_slackbuild_list *slapt_src_names_to_slackbuilds (
     slapt_src_slackbuild_list *available,
     slapt_list_t *names,
-    struct slapt_pkg_list *installed)
+    slapt_pkg_list_t *installed)
 {
   int i;
   slapt_src_slackbuild_list *sbs = slapt_src_slackbuild_list_init ();
@@ -772,7 +772,7 @@ slapt_src_slackbuild_list *slapt_src_names_to_slackbuilds (
     if (sb != NULL) {
       int d;
       slapt_src_slackbuild_list *deps = slapt_src_slackbuild_list_init ();
-      struct slapt_pkg_err_list *errors = slapt_init_pkg_err_list ();
+      slapt_pkg_err_list_t *errors = slapt_init_pkg_err_list ();
       int dep_check = slapt_src_resolve_dependencies (available, sb, deps, installed, errors);
 
       if (dep_check != 0) {

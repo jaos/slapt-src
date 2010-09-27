@@ -52,7 +52,7 @@ slapt_src_slackbuild_list *slapt_src_get_available_slackbuilds (void);
 int slapt_src_fetch_slackbuild (slapt_src_config *, slapt_src_slackbuild *);
 int slapt_src_build_slackbuild (slapt_src_config *, slapt_src_slackbuild *);
 int slapt_src_install_slackbuild (slapt_src_config *, slapt_src_slackbuild *);
-slapt_src_slackbuild_list *slapt_src_names_to_slackbuilds (slapt_src_slackbuild_list *, slapt_list_t *, struct slapt_pkg_list *);
+slapt_src_slackbuild_list *slapt_src_names_to_slackbuilds (slapt_src_slackbuild_list *, slapt_list_t *, slapt_pkg_list_t *);
 slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *);
 void slapt_src_write_slackbuilds_to_file (slapt_src_slackbuild_list *, const char *);
 slapt_src_slackbuild_list *slapt_src_search_slackbuild_cache (slapt_src_slackbuild_list *, slapt_list_t *);

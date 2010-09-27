@@ -88,7 +88,7 @@ int main (int argc, char *argv[])
   slapt_src_config *config = NULL;
   slapt_src_slackbuild_list *sbs = NULL;
   slapt_src_slackbuild_list *remote_sbs = NULL;
-  struct slapt_pkg_list *installed = NULL;
+  slapt_pkg_list_t *installed = NULL;
 
   static struct option long_options[] = {
     {"version", no_argument,        0, VERSION_OPT},
