@@ -88,6 +88,7 @@ int main (int argc, char *argv[])
   slapt_src_config *config = NULL;
   slapt_src_slackbuild_list *sbs = NULL;
   slapt_src_slackbuild_list *remote_sbs = NULL;
+  struct slapt_pkg_list *installed = NULL;
 
   static struct option long_options[] = {
     {"version", no_argument,        0, VERSION_OPT},
@@ -158,19 +159,21 @@ int main (int argc, char *argv[])
     exit (EXIT_FAILURE);
   }
 
+  /* setup, fetch, and other preperation steps */
   switch (action) {
+    case LIST_OPT:
     case SEARCH_OPT:
+    case SHOW_OPT:
       remote_sbs = slapt_src_get_available_slackbuilds ();
     break;
     case FETCH_OPT:
     case BUILD_OPT:
     case INSTALL_OPT:
-    case LIST_OPT:
-    case SHOW_OPT:
       remote_sbs = slapt_src_get_available_slackbuilds ();
+      installed = slapt_get_installed_pkgs ();
       /* convert all names to slackbuilds */
       if (names->count > 0) {
-        sbs = slapt_src_names_to_slackbuilds (config, remote_sbs, names);
+        sbs = slapt_src_names_to_slackbuilds (remote_sbs, names, installed);
         if (sbs == NULL || sbs->count == 0) {
           printf (gettext("Unable to find all specified slackbuilds.\n"));
           exit (EXIT_FAILURE);
@@ -180,6 +183,7 @@ int main (int argc, char *argv[])
   }
 
 
+  /* now, actually do what was requested */
   switch (action) {
 
     case UPDATE_OPT:
@@ -281,6 +285,8 @@ int main (int argc, char *argv[])
     slapt_src_slackbuild_list_free (sbs);
   if (remote_sbs != NULL)
     slapt_src_slackbuild_list_free (remote_sbs);
+  if (installed != NULL)
+    slapt_free_pkg_list (installed);
 
   slapt_src_config_free (config);
 

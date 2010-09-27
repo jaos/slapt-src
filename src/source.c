@@ -697,7 +697,71 @@ slapt_src_slackbuild *slapt_src_get_slackbuild (slapt_src_slackbuild_list *sbs, 
   return NULL;
 }
 
-slapt_src_slackbuild_list *slapt_src_names_to_slackbuilds (slapt_src_config *config, slapt_src_slackbuild_list *available, slapt_list_t *names)
+/* for short, unsorted slackbulid_lists */
+static SLAPT_BOOL_T _slapt_src_search_slackbuild_cache_linear_by_name (slapt_src_slackbuild_list *sbs, const char *name)
+{
+  int i;
+  for (i = 0; i < sbs->count; i++) {
+    if (strcmp (sbs->slackbuilds[i]->name, name) == 0)
+      return SLAPT_TRUE;
+  }
+  return SLAPT_FALSE;
+}
+
+static int slapt_src_resolve_dependencies (
+    slapt_src_slackbuild_list *available,
+    slapt_src_slackbuild *sb,
+    slapt_src_slackbuild_list *deps,
+    struct slapt_pkg_list *installed,
+    struct slapt_pkg_err_list *errors)
+{
+  int r = 0;
+  slapt_list_t *requires = NULL;
+  if (sb->requires == NULL)
+    return 0;
+
+  requires = slapt_parse_delimited_list (sb->requires, ' ');
+  if (requires == NULL)
+    return 0;
+
+  for (r = 0; r < requires->count; r++) {
+    const char *dep_name = requires->items[r];
+    slapt_src_slackbuild *sb_dep = slapt_src_get_slackbuild (available, dep_name);
+      
+    /* we will try and resolve its dependencies no matter what,
+       in case there are new deps we don't yet have */
+    if (sb_dep != NULL) {
+      int dep_check = slapt_src_resolve_dependencies (available, sb_dep, deps, installed, errors);
+
+      if (dep_check != 0)
+        return dep_check;
+
+      /* if not installed */
+      if (slapt_get_newest_pkg (installed, dep_name) == NULL) {
+        /* if not already being tracked */
+        if (_slapt_src_search_slackbuild_cache_linear_by_name (deps, dep_name) == SLAPT_FALSE)
+          slapt_src_slackbuild_list_add (deps, sb_dep);
+      }
+    }
+    /* we don't have a slackbuild for it */
+    else {
+      /* if not installed, this is an error */
+      if (slapt_get_newest_pkg (installed, dep_name) == NULL) {
+        slapt_add_pkg_err_to_list (errors, sb->name, dep_name);
+        slapt_free_list (requires);
+        return 1;
+      }
+    }
+  }
+
+  slapt_free_list (requires);
+  return 0;
+}
+
+slapt_src_slackbuild_list *slapt_src_names_to_slackbuilds (
+    slapt_src_slackbuild_list *available,
+    slapt_list_t *names,
+    struct slapt_pkg_list *installed)
 {
   int i;
   slapt_src_slackbuild_list *sbs = slapt_src_slackbuild_list_init ();
@@ -705,10 +769,35 @@ slapt_src_slackbuild_list *slapt_src_names_to_slackbuilds (slapt_src_config *con
   for (i = 0; i < names->count; i++) {
     slapt_src_slackbuild *sb = slapt_src_get_slackbuild (available, names->items[i]);
 
-    /* TODO handle dependencies here */
-    if (sb != NULL)
-      slapt_src_slackbuild_list_add (sbs, sb);
+    if (sb != NULL) {
+      int d;
+      slapt_src_slackbuild_list *deps = slapt_src_slackbuild_list_init ();
+      struct slapt_pkg_err_list *errors = slapt_init_pkg_err_list ();
+      int dep_check = slapt_src_resolve_dependencies (available, sb, deps, installed, errors);
+
+      if (dep_check != 0) {
+        for (d = 0; d < errors->err_count; d++) {
+          slapt_pkg_err_t *err = errors->errs[d];
+          fprintf (stderr, gettext("%s requires %s\n"), err->pkg, err->error);
+        }
+        slapt_src_slackbuild_list_free (deps);
+        slapt_free_pkg_err_list (errors);
+        continue;
+      }
+
+      slapt_free_pkg_err_list (errors);
+
+      for (d = 0; d < deps->count; d++) {
+        if (_slapt_src_search_slackbuild_cache_linear_by_name (sbs, deps->slackbuilds[d]->name) == SLAPT_FALSE)
+          slapt_src_slackbuild_list_add (sbs, deps->slackbuilds[d]);
+      }
+
+      slapt_src_slackbuild_list_free (deps);
+      if (_slapt_src_search_slackbuild_cache_linear_by_name (sbs, sb->name) == SLAPT_FALSE)
+        slapt_src_slackbuild_list_add (sbs, sb);
+    }
   }
+
 
   return sbs;
 }
