@@ -19,7 +19,7 @@ static char *gen_short_pkg_description (slapt_src_slackbuild *);
 
 void version (void)
 {
-  printf (gettext("%s version %s\n"), PACKAGE, VERSION);
+  printf (gettext ("%s version %s\n"), PACKAGE, VERSION);
   printf ("Jason Woodward <woodwardj at jaos dot org>\n");
   printf ("\n");
   printf ("This program is free software; you can redistribute it and/or modify\n");
@@ -39,16 +39,16 @@ void version (void)
 
 void help (void)
 {
-  printf (gettext("%s - A SlackBuild utility\n"), PACKAGE);
-  printf (gettext("Usage: %s [action]\n"), PACKAGE);
+  printf (gettext ("%s - A SlackBuild utility\n"), PACKAGE);
+  printf (gettext ("Usage: %s [action]\n"), PACKAGE);
   printf ("  --update |-u  - %s\n", "update local cache of remote slackbuilds");
   printf ("  --list   |-l  - %s\n", "list available slackbuilds");
-  printf (gettext("Usage: %s [action] [slackbuild(s)]\n"), PACKAGE);
-  printf ("  --search |-s  - %s\n", gettext("search available slackbuilds"));
-  printf ("  --show   |-w  - %s\n", gettext("show specified slackbuilds"));
-  printf ("  --install|-i  - %s\n", gettext("fetch, build, and install the specified slackbuild(s)"));
-  printf ("  --build  |-b  - %s\n", gettext("only fetch and build the specified slackbuild(s)"));
-  printf ("  --fetch  |-f  - %s\n", gettext("only fetch the specified slackbuild(s)"));
+  printf (gettext ("Usage: %s [action] [slackbuild(s)]\n"), PACKAGE);
+  printf ("  --search |-s  - %s\n", gettext ("search available slackbuilds"));
+  printf ("  --show   |-w  - %s\n", gettext ("show specified slackbuilds"));
+  printf ("  --install|-i  - %s\n", gettext ("fetch, build, and install the specified slackbuild(s)"));
+  printf ("  --build  |-b  - %s\n", gettext ("only fetch and build the specified slackbuild(s)"));
+  printf ("  --fetch  |-f  - %s\n", gettext ("only fetch the specified slackbuild(s)"));
 }
 
 #define VERSION_OPT 'v'
@@ -176,7 +176,7 @@ int main (int argc, char *argv[])
       if (names->count > 0) {
         sbs = slapt_src_names_to_slackbuilds (remote_sbs, names, installed);
         if (sbs == NULL || sbs->count == 0) {
-          printf (gettext("Unable to find all specified slackbuilds.\n"));
+          printf (gettext ("Unable to find all specified slackbuilds.\n"));
           exit (EXIT_FAILURE);
         }
       }
@@ -265,19 +265,19 @@ int main (int argc, char *argv[])
 
             slapt_clean_description (desc, sb->name);
 
-            printf (gettext("SlackBuild Name: %s\n"), sb->name);
-            printf (gettext("SlackBuild Version: %s\n"), sb->version);
-            printf (gettext("SlackBuild Category: %s\n"), sb->location);
-            printf (gettext("SlackBuild Files:\n"));
+            printf (gettext ("SlackBuild Name: %s\n"), sb->name);
+            printf (gettext ("SlackBuild Version: %s\n"), sb->version);
+            printf (gettext ("SlackBuild Category: %s\n"), sb->location);
+            printf (gettext ("SlackBuild Files:\n"));
 
             for (c = 0; c < sb->files->count; c++) {
               printf (" %s\n", sb->files->items[c]);
             }
 
             if (sb->requires != NULL)
-              printf (gettext("SlackBuild Requires: %s\n"), sb->requires);
+              printf (gettext ("SlackBuild Requires: %s\n"), sb->requires);
 
-            printf (gettext("SlackBuild README:\n%s\n"), desc);
+            printf (gettext ("SlackBuild README:\n%s\n"), desc);
 
             if (i+1 != names->count)
               printf ("\n");
@@ -332,9 +332,9 @@ static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, in
   int i, line_len = 0;
 
   printf ("The following packages will be %s:\n",
-    action == INSTALL_OPT ? gettext("installed")
-    : action == BUILD_OPT ? gettext("built")
-    : gettext("fetched")
+    action == INSTALL_OPT ? gettext ("installed")
+    : action == BUILD_OPT ? gettext ("built")
+    : gettext ("fetched")
   );
 
   for (i = 0; i < names->count; i++) {
@@ -384,8 +384,8 @@ static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, in
 
   }
 
-  if (slapt_ask_yes_no (gettext("Do you want to continue? [y/N] ")) != 1) {
-    printf (gettext("Abort.\n"));
+  if (slapt_ask_yes_no (gettext ("Do you want to continue? [y/N] ")) != 1) {
+    printf (gettext ("Abort.\n"));
     return 0;
   }
 

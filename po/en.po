@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-27 23:47+0000\n"
+"POT-Creation-Date: 2010-09-27 23:49+0000\n"
 "PO-Revision-Date: 2010-09-27 01:34+0000\n"
 "Last-Translator: Jason Woodward <woodwardj at jaos dot org>\n"
 "Language-Team: slapt-get-devel@jaos.org\n"
@@ -18,10 +18,6 @@ msgstr ""
 #, c-format
 msgid "%s - A SlackBuild utility\n"
 msgstr "%s - A SlackBuild utility\n"
-
-#, c-format
-msgid "%s requires %s\n"
-msgstr "%s requires %s\n"
 
 #, c-format
 msgid "%s version %s\n"
@@ -73,6 +69,10 @@ msgstr "MD5SUM mismatch for %s\n"
 #, c-format
 msgid "Mismatch between download files and md5sums\n"
 msgstr "Mismatch between download files and md5sums\n"
+
+#, c-format
+msgid "Missing slackbuild: %s requires %s\n"
+msgstr "Missing slackbuild: %s requires %s\n"
 
 #, c-format
 msgid "SlackBuild Category: %s\n"
@@ -137,3 +137,4 @@ msgstr "search available slackbuilds"
 
 msgid "show specified slackbuilds"
 msgstr "show specified slackbuilds"
+
