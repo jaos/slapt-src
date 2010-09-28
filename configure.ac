@@ -28,6 +28,12 @@ AC_CHECK_LIB(gpgme,gpgme_new, [
 ], [AC_MSG_WARN(gpg support disabled)])
 AC_CHECK_LIB(slapt,slapt_download_data, [], [AC_MSG_ERROR(libslapt 0.10.2g or greater is required)])
 
+# options
+AC_ARG_WITH([fakeroot], 
+  AC_HELP_STRING([--with-fakeroot], [use fakeroot (default is no)]),
+  [AC_DEFINE(HAS_FAKEROOT, 1, [has fakeroot])],
+)
+
 GETTEXT_PACKAGE=slapt-src
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package.])

@@ -1,6 +1,14 @@
 #define _GNU_SOURCE
 #include "source.h"
 
+#ifdef HAS_FAKEROOT
+  #define SLAPTSRC_CMD_LEN 27
+  #define SLAPTSRC_CMD "fakeroot -- sh"
+#else
+  #define SLAPTSRC_CMD_LEN 15
+  #define SLAPTSRC_CMD "sh"
+#endif
+
 extern struct utsname uname_v;
 
 static char *filename_from_url (char *url);
@@ -584,7 +592,7 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
 {
   char *cwd = NULL;
   char *command = NULL;
-  int command_len = 15, r = 0;
+  int command_len = SLAPTSRC_CMD_LEN, r = 0;
 
   if (chdir (sb->location) != 0) {
     printf (gettext ("Failed to chdir to %s\n"), sb->location);
@@ -608,7 +616,7 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
 
   command_len += strlen (sb->name);
   command = slapt_malloc (sizeof *command * command_len);
-  r = snprintf (command, command_len, "sh %s.SlackBuild", sb->name);
+  r = snprintf (command, command_len, "%s %s.SlackBuild", SLAPTSRC_CMD, sb->name);
   if (r+1 != command_len) { 
     printf ("Failed to construct command string (%d,%d,%s\n", r, command_len, command);
     exit (EXIT_FAILURE);
