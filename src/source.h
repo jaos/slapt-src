@@ -1,4 +1,5 @@
 #include <slapt.h>
+#include <sys/utsname.h>
 #ifndef __SLAPT_SRC_SOURCE_H__
 #define __SLAPT_SRC_SOURCE_H__
 

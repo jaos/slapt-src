@@ -514,10 +514,18 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
     fclose (f);
   }
 
-  /* TODO fetch download || download_x86_64 */
-  /* can check uname_v.machine to see if we are x86_64 */
-  download_parts = slapt_parse_delimited_list (sb->download, ' ');
-  md5sum_parts   = slapt_parse_delimited_list (sb->md5sum, ' ');
+  /* fetch download || download_x86_64 */
+  if (strcmp (uname_v.machine, "x86_64") == 0
+      && strcmp (sb->download_x86_64, "") != 0
+      && strcmp (sb->download_x86_64, "UNSUPPORTED") != 0
+      && strcmp (sb->download_x86_64, "UNTESTED") != 0) {
+    download_parts = slapt_parse_delimited_list (sb->download_x86_64, ' ');
+    md5sum_parts   = slapt_parse_delimited_list (sb->md5sum_x86_64, ' ');
+  } else {
+    download_parts = slapt_parse_delimited_list (sb->download, ' ');
+    md5sum_parts   = slapt_parse_delimited_list (sb->md5sum, ' ');
+  }
+
   if (download_parts->count != md5sum_parts->count) {
     printf (gettext ("Mismatch between download files and md5sums\n"));
     exit (EXIT_FAILURE);
@@ -591,6 +599,12 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
   setenv ("OUTPUT", cwd, 1);
   setenv ("PKGTYPE", config->pkgext, 1);
   free (cwd);
+  if (strcmp (uname_v.machine, "x86_64") == 0
+      && strcmp (sb->download_x86_64, "") != 0
+      && strcmp (sb->download_x86_64, "UNSUPPORTED") != 0
+      && strcmp (sb->download_x86_64, "UNTESTED") != 0) {
+    setenv ("ARCH", uname_v.machine, 1);
+  }
 
   command_len += strlen (sb->name);
   command = slapt_malloc (sizeof *command * command_len);
