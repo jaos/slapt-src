@@ -686,6 +686,7 @@ int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild
     free (command);
   }
 
+  closedir (d);
   slapt_free_regex (pkg_regex);
   return 0;
 }
