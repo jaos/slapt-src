@@ -8,6 +8,7 @@
 #define SLAPT_SRC_SOURCE_TOKEN "SOURCE="
 #define SLAPT_SRC_BUILDDIR_TOKEN "BUILDDIR="
 #define SLAPT_SRC_PKGEXT_TOKEN "PKGEXT="
+#define SLAPT_SRC_PKGTAG_TOKEN "PKGTAG="
 #define SLAPT_SRC_SOURCES_LIST_GZ "SLACKBUILDS.TXT.gz"
 #define SLAPT_SRC_SOURCES_LIST "SLACKBUILDS.TXT"
 
@@ -16,6 +17,7 @@ typedef struct _slapt_src_config_
   slapt_list_t *sources;
   char *builddir;
   char *pkgext;
+  char *pkgtag;
 } slapt_src_config;
 slapt_src_config *slapt_src_config_init (void);
 void slapt_src_config_free (slapt_src_config *config);

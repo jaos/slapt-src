@@ -20,6 +20,7 @@ slapt_src_config *slapt_src_config_init (void)
   config->sources = slapt_init_list ();
   config->builddir = NULL;
   config->pkgext = NULL;
+  config->pkgtag = NULL;
   return config;
 }
 
@@ -30,6 +31,8 @@ void slapt_src_config_free (slapt_src_config *config)
     free (config->builddir);
   if (config->pkgext != NULL)
     free (config->pkgext);
+  if (config->pkgtag != NULL)
+    free (config->pkgtag);
   free (config);
 }
 
@@ -75,6 +78,11 @@ slapt_src_config *slapt_src_read_config (const char *filename)
 
       if ( strlen (token_ptr) > strlen (SLAPT_SRC_PKGEXT_TOKEN) )
         config->pkgext = strdup (token_ptr + strlen (SLAPT_SRC_PKGEXT_TOKEN));
+
+    } else if ( (token_ptr = strstr (buffer,SLAPT_SRC_PKGTAG_TOKEN)) != NULL ) {
+
+      if ( strlen (token_ptr) > strlen (SLAPT_SRC_PKGTAG_TOKEN) )
+        config->pkgtag = strdup (token_ptr + strlen (SLAPT_SRC_PKGTAG_TOKEN));
 
     }
 
@@ -605,8 +613,14 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
   cwd = get_current_dir_name ();
   setenv ("TMP", cwd, 1);
   setenv ("OUTPUT", cwd, 1);
-  setenv ("PKGTYPE", config->pkgext, 1);
   free (cwd);
+
+  if ( config->pkgext != NULL)
+    setenv ("PKGTYPE", config->pkgext, 1);
+
+  if ( config->pkgtag != NULL)
+    setenv ("TAG", config->pkgtag, 1);
+
   if (strcmp (uname_v.machine, "x86_64") == 0
       && strcmp (sb->download_x86_64, "") != 0
       && strcmp (sb->download_x86_64, "UNSUPPORTED") != 0
