@@ -14,7 +14,7 @@
 extern char *optarg;
 extern int optind, opterr, optopt;
 
-static int show_summary (slapt_src_slackbuild_list *, slapt_list_t *, int);
+static int show_summary (slapt_src_slackbuild_list *, slapt_list_t *, int, SLAPT_BOOL_T);
 static char *gen_short_pkg_description (slapt_src_slackbuild *);
 
 void version (void)
@@ -43,12 +43,13 @@ void help (void)
   printf (gettext ("Usage: %s [action]\n"), PACKAGE);
   printf ("  --update |-u  - %s\n", "update local cache of remote slackbuilds");
   printf ("  --list   |-l  - %s\n", "list available slackbuilds");
-  printf (gettext ("Usage: %s [action] [slackbuild(s)]\n"), PACKAGE);
+  printf (gettext ("Usage: %s [option(s)] [action] [slackbuild(s)]\n"), PACKAGE);
   printf ("  --search |-s  - %s\n", gettext ("search available slackbuilds"));
   printf ("  --show   |-w  - %s\n", gettext ("show specified slackbuilds"));
   printf ("  --install|-i  - %s\n", gettext ("fetch, build, and install the specified slackbuild(s)"));
   printf ("  --build  |-b  - %s\n", gettext ("only fetch and build the specified slackbuild(s)"));
   printf ("  --fetch  |-f  - %s\n", gettext ("only fetch the specified slackbuild(s)"));
+  printf ("  --yes    |-y  - %s\n", gettext ("do not prompt"));
 }
 
 #define VERSION_OPT 'v'
@@ -60,6 +61,7 @@ void help (void)
 #define FETCH_OPT 'f'
 #define BUILD_OPT 'b'
 #define INSTALL_OPT 'i'
+#define YES_OPT 'y'
 
 struct utsname uname_v; /* for .machine */
 
@@ -90,6 +92,7 @@ int main (int argc, char *argv[])
   slapt_src_slackbuild_list *sbs = NULL;
   slapt_src_slackbuild_list *remote_sbs = NULL;
   slapt_pkg_list_t *installed = NULL;
+  SLAPT_BOOL_T prompt = SLAPT_TRUE;
 
   static struct option long_options[] = {
     {"version", no_argument,        0, VERSION_OPT},
@@ -103,6 +106,7 @@ int main (int argc, char *argv[])
     {"fetch",   required_argument,  0, FETCH_OPT},
     {"build",   required_argument,  0, BUILD_OPT},
     {"install", required_argument,  0, INSTALL_OPT},
+    {"yes",     no_argument,        0, YES_OPT},
     {0, 0, 0, 0}
   };
 
@@ -138,6 +142,7 @@ int main (int argc, char *argv[])
       case SHOW_OPT: action = SHOW_OPT; slapt_add_list_item (names, optarg); break;
       case BUILD_OPT: action = BUILD_OPT; slapt_add_list_item (names, optarg); break;
       case INSTALL_OPT: action = INSTALL_OPT; slapt_add_list_item (names, optarg); break;
+      case YES_OPT: prompt = SLAPT_FALSE; break;
       default: help (); exit (EXIT_SUCCESS);
     }
   }
@@ -181,7 +186,7 @@ int main (int argc, char *argv[])
         }
       }
       /* provide summary */
-      action = show_summary (sbs, names, action);
+      action = show_summary (sbs, names, action, prompt);
     break;
   }
 
@@ -327,7 +332,7 @@ static char *gen_short_pkg_description (slapt_src_slackbuild *sb)
   return short_readme;
 }
 
-static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, int action)
+static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, int action, SLAPT_BOOL_T prompt)
 {
   int i, line_len = 0;
 
@@ -384,9 +389,11 @@ static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, in
 
   }
 
-  if (slapt_ask_yes_no (gettext ("Do you want to continue? [y/N] ")) != 1) {
-    printf (gettext ("Abort.\n"));
-    return 0;
+  if (prompt == SLAPT_TRUE) {
+    if (slapt_ask_yes_no (gettext ("Do you want to continue? [y/N] ")) != 1) {
+      printf (gettext ("Abort.\n"));
+      return 0;
+    }
   }
 
   return action;

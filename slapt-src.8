@@ -13,7 +13,15 @@ slapt-src \- slackbuild utility
 .SH SYNOPSIS
 .B slapt-src
 [
+.BI option(s)
+]
+[
 .BI action
+]
+.LP
+.B options:
+[
+.B --yes | -y
 ]
 .LP
 .B action:
@@ -42,7 +50,11 @@ slapt-src \- slackbuild utility
 .B slapt-src
 is a utility to make querying, retrieving, and building slackbuilds
 as easily as working with binary packages with slapt-get.
-.SH TARGETS
+.SH OPTIONS
+.TP
+.B --yes | -y
+Do not prompt
+.SH ACTIONS
 .TP
 .B --update|-u
 Update the local cache of remote slackbuilds.
