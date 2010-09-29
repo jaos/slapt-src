@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-27 23:49+0000\n"
-"PO-Revision-Date: 2010-09-27 01:34+0000\n"
+"PO-Revision-Date: 2010-09-29 00:20+0000\n"
 "Last-Translator: Jason Woodward <woodwardj at jaos dot org>\n"
 "Language-Team: slapt-get-devel@jaos.org\n"
 "MIME-Version: 1.0\n"
@@ -111,11 +111,14 @@ msgid "Usage: %s [action]\n"
 msgstr "Usage: %s [action]\n"
 
 #, c-format
-msgid "Usage: %s [action] [slackbuild(s)]\n"
-msgstr "Usage: %s [action] [slackbuild(s)]\n"
+msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
+msgstr "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
 
 msgid "built"
 msgstr "built"
+
+msgid "do not prompt"
+msgstr "do not prompt"
 
 msgid "fetch, build, and install the specified slackbuild(s)"
 msgstr "fetch, build, and install the specified slackbuild(s)"

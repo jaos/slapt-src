@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-27 23:49+0000\n"
+"POT-Creation-Date: 2010-09-29 00:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -110,10 +110,13 @@ msgid "Usage: %s [action]\n"
 msgstr ""
 
 #, c-format
-msgid "Usage: %s [action] [slackbuild(s)]\n"
+msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
 msgstr ""
 
 msgid "built"
+msgstr ""
+
+msgid "do not prompt"
 msgstr ""
 
 msgid "fetch, build, and install the specified slackbuild(s)"
