@@ -76,8 +76,35 @@ Only fetch and build the specified slackbuild(s).
 .TP
 .B --fetch|-f [expression(s)]
 Only fetch the specified slackbuild(s).
-.SH FILES
-/etc/slapt-get/slapt-srcrc
+.SH CONFIGURATION
+
+.B slapt-src
+checks The configuration file
+.B /etc/slapt-get/slapt-srcrc
+for options and slackbuild locations.
+
+Each slackbuild location is defined with a a 
+.B SOURCE
+token.
+
+The default package file extension is defined by specifying the
+.B PKGEXT
+token.
+
+The default package tag can be set by specifying the
+.B PKGTAG
+token.
+
+An example configuration file may look like this:
+.nf
+# sample slapt-getrc
+SOURCE=http://www.slackware.org.uk/html/slapt-src/slackbuilds.org/13.1/
+BUILDDIR=/tmp
+PKGEXT=txz
+PKGTAG=me
+.fi
+
+
 
 .SH AUTHOR
 Jason Woodward <woodwardj@jaos.org>
