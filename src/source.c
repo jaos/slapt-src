@@ -532,6 +532,7 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
 
   /* fetch download || download_x86_64 */
   if (strcmp (uname_v.machine, "x86_64") == 0
+      && sb->download_x86_64 != NULL
       && strcmp (sb->download_x86_64, "") != 0
       && strcmp (sb->download_x86_64, "UNSUPPORTED") != 0
       && strcmp (sb->download_x86_64, "UNTESTED") != 0) {
@@ -622,6 +623,7 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
     setenv ("TAG", config->pkgtag, 1);
 
   if (strcmp (uname_v.machine, "x86_64") == 0
+      && sb->download_x86_64 != NULL
       && strcmp (sb->download_x86_64, "") != 0
       && strcmp (sb->download_x86_64, "UNSUPPORTED") != 0
       && strcmp (sb->download_x86_64, "UNTESTED") != 0) {
