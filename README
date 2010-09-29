@@ -57,6 +57,9 @@ The slapt-srcrc file consists of the following keys:
   * SOURCE
   * BUILDDIR
   * PKGEXT
+  * PKGTAG
+
+Refer to the slapt-src(8) man page for more on the configuration format and options.
 
 Source should point to a local or remote SlackBuild repository that contains
 the necessary meta data.  See SLACKBUILDS.TXT below.
