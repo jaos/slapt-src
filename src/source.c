@@ -212,7 +212,7 @@ int slapt_src_update_slackbuild_cache (slapt_src_config *config)
         err = slapt_get_mirror_data_from_source (f, slapt_config, url, files[fc]);
         fclose (f);
 
-        if (!err) {
+        if (! err) {
           printf (gettext ("Done\n"));
           sbs = slapt_src_get_slackbuilds_from_file (filename);
 
@@ -684,7 +684,7 @@ int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild
     if (lstat (file->d_name, &stat_buf) == -1)
         continue;
 
-    if (!S_ISREG(stat_buf.st_mode))
+    if (! S_ISREG (stat_buf.st_mode))
       continue;
 
     slapt_execute_regex (pkg_regex,file->d_name);
