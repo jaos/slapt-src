@@ -34,7 +34,7 @@ typedef struct _slapt_src_slackbuild_
   char *download_x86_64;
   char *md5sum;
   char *md5sum_x86_64;
-  char *readme;
+  char *short_desc;
   char *requires;
 } slapt_src_slackbuild;
 slapt_src_slackbuild *slapt_src_slackbuild_init (void);

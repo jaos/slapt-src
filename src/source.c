@@ -107,7 +107,7 @@ slapt_src_slackbuild *slapt_src_slackbuild_init (void)
   sb->version = NULL;
   sb->location = NULL;
   sb->sb_source_url = NULL;
-  sb->readme = NULL;
+  sb->short_desc = NULL;
   sb->download = NULL;
   sb->download_x86_64 = NULL;
   sb->md5sum = NULL;
@@ -136,8 +136,8 @@ void slapt_src_slackbuild_free (slapt_src_slackbuild *sb)
     free (sb->md5sum);
   if (sb->md5sum_x86_64 != NULL)
     free (sb->md5sum_x86_64);
-  if (sb->readme != NULL)
-    free (sb->readme);
+  if (sb->short_desc != NULL)
+    free (sb->short_desc);
   if (sb->requires != NULL)
     free (sb->requires);
 
@@ -277,13 +277,14 @@ void slapt_src_write_slackbuilds_to_file (slapt_src_slackbuild_list *sbs, const 
 
   for (i = 0; i < sbs->count; i++) {
     int c;
+    slapt_src_slackbuild *sb = sbs->slackbuilds[i];
     /* write out package data */
-    fprintf (f, "SLACKBUILD NAME: %s\n", sbs->slackbuilds[i]->name);
-    fprintf (f, "SLACKBUILD SOURCEURL: %s\n", sbs->slackbuilds[i]->sb_source_url);
+    fprintf (f, "SLACKBUILD NAME: %s\n", sb->name);
+    fprintf (f, "SLACKBUILD SOURCEURL: %s\n", sb->sb_source_url);
 
     /* fixup locations so they are easier to work with later */
     {
-      char *location = strdup (sbs->slackbuilds[i]->location);
+      char *location = strdup (sb->location);
 
       if (location[strlen (location)-1] != '/') {
         char *fixed = add_part_to_url (location, "/");
@@ -302,23 +303,20 @@ void slapt_src_write_slackbuilds_to_file (slapt_src_slackbuild_list *sbs, const 
     }
 
     fprintf (f, "SLACKBUILD FILES: ");
-    for (c = 0; c < sbs->slackbuilds[i]->files->count; c++) {
-      if (c == (sbs->slackbuilds[i]->files->count - 1))
-        fprintf (f, "%s\n", sbs->slackbuilds[i]->files->items[c]);
+    for (c = 0; c < sb->files->count; c++) {
+      if (c == (sb->files->count - 1))
+        fprintf (f, "%s\n", sb->files->items[c]);
       else
-        fprintf (f, "%s ", sbs->slackbuilds[i]->files->items[c]);
+        fprintf (f, "%s ", sb->files->items[c]);
     }
 
-    fprintf (f, "SLACKBUILD VERSION: %s\n", sbs->slackbuilds[i]->version);
-    fprintf (f, "SLACKBUILD DOWNLOAD: %s\n", sbs->slackbuilds[i]->download ? sbs->slackbuilds[i]->download : "");
-    fprintf (f, "SLACKBUILD DOWNLOAD_x86_64: %s\n", sbs->slackbuilds[i]->download_x86_64 ? sbs->slackbuilds[i]->download_x86_64 : "");
-    fprintf (f, "SLACKBUILD MD5SUM: %s\n", sbs->slackbuilds[i]->md5sum ? sbs->slackbuilds[i]->md5sum : "");
-    fprintf (f, "SLACKBUILD MD5SUM_x86_64: %s\n", sbs->slackbuilds[i]->md5sum_x86_64 ? sbs->slackbuilds[i]->md5sum_x86_64 : "");
-    fprintf (f, "SLACKBUILD REQUIRES: %s\n", sbs->slackbuilds[i]->requires ? sbs->slackbuilds[i]->requires : "");
-
-    fprintf (f, "SLACKBUILD README:\n");
-    if (sbs->slackbuilds[i]->readme != NULL)  
-      fprintf (f, "%s\n", sbs->slackbuilds[i]->readme);
+    fprintf (f, "SLACKBUILD VERSION: %s\n", sb->version);
+    fprintf (f, "SLACKBUILD DOWNLOAD: %s\n", sb->download ? sb->download : "");
+    fprintf (f, "SLACKBUILD DOWNLOAD_x86_64: %s\n", sb->download_x86_64 ? sb->download_x86_64 : "");
+    fprintf (f, "SLACKBUILD MD5SUM: %s\n", sb->md5sum ? sb->md5sum : "");
+    fprintf (f, "SLACKBUILD MD5SUM_x86_64: %s\n", sb->md5sum_x86_64 ? sb->md5sum_x86_64 : "");
+    fprintf (f, "SLACKBUILD REQUIRES: %s\n", sb->requires ? sb->requires : "");
+    fprintf (f, "SLACKBUILD SHORT DESCRIPTION: %s\n", sb->short_desc ? sb->short_desc : "");
     fprintf (f, "\n");
   }
 
@@ -333,7 +331,7 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
   ssize_t g_size;
   slapt_src_slackbuild_list *sbs = slapt_src_slackbuild_list_init ();
   slapt_src_slackbuild *sb = NULL;
-  enum { SLAPT_SRC_NOT_PARSING, SLAPT_SRC_PARSING, SLAPT_SRC_PARSING_README } parse_state;
+  enum { SLAPT_SRC_NOT_PARSING, SLAPT_SRC_PARSING } parse_state;
   parse_state = SLAPT_SRC_NOT_PARSING;
 
   /* support reading from gzip'd files */
@@ -368,10 +366,8 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
       parse_state = SLAPT_SRC_PARSING;
       sb = slapt_src_slackbuild_init ();
     }
-    if (strstr (buffer, "SLACKBUILD README:") != NULL)
-      parse_state = SLAPT_SRC_PARSING_README;
 
-    if ((strcmp (buffer, "\n") == 0) && (parse_state == SLAPT_SRC_PARSING_README)) {
+    if ((strcmp (buffer, "\n") == 0) && (parse_state == SLAPT_SRC_PARSING)) {
       slapt_src_slackbuild_list_add (sbs, sb);
       /* do not free, in use in sbs list
       slapt_src_slackbuild_free (sb);
@@ -442,19 +438,11 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
           free (token);
         }
 
-      break;
+        if ( (sscanf (buffer, "SLACKBUILD SHORT DESCRIPTION: %a[^\n]", &token)) == 1) {
+          sb->short_desc = strdup (token);
+          free (token);
+        }
 
-      case SLAPT_SRC_PARSING_README:
-        if (strncmp (buffer, sb->name, strlen (sb->name)) == 0) {
-          buffer[g_size - 1] = '\0';
-          if (sb->readme != NULL) {
-            sb->readme = realloc (sb->readme, sizeof *sb->readme * (strlen (sb->readme) + strlen (buffer) + 2));
-            sb->readme = strcat (sb->readme, "\n");
-            sb->readme = strcat (sb->readme, buffer);
-          } else {
-            sb->readme = strdup (buffer);
-          }
-      }
       break;
 
       default:
@@ -874,7 +862,7 @@ slapt_src_slackbuild_list *slapt_src_search_slackbuild_cache (slapt_src_slackbui
       continue;
 
     for (i = 0; i < remote_sbs->count; i++) {
-      int name_r = -1, version_r = -1, readme_r = -1;
+      int name_r = -1, version_r = -1, short_desc_r = -1;
 
       slapt_execute_regex (search_regex, remote_sbs->slackbuilds[i]->name);
       name_r    = search_regex->reg_return;
@@ -882,12 +870,12 @@ slapt_src_slackbuild_list *slapt_src_search_slackbuild_cache (slapt_src_slackbui
       slapt_execute_regex (search_regex, remote_sbs->slackbuilds[i]->location);
       version_r = search_regex->reg_return;
 
-      if (remote_sbs->slackbuilds[i]->readme != NULL) {
-        slapt_execute_regex (search_regex, remote_sbs->slackbuilds[i]->readme);
-        readme_r  = search_regex->reg_return;
+      if (remote_sbs->slackbuilds[i]->short_desc != NULL) {
+        slapt_execute_regex (search_regex, remote_sbs->slackbuilds[i]->short_desc);
+        short_desc_r  = search_regex->reg_return;
       }
 
-      if (name_r == 0 || version_r == 0 || readme_r == 0)
+      if (name_r == 0 || version_r == 0 || short_desc_r == 0)
         slapt_src_slackbuild_list_add (sbs, remote_sbs->slackbuilds[i]);
 
     }

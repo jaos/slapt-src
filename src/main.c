@@ -232,14 +232,12 @@ int main (int argc, char *argv[])
       {
         slapt_src_slackbuild_list *search = slapt_src_search_slackbuild_cache (remote_sbs, names);
         for (i = 0; i < search->count; i++) {
-          char *short_desc = gen_short_pkg_description (search->slackbuilds[i]);
+          slapt_src_slackbuild *sb = search->slackbuilds[i];
           printf ("%s-%s: %s\n",
-            search->slackbuilds[i]->name,
-            search->slackbuilds[i]->version,
-            short_desc != NULL ? short_desc : ""
+            sb->name,
+            sb->version,
+            sb->short_desc != NULL ? sb->short_desc : ""
           );
-          if (short_desc != NULL)
-            free (short_desc);
         }
         slapt_src_slackbuild_list_free (search);
       }
@@ -247,14 +245,12 @@ int main (int argc, char *argv[])
 
     case LIST_OPT:
       for (i = 0; i < remote_sbs->count; i++) {
-        char *short_desc = gen_short_pkg_description (remote_sbs->slackbuilds[i]);
+        slapt_src_slackbuild *sb = remote_sbs->slackbuilds[i];
         printf ("%s-%s: %s\n",
-          remote_sbs->slackbuilds[i]->name,
-          remote_sbs->slackbuilds[i]->version,
-          short_desc != NULL ? short_desc : ""
+          sb->name,
+          sb->version,
+          sb->short_desc != NULL ? sb->short_desc : ""
         );
-        if (short_desc != NULL)
-          free (short_desc);
       }
     break;
 
@@ -265,14 +261,12 @@ int main (int argc, char *argv[])
           slapt_src_slackbuild *sb = slapt_src_get_slackbuild (remote_sbs, names->items[i]);
 
           if (sb != NULL) {
-            char *short_desc = gen_short_pkg_description (sb);
-            char *desc = strdup (sb->readme);
-
-            slapt_clean_description (desc, sb->name);
 
             printf (gettext ("SlackBuild Name: %s\n"), sb->name);
             printf (gettext ("SlackBuild Version: %s\n"), sb->version);
             printf (gettext ("SlackBuild Category: %s\n"), sb->location);
+            printf (gettext ("SlackBuild Description: %s\n"), sb->short_desc != NULL ? sb->short_desc : "");
+
             printf (gettext ("SlackBuild Files:\n"));
 
             for (c = 0; c < sb->files->count; c++) {
@@ -282,13 +276,9 @@ int main (int argc, char *argv[])
             if (sb->requires != NULL)
               printf (gettext ("SlackBuild Requires: %s\n"), sb->requires);
 
-            printf (gettext ("SlackBuild README:\n%s\n"), desc);
-
             if (i+1 != names->count)
               printf ("\n");
 
-            free (desc);
-            free (short_desc);
             /* slapt_src_slackbuild_free (sb); NO FREE */
           }
         }
@@ -308,28 +298,6 @@ int main (int argc, char *argv[])
   slapt_src_config_free (config);
 
   return 0;
-}
-
-static char *gen_short_pkg_description (slapt_src_slackbuild *sb)
-{
-  char *short_readme = NULL;
-  size_t string_size = 0;
-
-  if (sb->readme == NULL)
-    return NULL;
-
-  if (strchr (sb->readme,'\n') != NULL) {
-    string_size = strlen (sb->readme) -
-      (strlen (sb->name) + 2) - strlen (strchr (sb->readme,'\n'));
-  }
-
-  /* quit now if the readme is going to be empty */
-  if ((int)string_size < 1)
-    return NULL;
-
-  short_readme = strndup ( sb->readme + (strlen (sb->name) + 2), string_size);
-
-  return short_readme;
 }
 
 static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, int action, SLAPT_BOOL_T prompt)
