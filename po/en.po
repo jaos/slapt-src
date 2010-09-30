@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-27 23:49+0000\n"
-"PO-Revision-Date: 2010-09-29 00:20+0000\n"
+"PO-Revision-Date: 2010-09-30 18:30+0000\n"
 "Last-Translator: Jason Woodward <woodwardj at jaos dot org>\n"
 "Language-Team: slapt-get-devel@jaos.org\n"
 "MIME-Version: 1.0\n"
@@ -79,20 +79,16 @@ msgid "SlackBuild Category: %s\n"
 msgstr "SlackBuild Category: %s\n"
 
 #, c-format
+msgid "SlackBuild Description: %s\n"
+msgstr "SlackBuild Description: %s\n"
+
+#, c-format
 msgid "SlackBuild Files:\n"
 msgstr "SlackBuild Files:\n"
 
 #, c-format
 msgid "SlackBuild Name: %s\n"
 msgstr "SlackBuild Name: %s\n"
-
-#, c-format
-msgid ""
-"SlackBuild README:\n"
-"%s\n"
-msgstr ""
-"SlackBuild README:\n"
-"%s\n"
 
 #, c-format
 msgid "SlackBuild Requires: %s\n"
@@ -116,6 +112,9 @@ msgstr "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
 
 msgid "built"
 msgstr "built"
+
+msgid "do not look for dependencies"
+msgstr "do not look for dependencies"
 
 msgid "do not prompt"
 msgstr "do not prompt"
@@ -141,3 +140,5 @@ msgstr "search available slackbuilds"
 msgid "show specified slackbuilds"
 msgstr "show specified slackbuilds"
 
+msgid "use the specified configuration file"
+msgstr "use the specified configuration file"

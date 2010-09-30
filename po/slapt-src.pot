@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-29 00:20+0000\n"
+"POT-Creation-Date: 2010-09-30 18:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,17 +80,15 @@ msgid "SlackBuild Category: %s\n"
 msgstr ""
 
 #, c-format
+msgid "SlackBuild Description: %s\n"
+msgstr ""
+
+#, c-format
 msgid "SlackBuild Files:\n"
 msgstr ""
 
 #, c-format
 msgid "SlackBuild Name: %s\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"SlackBuild README:\n"
-"%s\n"
 msgstr ""
 
 #, c-format
@@ -116,6 +114,9 @@ msgstr ""
 msgid "built"
 msgstr ""
 
+msgid "do not look for dependencies"
+msgstr ""
+
 msgid "do not prompt"
 msgstr ""
 
@@ -138,4 +139,7 @@ msgid "search available slackbuilds"
 msgstr ""
 
 msgid "show specified slackbuilds"
+msgstr ""
+
+msgid "use the specified configuration file"
 msgstr ""
