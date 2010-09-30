@@ -33,6 +33,10 @@ AC_ARG_WITH([fakeroot],
   AC_HELP_STRING([--with-fakeroot], [use fakeroot (default is no)]),
   [AC_DEFINE(HAS_FAKEROOT, 1, [has fakeroot])],
 )
+AC_ARG_WITH([slkbuild], 
+  AC_HELP_STRING([--with-slkbuild], [use slkbuild (default is no)]),
+  [AC_DEFINE(HAS_SLKBUILD, 1, [has slkbuild])],
+)
 
 GETTEXT_PACKAGE=slapt-src
 AC_SUBST(GETTEXT_PACKAGE)

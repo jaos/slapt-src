@@ -1,12 +1,17 @@
 #define _GNU_SOURCE
 #include "source.h"
+#include "config.h"
 
 #ifdef HAS_FAKEROOT
   #define SLAPTSRC_CMD_LEN 27
   #define SLAPTSRC_CMD "fakeroot -- sh"
+  #define SLAPTSRC_SLKBUILD_CMD_LEN 33
+  #define SLAPTSRC_SLKBUILD_CMD "fakeroot -- slkbuild -X SLKBUILD"
 #else
   #define SLAPTSRC_CMD_LEN 15
   #define SLAPTSRC_CMD "sh"
+  #define SLAPTSRC_SLKBUILD_CMD_LEN 20
+  #define SLAPTSRC_SLKBUILD_CMD "slkbuild -X SLKBUILD"
 #endif
 
 extern struct utsname uname_v;
@@ -539,8 +544,15 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
     download_parts = slapt_parse_delimited_list (sb->download_x86_64, ' ');
     md5sum_parts   = slapt_parse_delimited_list (sb->md5sum_x86_64, ' ');
   } else {
-    download_parts = slapt_parse_delimited_list (sb->download, ' ');
-    md5sum_parts   = slapt_parse_delimited_list (sb->md5sum, ' ');
+    if (sb->download != NULL)
+      download_parts = slapt_parse_delimited_list (sb->download, ' ');
+    else
+      download_parts = slapt_init_list (); /* no download files */
+
+    if (sb->md5sum != NULL)
+      md5sum_parts   = slapt_parse_delimited_list (sb->md5sum, ' ');
+    else
+      md5sum_parts = slapt_init_list (); /* no md5sum files */
   }
 
   if (download_parts->count != md5sum_parts->count) {
@@ -630,9 +642,19 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
     setenv ("ARCH", uname_v.machine, 1);
   }
 
+#if defined (HAS_SLKBUILD)
+  if (slapt_search_list (sb->files, "SLKBUILD") != NULL) {
+    command_len = SLAPTSRC_SLKBUILD_CMD_LEN;
+    command = slapt_malloc (sizeof *command * command_len);
+    r = snprintf (command, command_len, "%s", SLAPTSRC_SLKBUILD_CMD);
+  } else {
+#endif
   command_len += strlen (sb->name);
   command = slapt_malloc (sizeof *command * command_len);
   r = snprintf (command, command_len, "%s %s.SlackBuild", SLAPTSRC_CMD, sb->name);
+#if defined (HAS_SLKBUILD)
+  }
+#endif
   if (r+1 != command_len) { 
     printf ("Failed to construct command string (%d,%d,%s\n", r, command_len, command);
     exit (EXIT_FAILURE);
