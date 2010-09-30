@@ -5,13 +5,13 @@
 #ifdef HAS_FAKEROOT
   #define SLAPTSRC_CMD_LEN 27
   #define SLAPTSRC_CMD "fakeroot -- sh"
-  #define SLAPTSRC_SLKBUILD_CMD_LEN 33
-  #define SLAPTSRC_SLKBUILD_CMD "fakeroot -- slkbuild -X SLKBUILD"
+  #define SLAPTSRC_SLKBUILD_CMD_LEN 24
+  #define SLAPTSRC_SLKBUILD_CMD "fakeroot -- slkbuild -X"
 #else
   #define SLAPTSRC_CMD_LEN 15
   #define SLAPTSRC_CMD "sh"
-  #define SLAPTSRC_SLKBUILD_CMD_LEN 20
-  #define SLAPTSRC_SLKBUILD_CMD "slkbuild -X SLKBUILD"
+  #define SLAPTSRC_SLKBUILD_CMD_LEN 11
+  #define SLAPTSRC_SLKBUILD_CMD "slkbuild -X"
 #endif
 
 extern struct utsname uname_v;
