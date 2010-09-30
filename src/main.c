@@ -50,6 +50,7 @@ void help (void)
   printf ("  --build  |-b  - %s\n", gettext ("only fetch and build the specified slackbuild(s)"));
   printf ("  --fetch  |-f  - %s\n", gettext ("only fetch the specified slackbuild(s)"));
   printf ("  --yes    |-y  - %s\n", gettext ("do not prompt"));
+  printf ("  --config |-c  - %s\n", gettext ("use the specified configuration file"));
 }
 
 #define VERSION_OPT 'v'
@@ -62,6 +63,7 @@ void help (void)
 #define BUILD_OPT 'b'
 #define INSTALL_OPT 'i'
 #define YES_OPT 'y'
+#define CONFIG_OPT 'c'
 
 struct utsname uname_v; /* for .machine */
 
@@ -93,6 +95,7 @@ int main (int argc, char *argv[])
   slapt_src_slackbuild_list *remote_sbs = NULL;
   slapt_pkg_list_t *installed = NULL;
   SLAPT_BOOL_T prompt = SLAPT_TRUE;
+  char *config_file = NULL;
 
   static struct option long_options[] = {
     {"version", no_argument,        0, VERSION_OPT},
@@ -107,6 +110,7 @@ int main (int argc, char *argv[])
     {"build",   required_argument,  0, BUILD_OPT},
     {"install", required_argument,  0, INSTALL_OPT},
     {"yes",     no_argument,        0, YES_OPT},
+    {"config",  required_argument,  0, CONFIG_OPT},
     {0, 0, 0, 0}
   };
 
@@ -143,6 +147,7 @@ int main (int argc, char *argv[])
       case BUILD_OPT: action = BUILD_OPT; slapt_add_list_item (names, optarg); break;
       case INSTALL_OPT: action = INSTALL_OPT; slapt_add_list_item (names, optarg); break;
       case YES_OPT: prompt = SLAPT_FALSE; break;
+      case CONFIG_OPT: config_file = strdup (optarg); break;
       default: help (); exit (EXIT_SUCCESS);
     }
   }
@@ -153,7 +158,10 @@ int main (int argc, char *argv[])
     ++optind;
   }
 
-  config = slapt_src_read_config (SLAPT_SRC_RC);
+  if (config_file != NULL)
+    config = slapt_src_read_config (config_file);
+  else
+    config = slapt_src_read_config (SLAPT_SRC_RC);
   if (config == NULL) {
     fprintf (stderr,"Failed to read %s\n", SLAPT_SRC_RC);
     exit (EXIT_FAILURE);
@@ -294,6 +302,8 @@ int main (int argc, char *argv[])
     slapt_src_slackbuild_list_free (remote_sbs);
   if (installed != NULL)
     slapt_free_pkg_list (installed);
+  if (config_file != NULL)
+    free (config_file);
 
   slapt_src_config_free (config);
 
