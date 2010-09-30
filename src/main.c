@@ -51,6 +51,7 @@ void help (void)
   printf ("  --fetch  |-f  - %s\n", gettext ("only fetch the specified slackbuild(s)"));
   printf ("  --yes    |-y  - %s\n", gettext ("do not prompt"));
   printf ("  --config |-c  - %s\n", gettext ("use the specified configuration file"));
+  printf ("  --no-dep |-n  - %s\n", gettext ("do not look for dependencies"));
 }
 
 #define VERSION_OPT 'v'
@@ -64,6 +65,7 @@ void help (void)
 #define INSTALL_OPT 'i'
 #define YES_OPT 'y'
 #define CONFIG_OPT 'c'
+#define NODEP_OPT 'n'
 
 struct utsname uname_v; /* for .machine */
 
@@ -94,7 +96,7 @@ int main (int argc, char *argv[])
   slapt_src_slackbuild_list *sbs = NULL;
   slapt_src_slackbuild_list *remote_sbs = NULL;
   slapt_pkg_list_t *installed = NULL;
-  SLAPT_BOOL_T prompt = SLAPT_TRUE;
+  SLAPT_BOOL_T prompt = SLAPT_TRUE, do_dep = SLAPT_TRUE;
   char *config_file = NULL;
 
   static struct option long_options[] = {
@@ -110,6 +112,7 @@ int main (int argc, char *argv[])
     {"build",   required_argument,  0, BUILD_OPT},
     {"install", required_argument,  0, INSTALL_OPT},
     {"yes",     no_argument,        0, YES_OPT},
+    {"no-dep",  no_argument,        0, NODEP_OPT},
     {"config",  required_argument,  0, CONFIG_OPT},
     {0, 0, 0, 0}
   };
@@ -147,6 +150,7 @@ int main (int argc, char *argv[])
       case BUILD_OPT: action = BUILD_OPT; slapt_add_list_item (names, optarg); break;
       case INSTALL_OPT: action = INSTALL_OPT; slapt_add_list_item (names, optarg); break;
       case YES_OPT: prompt = SLAPT_FALSE; break;
+      case NODEP_OPT: do_dep = SLAPT_FALSE; break;
       case CONFIG_OPT: config_file = strdup (optarg); break;
       default: help (); exit (EXIT_SUCCESS);
     }
@@ -166,6 +170,9 @@ int main (int argc, char *argv[])
     fprintf (stderr,"Failed to read %s\n", SLAPT_SRC_RC);
     exit (EXIT_FAILURE);
   }
+
+  /* honor command line option */
+  config->do_dep = do_dep;
 
   init_builddir (config);
   if ( (chdir (config->builddir)) != 0) {
@@ -187,7 +194,7 @@ int main (int argc, char *argv[])
       installed = slapt_get_installed_pkgs ();
       /* convert all names to slackbuilds */
       if (names->count > 0) {
-        sbs = slapt_src_names_to_slackbuilds (remote_sbs, names, installed);
+        sbs = slapt_src_names_to_slackbuilds (config, remote_sbs, names, installed);
         if (sbs == NULL || sbs->count == 0) {
           printf (gettext ("Unable to find all specified slackbuilds.\n"));
           exit (EXIT_FAILURE);
