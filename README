@@ -98,11 +98,11 @@ do
     echo "SLACKBUILD MD5SUM: $MD5SUM"
     echo "SLACKBUILD MD5SUM_x86_64: $MD5SUM_x86_64"
 
-    echo "SLACKBUILD README:"
-    if [ -f $location/README ]; then
-      while read readmeline; do
-        echo "$name: $readmeline"
-      done < $location/README
+    if [ -f $location/slack-desc ]; then
+      SHORTDESC=$(grep ^$name: $location/slack-desc | head -n 1 | sed -re "s/^$name://")
+      echo "SLACKBUILD SHORT DESCRIPTION: $SHORTDESC"
+    else
+      echo "SLACKBUILD SHORT DESCRIPTION: "
     fi
 
     echo
