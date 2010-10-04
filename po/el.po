@@ -1,0 +1,148 @@
+# el slapt-src translation
+# Copyright (C) 2010 Jason Woodward
+# This file is distributed under the same license as the slapt-src package.
+# George Vlahavas <vlahavas~at~gmail~dot~com>, 2010
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: slapt-src\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-09-30 18:30+0000\n"
+"PO-Revision-Date: 2010-10-05 00:22+0200\n"
+"Last-Translator: George Vlahavas <vlahavas~at~gmail~dot~com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#, c-format
+msgid "%s - A SlackBuild utility\n"
+msgstr "%s - Ένα εργαλείο για αρχεία SlackBuild\n"
+
+#, c-format
+msgid "%s version %s\n"
+msgstr "%s έκδοση %s\n"
+
+#, c-format
+msgid "Abort.\n"
+msgstr "Ακύρωση.\n"
+
+#, c-format
+msgid "Cached\n"
+msgstr "Στη μνήμη\n"
+
+msgid "Do you want to continue? [y/N] "
+msgstr "Θέλετε να συνεχίσετε; [y/N]"
+
+#, c-format
+msgid "Done\n"
+msgstr "Έτοιμο\n"
+
+#, c-format
+msgid "Download failed: %s\n"
+msgstr "Η λήψη του αρχείου απέτυχε: %s\n"
+
+#, c-format
+msgid "Failed\n"
+msgstr "Αποτυχία\n"
+
+#, c-format
+msgid "Failed to chdir to %s\n"
+msgstr "Αποτυχία αλλαγής καταλόγους στο %s\n"
+
+#, c-format
+msgid "Failed to open %s for reading\n"
+msgstr "Αποτυχία κατά το άνοιγμα του %s για ανάγνωση\n"
+
+#, c-format
+msgid "Fetching %s..."
+msgstr "Λήψη του %s..."
+
+#, c-format
+msgid "Fetching slackbuild list from %s..."
+msgstr "Λήψη της λίστας slackbuild από το %s..."
+
+#, c-format
+msgid "MD5SUM mismatch for %s\n"
+msgstr "Αποτυχία στον έλεγχο MD5SUM για το %s\n"
+
+#, c-format
+msgid "Mismatch between download files and md5sums\n"
+msgstr "Τα ληφθέντα αρχεία και τα αρχεία md5sum δεν ταιριάζουν\n"
+
+#, c-format
+msgid "Missing slackbuild: %s requires %s\n"
+msgstr "Αδυναμία εύρεσης του slackbuild: το %s απαιτεί το %s\n"
+
+#, c-format
+msgid "SlackBuild Category: %s\n"
+msgstr "Κατηγορία SlackBuild: %s\n"
+
+#, c-format
+msgid "SlackBuild Description: %s\n"
+msgstr "Περιγραφή SlackBuild: %s\n"
+
+#, c-format
+msgid "SlackBuild Files:\n"
+msgstr "Αρχεία SlackBuild:\n"
+
+#, c-format
+msgid "SlackBuild Name: %s\n"
+msgstr "Όνομα SlackBuild: %s\n"
+
+#, c-format
+msgid "SlackBuild Requires: %s\n"
+msgstr "Εξαρτήσεις Slackbuild: %s\n"
+
+#, c-format
+msgid "SlackBuild Version: %s\n"
+msgstr "Έκδοση SlackBuild: %s\n"
+
+#, c-format
+msgid "Unable to find all specified slackbuilds.\n"
+msgstr "Αδυναμία εύρεσης όλων των slackbuilds.\n"
+
+#, c-format
+msgid "Usage: %s [action]\n"
+msgstr "Χρήση: %s [ενέργεια]\n"
+
+#, c-format
+msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
+msgstr "Χρήση: %s [επιλογή(ες)] [ενέργεια] [slackbuild(s)]\n"
+
+msgid "built"
+msgstr "έτοιμο"
+
+msgid "do not look for dependencies"
+msgstr "παράλειψη ελέγχου απαιτούμενων πακέτων"
+
+msgid "do not prompt"
+msgstr "χωρίς προτροπή"
+
+msgid "fetch, build, and install the specified slackbuild(s)"
+msgstr "λήψη, δημιουργία και εγκατάσταση των πακέτων από τα slackbuild"
+
+msgid "fetched"
+msgstr "ελήφθησαν"
+
+msgid "installed"
+msgstr "εγκαταστάθηκε(αν)"
+
+msgid "only fetch and build the specified slackbuild(s)"
+msgstr "μόνο λήψη και δημιουργία των πακέτων από τα slackbuild"
+
+msgid "only fetch the specified slackbuild(s)"
+msgstr "μόνο λήψη των slackbuild(s)"
+
+msgid "search available slackbuilds"
+msgstr "αναζήτηση στα διαθέσιμα slackbuilds"
+
+msgid "show specified slackbuilds"
+msgstr "εμφάνιση ζητούμενο slackbuild"
+
+msgid "use the specified configuration file"
+msgstr "προσδιορίστε εναλλακτική τοποθεσία για το αρχείο ρυθμίσεων"
+
