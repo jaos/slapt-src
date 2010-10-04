@@ -8,7 +8,7 @@
          |-----handy-ruler------------------------------------------------------|
 slapt-src: slapt-src (slapt slackbuild utility)
 slapt-src: slapt-src is a utility to make querying, retrieving, and building
-slapt-src: slackbuilds as easily as working with binary packages with slapt-get.
+slapt-src: slackbuilds as easy as working with binary packages with slapt-get.
 slapt-src: 
 slapt-src:
 slapt-src:

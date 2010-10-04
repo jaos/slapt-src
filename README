@@ -29,7 +29,7 @@ Table of Contents:
 1. About
 
 slapt-src is a utility to make querying, retrieving, and building slackbuilds as
-easily as working with binary packages with slapt-get.
+easy as working with binary packages with slapt-get.
 
 
 2. Features
