@@ -645,7 +645,7 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
   }
 #endif
   if (r+1 != command_len) { 
-    printf ("Failed to construct command string (%d,%d,%s\n", r, command_len, command);
+    printf ("%s (%d,%d,%s\n", gettext ("Failed to construct command string"), r, command_len, command);
     exit (EXIT_FAILURE);
   }
 
@@ -679,7 +679,7 @@ int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild
 
   d = opendir (".");
   if (d == NULL) {
-    printf ("failed to open current directory\n");
+    printf (gettext ("Failed to open current directory\n"));
     exit (EXIT_FAILURE);
   }
 
@@ -708,7 +708,7 @@ int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild
     command = slapt_malloc (sizeof *command * command_len);
     r = snprintf (command, command_len, "upgradepkg --reinstall --install-new %s", file->d_name);
     if (r+1 != command_len) {
-      printf ("Failed to build command\n");
+      printf (gettext ("Failed to build command\n"));
       exit (EXIT_FAILURE);
     }
 

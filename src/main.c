@@ -41,8 +41,8 @@ void help (void)
 {
   printf (gettext ("%s - A SlackBuild utility\n"), PACKAGE);
   printf (gettext ("Usage: %s [action]\n"), PACKAGE);
-  printf ("  --update |-u  - %s\n", "update local cache of remote slackbuilds");
-  printf ("  --list   |-l  - %s\n", "list available slackbuilds");
+  printf ("  --update |-u  - %s\n", gettext ("update local cache of remote slackbuilds"));
+  printf ("  --list   |-l  - %s\n", gettext ("list available slackbuilds"));
   printf (gettext ("Usage: %s [option(s)] [action] [slackbuild(s)]\n"), PACKAGE);
   printf ("  --search |-s  - %s\n", gettext ("search available slackbuilds"));
   printf ("  --show   |-w  - %s\n", gettext ("show specified slackbuilds"));
@@ -76,7 +76,7 @@ static void init_builddir (slapt_src_config *config)
 
   if ( (builddir = opendir (config->builddir)) == NULL ) {
     if ( mkdir (config->builddir, mode) == -1 ) {
-      printf ("Failed to create build  directory [%s]\n", config->builddir);
+      printf (gettext ("Failed to create build  directory [%s]\n"), config->builddir);
 
       if (errno)
         perror (config->builddir);
@@ -167,7 +167,7 @@ int main (int argc, char *argv[])
   else
     config = slapt_src_read_config (SLAPT_SRC_RC);
   if (config == NULL) {
-    fprintf (stderr,"Failed to read %s\n", SLAPT_SRC_RC);
+    fprintf (stderr, gettext ("Failed to read %s\n"), SLAPT_SRC_RC);
     exit (EXIT_FAILURE);
   }
 
@@ -176,7 +176,7 @@ int main (int argc, char *argv[])
 
   init_builddir (config);
   if ( (chdir (config->builddir)) != 0) {
-    perror ("Failed to chdir to build directory");
+    perror (gettext ("Failed to chdir to build directory"));
     exit (EXIT_FAILURE);
   }
 
@@ -321,7 +321,7 @@ static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, in
 {
   int i, line_len = 0;
 
-  printf ("The following packages will be %s:\n",
+  printf (gettext ("The following packages will be %s:\n"),
     action == INSTALL_OPT ? gettext ("installed")
     : action == BUILD_OPT ? gettext ("built")
     : gettext ("fetched")
@@ -348,7 +348,7 @@ static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, in
   if (names->count < sbs->count) {
     line_len = 0;
 
-    printf ("The following dependent slackbuilds will be built and installed:\n");
+    printf (gettext ("The following dependent slackbuilds will be built and installed:\n"));
 
     for (i = 0; i < sbs->count; i++) {
       const char *name = sbs->slackbuilds[i]->name;
