@@ -76,7 +76,7 @@ static void init_builddir (slapt_src_config *config)
 
   if ( (builddir = opendir (config->builddir)) == NULL ) {
     if ( mkdir (config->builddir, mode) == -1 ) {
-      printf (gettext ("Failed to create build  directory [%s]\n"), config->builddir);
+      printf (gettext ("Failed to create build directory [%s]\n"), config->builddir);
 
       if (errno)
         perror (config->builddir);
