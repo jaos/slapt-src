@@ -1,0 +1,175 @@
+# ru slapt-src translation
+# Copyright (C) 2010 Jason Woodward
+# This file is distributed under the same license as the slapt-src package.
+msgid ""
+msgstr ""
+"Project-Id-Version: slapt-src 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-14 00:50+0400\n"
+"PO-Revision-Date: 2010-10-12 01:07+0400\n"
+"Last-Translator: Igor Murzov <igor@gplsoft.org>\n"
+"Language-Team: slackware-current@conference.jabber.ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, c-format
+msgid "%s - A SlackBuild utility\n"
+msgstr "%s - Утилита для SlackBuild'ов\n"
+
+#, c-format
+msgid "%s version %s\n"
+msgstr "%s версия %s\n"
+
+#, c-format
+msgid "Abort.\n"
+msgstr "Отмена.\n"
+
+#, c-format
+msgid "Cached\n"
+msgstr "Сохранено\n"
+
+msgid "Do you want to continue? [y/N] "
+msgstr "Продолжить? [y/N] "
+
+#, c-format
+msgid "Done\n"
+msgstr "Готово\n"
+
+#, c-format
+msgid "Download failed: %s\n"
+msgstr "Не удалось загрузить: %s\n"
+
+#, c-format
+msgid "Failed\n"
+msgstr "Ошибка\n"
+
+#, c-format
+msgid "Failed to chdir to %s\n"
+msgstr "Не удалось перейти в %s\n"
+
+msgid "Failed to chdir to build directory"
+msgstr "Не удалось перейти в каталог сборки"
+
+#, c-format
+msgid "Failed to construct command string\n"
+msgstr "Не удалось построить строку с командой\n"
+
+#, c-format
+msgid "Failed to create build directory [%s]\n"
+msgstr "Не удалось создать каталог сборки [%s]\n"
+
+#, c-format
+msgid "Failed to open %s for reading\n"
+msgstr "Не удалось открыть %s на чтение\n"
+
+#, c-format
+msgid "Failed to open current directory\n"
+msgstr "Не удалось открыть текущий каталог\n"
+
+#, c-format
+msgid "Failed to read %s\n"
+msgstr "Не удалось прочитать %s\n"
+
+#, c-format
+msgid "Fetching %s..."
+msgstr "Получение %s..."
+
+#, c-format
+msgid "Fetching slackbuild list from %s..."
+msgstr "Получение списка слакбилдов с %s..."
+
+#, c-format
+msgid "MD5SUM mismatch for %s\n"
+msgstr "MD5SUM не совпадает для %s\n"
+
+#, c-format
+msgid "Mismatch between download files and md5sums\n"
+msgstr "md5-суммы для загруженных файлов не совпадают\n"
+
+#, c-format
+msgid "Missing slackbuild: %s requires %s\n"
+msgstr "Слакбилд отсутствует: %s требует %s\n"
+
+#, c-format
+msgid "SlackBuild Category: %s\n"
+msgstr "Категория слакбилда: %s\n"
+
+#, c-format
+msgid "SlackBuild Description: %s\n"
+msgstr "Описание слакбилда: %s\n"
+
+#, c-format
+msgid "SlackBuild Files:\n"
+msgstr "Файлы слакбилда:\n"
+
+#, c-format
+msgid "SlackBuild Name: %s\n"
+msgstr "Имя слакбилда: %s\n"
+
+#, c-format
+msgid "SlackBuild Requires: %s\n"
+msgstr "Требования слакбилда: %s\n"
+
+#, c-format
+msgid "SlackBuild Version: %s\n"
+msgstr "Версия слакбилда: %s\n"
+
+#, c-format
+msgid "The following dependent slackbuilds will be built and installed:\n"
+msgstr "Следующие зависимые слакбилды будут собраны и установлены:\n"
+
+#, c-format
+msgid "The following packages will be %s:\n"
+msgstr "Следующие пакеты будут %s:\n"
+
+#, c-format
+msgid "Unable to find all specified slackbuilds.\n"
+msgstr "Не удалось найти все указанные слакбилды.\n"
+
+#, c-format
+msgid "Usage: %s [action]\n"
+msgstr "Использование: %s [действие]\n"
+
+#, c-format
+msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
+msgstr "Использование: %s [опции] [действие] [слакбилды]\n"
+
+msgid "built"
+msgstr "собраны"
+
+msgid "do not look for dependencies"
+msgstr "игнорировать зависимости"
+
+msgid "do not prompt"
+msgstr "не спрашивать"
+
+msgid "fetch, build, and install the specified slackbuild(s)"
+msgstr "получить, собрать и установить указанные слакбилды"
+
+msgid "fetched"
+msgstr "получены"
+
+msgid "installed"
+msgstr "установлены"
+
+msgid "list available slackbuilds"
+msgstr "список доступных слакбилдов"
+
+msgid "only fetch and build the specified slackbuild(s)"
+msgstr "только получить и собрать указанные слакбилды"
+
+msgid "only fetch the specified slackbuild(s)"
+msgstr "только получить указанные слакбилды"
+
+msgid "search available slackbuilds"
+msgstr "найти доступные слакбилды"
+
+msgid "show specified slackbuilds"
+msgstr "показать указанные слакбилды"
+
+msgid "update local cache of remote slackbuilds"
+msgstr "обновить локальный кеш удалённых слакбилдов"
+
+msgid "use the specified configuration file"
+msgstr "использовать указанный конфигурационный файл"
