@@ -645,7 +645,7 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
   }
 #endif
   if (r+1 != command_len) { 
-    printf ("%s (%d,%d,%s\n", gettext ("Failed to construct command string\n"), r, command_len, command);
+    printf ("%s (%d,%d,%s)\n", gettext ("Failed to construct command string\n"), r, command_len, command);
     exit (EXIT_FAILURE);
   }
 
