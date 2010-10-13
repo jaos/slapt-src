@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-30 18:30+0000\n"
+"POT-Creation-Date: 2010-10-13 22:16+0000\n"
 "PO-Revision-Date: 2010-10-05 00:22+0200\n"
 "Last-Translator: George Vlahavas <vlahavas~at~gmail~dot~com>\n"
 "Language-Team: \n"
@@ -53,9 +53,28 @@ msgstr "Αποτυχία\n"
 msgid "Failed to chdir to %s\n"
 msgstr "Αποτυχία αλλαγής καταλόγους στο %s\n"
 
+msgid "Failed to chdir to build directory"
+msgstr ""
+
+#, c-format
+msgid "Failed to construct command string\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to create build directory [%s]\n"
+msgstr ""
+
 #, c-format
 msgid "Failed to open %s for reading\n"
 msgstr "Αποτυχία κατά το άνοιγμα του %s για ανάγνωση\n"
+
+#, c-format
+msgid "Failed to open current directory\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to read %s\n"
+msgstr ""
 
 #, c-format
 msgid "Fetching %s..."
@@ -102,6 +121,14 @@ msgid "SlackBuild Version: %s\n"
 msgstr "Έκδοση SlackBuild: %s\n"
 
 #, c-format
+msgid "The following dependent slackbuilds will be built and installed:\n"
+msgstr ""
+
+#, c-format
+msgid "The following packages will be %s:\n"
+msgstr ""
+
+#, c-format
 msgid "Unable to find all specified slackbuilds.\n"
 msgstr "Αδυναμία εύρεσης όλων των slackbuilds.\n"
 
@@ -131,6 +158,9 @@ msgstr "ελήφθησαν"
 msgid "installed"
 msgstr "εγκαταστάθηκε(αν)"
 
+msgid "list available slackbuilds"
+msgstr ""
+
 msgid "only fetch and build the specified slackbuild(s)"
 msgstr "μόνο λήψη και δημιουργία των πακέτων από τα slackbuild"
 
@@ -143,6 +173,8 @@ msgstr "αναζήτηση στα διαθέσιμα slackbuilds"
 msgid "show specified slackbuilds"
 msgstr "εμφάνιση ζητούμενο slackbuild"
 
+msgid "update local cache of remote slackbuilds"
+msgstr ""
+
 msgid "use the specified configuration file"
 msgstr "προσδιορίστε εναλλακτική τοποθεσία για το αρχείο ρυθμίσεων"
-

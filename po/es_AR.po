@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-27 23:49+0000\n"
+"POT-Creation-Date: 2010-10-13 22:16+0000\n"
 "PO-Revision-Date: 2010-10-04 20:22-0300\n"
 "Last-Translator: seacat <seacat.linux@gmail.com>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Spanish\n"
 "X-Poedit-Country: ARGENTINA\n"
-"Language-Team: \n"
 
 #, c-format
 msgid "%s - A SlackBuild utility\n"
@@ -51,9 +51,28 @@ msgstr "Error\n"
 msgid "Failed to chdir to %s\n"
 msgstr "No se pudo hacer chdir a %s\n"
 
+msgid "Failed to chdir to build directory"
+msgstr ""
+
+#, c-format
+msgid "Failed to construct command string\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to create build directory [%s]\n"
+msgstr ""
+
 #, c-format
 msgid "Failed to open %s for reading\n"
 msgstr "No se pudo abrir %s para lectura\n"
+
+#, c-format
+msgid "Failed to open current directory\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to read %s\n"
+msgstr ""
 
 #, c-format
 msgid "Fetching %s..."
@@ -100,6 +119,14 @@ msgid "SlackBuild Version: %s\n"
 msgstr "Versión de slackBuild: %s\n"
 
 #, c-format
+msgid "The following dependent slackbuilds will be built and installed:\n"
+msgstr ""
+
+#, c-format
+msgid "The following packages will be %s:\n"
+msgstr ""
+
+#, c-format
 msgid "Unable to find all specified slackbuilds.\n"
 msgstr "Imposible encontrar todos los slackbuilds especificados.\n"
 
@@ -129,6 +156,9 @@ msgstr "recuperado"
 msgid "installed"
 msgstr "instalado"
 
+msgid "list available slackbuilds"
+msgstr ""
+
 msgid "only fetch and build the specified slackbuild(s)"
 msgstr "recuperar y compilar solamente el(los) slackbuild(s) especificado(s)"
 
@@ -141,7 +171,8 @@ msgstr "buscar los slackbuilds disponibles"
 msgid "show specified slackbuilds"
 msgstr "mostrar los slackbuilds especificados"
 
+msgid "update local cache of remote slackbuilds"
+msgstr ""
+
 msgid "use the specified configuration file"
 msgstr "usar el archivo de configuración especificado"
-
-

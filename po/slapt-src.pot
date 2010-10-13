@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-30 18:30+0000\n"
+"POT-Creation-Date: 2010-10-13 22:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,8 +51,27 @@ msgstr ""
 msgid "Failed to chdir to %s\n"
 msgstr ""
 
+msgid "Failed to chdir to build directory"
+msgstr ""
+
+#, c-format
+msgid "Failed to construct command string\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to create build directory [%s]\n"
+msgstr ""
+
 #, c-format
 msgid "Failed to open %s for reading\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to open current directory\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to read %s\n"
 msgstr ""
 
 #, c-format
@@ -100,6 +119,14 @@ msgid "SlackBuild Version: %s\n"
 msgstr ""
 
 #, c-format
+msgid "The following dependent slackbuilds will be built and installed:\n"
+msgstr ""
+
+#, c-format
+msgid "The following packages will be %s:\n"
+msgstr ""
+
+#, c-format
 msgid "Unable to find all specified slackbuilds.\n"
 msgstr ""
 
@@ -129,6 +156,9 @@ msgstr ""
 msgid "installed"
 msgstr ""
 
+msgid "list available slackbuilds"
+msgstr ""
+
 msgid "only fetch and build the specified slackbuild(s)"
 msgstr ""
 
@@ -139,6 +169,9 @@ msgid "search available slackbuilds"
 msgstr ""
 
 msgid "show specified slackbuilds"
+msgstr ""
+
+msgid "update local cache of remote slackbuilds"
 msgstr ""
 
 msgid "use the specified configuration file"
