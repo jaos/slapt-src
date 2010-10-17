@@ -1,0 +1,178 @@
+# Copyright (C) 2010 Jason Woodward
+# This file is distributed under the same license as the slapt-src package.
+# Jason Woodward <woodwardj at jaos dot org>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: slapt-src 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-13 22:16+0000\n"
+"PO-Revision-Date: 2010-10-17 19:58+0100\n"
+"Last-Translator: M.Mueller aka Quax <quax@lin2go.com>\n"
+"Language-Team: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, c-format
+msgid "%s - A SlackBuild utility\n"
+msgstr "%s - Ein SlackBuild-Werkzeug\n"
+
+#, c-format
+msgid "%s version %s\n"
+msgstr "%s Version %s\n"
+
+#, c-format
+msgid "Abort.\n"
+msgstr "Abbruch.\n"
+
+#, c-format
+msgid "Cached\n"
+msgstr "Gespeichert\n"
+
+msgid "Do you want to continue? [y/N] "
+msgstr "Fortfahren? [j/N] "
+
+#, c-format
+msgid "Done\n"
+msgstr "Fertig\n"
+
+#, c-format
+msgid "Download failed: %s\n"
+msgstr "Herunterladen von %s gescheitert\n"
+
+#, c-format
+msgid "Failed\n"
+msgstr "Gescheitert\n"
+
+#, c-format
+msgid "Failed to chdir to %s\n"
+msgstr "Fehler beim Wechseln nach %s\n"
+
+msgid "Failed to chdir to build directory"
+msgstr "Fehler beim Wechseln in das Arbeitsverzeichnis"
+
+#, c-format
+msgid "Failed to construct command string\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to create build directory [%s]\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to open %s for reading\n"
+msgstr "Fehler beim Einlesen von %s\n"
+
+#, c-format
+msgid "Failed to open current directory\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to read %s\n"
+msgstr "Fehler beim Lesen von %s\n"
+
+#, c-format
+msgid "Fetching %s..."
+msgstr "Hole %s..."
+
+#, c-format
+msgid "Fetching slackbuild list from %s..."
+msgstr "Hole SlackBuild-Liste von %s..."
+
+#, c-format
+msgid "MD5SUM mismatch for %s\n"
+msgstr "MD5-Fehler bei %s\n"
+
+#, c-format
+msgid "Mismatch between download files and md5sums\n"
+msgstr "Differenz zwischen Dateien und MD5-Summen\n"
+
+#, c-format
+msgid "Missing slackbuild: %s requires %s\n"
+msgstr "Fehlendes SlackBuild: % erfordert %s\n"
+
+#, c-format
+msgid "SlackBuild Category: %s\n"
+msgstr "SlackBuild-Kategorie: %s\n"
+
+#, c-format
+msgid "SlackBuild Description: %s\n"
+msgstr "SlackBuild-Beschreibung: %s\n"
+
+#, c-format
+msgid "SlackBuild Files:\n"
+msgstr "SlackBuild-Dateien:\n"
+
+#, c-format
+msgid "SlackBuild Name: %s\n"
+msgstr "SlackBuild-Name: %s\n"
+
+#, c-format
+msgid "SlackBuild Requires: %s\n"
+msgstr "SlackBuild-Abhängigkeiten: %s\n"
+
+#, c-format
+msgid "SlackBuild Version: %s\n"
+msgstr "SlackBuild-Version: %s\n"
+
+#, c-format
+msgid "The following dependent slackbuilds will be built and installed:\n"
+msgstr "Erstelle und installiere folgende(s) Abhängigkeits-SlackBuild(s):\n"
+
+#, c-format
+msgid "The following packages will be %s:\n"
+msgstr "Folgende(s) Paket(e) werden %s:\n"
+
+#, c-format
+msgid "Unable to find all specified slackbuilds.\n"
+msgstr "Konnte nicht alle angegebenen SlackBuilds finden.\n"
+
+#, c-format
+msgid "Usage: %s [action]\n"
+msgstr "Aufruf: %s [Aktion]\n"
+
+#, c-format
+msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
+msgstr "Aufuf: %s [Option(en)] [Aktion] [SlackBuild(s)]\n"
+
+msgid "built"
+msgstr "erstellt"
+
+msgid "do not look for dependencies"
+msgstr "nicht nach Abhängigkeiten suchen"
+
+msgid "do not prompt"
+msgstr "nicht nachfragen"
+
+msgid "fetch, build, and install the specified slackbuild(s)"
+msgstr "gewählte(s) SlackBuild(s) holen, erstellen und installieren"
+
+msgid "fetched"
+msgstr "geholt"
+
+msgid "installed"
+msgstr "installiert"
+
+msgid "list available slackbuilds"
+msgstr "verfügbare SlackBuilds auflisten"
+
+msgid "only fetch and build the specified slackbuild(s)"
+msgstr "gewählte(s) SlackBuild(s) nur holen und erstellen"
+
+msgid "only fetch the specified slackbuild(s)"
+msgstr "gewählte(s) SlackBuild(s) nur holen"
+
+msgid "search available slackbuilds"
+msgstr "verfügbare SlackBuilds suchen"
+
+msgid "show specified slackbuilds"
+msgstr "gewählte SlackBuilds anzeigen"
+
+msgid "update local cache of remote slackbuilds"
+msgstr "lokal gespeicherte SlackBuilds aktualisieren"
+
+msgid "use the specified configuration file"
+msgstr "angegebene Konfigurationsdatei nutzen"
+
