@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-30 18:30+0000\n"
+"POT-Creation-Date: 2010-10-13 22:16+0000\n"
 "PO-Revision-Date: 2010-10-12 02:12+0100\n"
 "Last-Translator: Cyrille Pontvieux <jrd@enialis.net>\n"
 "Language-Team:  <jrd@enialis.net>\n"
@@ -51,9 +51,28 @@ msgstr "Raté\n"
 msgid "Failed to chdir to %s\n"
 msgstr "Impossible de changer de répertoire pour %s\n"
 
+msgid "Failed to chdir to build directory"
+msgstr ""
+
+#, c-format
+msgid "Failed to construct command string\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to create build directory [%s]\n"
+msgstr ""
+
 #, c-format
 msgid "Failed to open %s for reading\n"
 msgstr "Impossible d'ouvrir %s en lecture\n"
+
+#, c-format
+msgid "Failed to open current directory\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to read %s\n"
+msgstr ""
 
 #, c-format
 msgid "Fetching %s..."
@@ -69,7 +88,9 @@ msgstr "Les sommes de contrôle (md5sum) ne correspondent pas pour %s\n"
 
 #, c-format
 msgid "Mismatch between download files and md5sums\n"
-msgstr "Incohérence entre les fichiers téléchargés et les sommes de contrôle (md5sum)\n"
+msgstr ""
+"Incohérence entre les fichiers téléchargés et les sommes de contrôle "
+"(md5sum)\n"
 
 #, c-format
 msgid "Missing slackbuild: %s requires %s\n"
@@ -98,6 +119,14 @@ msgstr "Dépendances du SlackBuild : %s\n"
 #, c-format
 msgid "SlackBuild Version: %s\n"
 msgstr "Version du SlackBuild : %s\n"
+
+#, c-format
+msgid "The following dependent slackbuilds will be built and installed:\n"
+msgstr ""
+
+#, c-format
+msgid "The following packages will be %s:\n"
+msgstr ""
 
 #, c-format
 msgid "Unable to find all specified slackbuilds.\n"
@@ -134,6 +163,9 @@ msgstr "récupérés"
 msgid "installed"
 msgstr "installés"
 
+msgid "list available slackbuilds"
+msgstr ""
+
 msgid "only fetch and build the specified slackbuild(s)"
 msgstr "uniquement récupère et construit les slackbuilds spécifiés"
 
@@ -146,6 +178,8 @@ msgstr "rechercher les slackbuilds disponibles"
 msgid "show specified slackbuilds"
 msgstr "afficher les slackbuilds spécifiés"
 
+msgid "update local cache of remote slackbuilds"
+msgstr ""
+
 msgid "use the specified configuration file"
 msgstr "utiliser le fichier de configuration spécifié"
-
