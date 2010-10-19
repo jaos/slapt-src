@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-10-13 22:16+0000\n"
-"PO-Revision-Date: 2010-10-17 19:58+0100\n"
+"PO-Revision-Date: 2010-10-18 08:17+0100\n"
 "Last-Translator: M.Mueller aka Quax <quax@lin2go.com>\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgid "Cached\n"
 msgstr "Gespeichert\n"
 
 msgid "Do you want to continue? [y/N] "
-msgstr "Fortfahren? [j/N] "
+msgstr "Fortfahren? [y/N] "
 
 #, c-format
 msgid "Done\n"
@@ -48,30 +48,30 @@ msgstr "Gescheitert\n"
 
 #, c-format
 msgid "Failed to chdir to %s\n"
-msgstr "Fehler beim Wechseln nach %s\n"
+msgstr "Wechseln nach %s gescheitert\n"
 
 msgid "Failed to chdir to build directory"
-msgstr "Fehler beim Wechseln in das Arbeitsverzeichnis"
+msgstr "Wechseln in das Arbeitsverzeichnis gescheitert"
 
 #, c-format
 msgid "Failed to construct command string\n"
-msgstr ""
+msgstr "Erstellen des Befehls-Aufrufs gescheitert\n"
 
 #, c-format
 msgid "Failed to create build directory [%s]\n"
-msgstr ""
+msgstr "Erstellen des Arbeitsverzeichnisses [%s] gescheitert\n"
 
 #, c-format
 msgid "Failed to open %s for reading\n"
-msgstr "Fehler beim Einlesen von %s\n"
+msgstr "Einlesen von %s gescheitert\n"
 
 #, c-format
 msgid "Failed to open current directory\n"
-msgstr ""
+msgstr "Öffnen des aktuellen Verzeichnisses gescheitert\n"
 
 #, c-format
 msgid "Failed to read %s\n"
-msgstr "Fehler beim Lesen von %s\n"
+msgstr "Lesen von %s gescheitert\n"
 
 #, c-format
 msgid "Fetching %s..."
@@ -87,7 +87,7 @@ msgstr "MD5-Fehler bei %s\n"
 
 #, c-format
 msgid "Mismatch between download files and md5sums\n"
-msgstr "Differenz zwischen Dateien und MD5-Summen\n"
+msgstr "Differenz zwischen geholten Dateien und MD5-Summen\n"
 
 #, c-format
 msgid "Missing slackbuild: %s requires %s\n"
@@ -147,7 +147,7 @@ msgid "do not prompt"
 msgstr "nicht nachfragen"
 
 msgid "fetch, build, and install the specified slackbuild(s)"
-msgstr "gewählte(s) SlackBuild(s) holen, erstellen und installieren"
+msgstr "gewählte(s) SlackBuild(s) holen, paketieren und installieren"
 
 msgid "fetched"
 msgstr "geholt"
@@ -168,7 +168,7 @@ msgid "search available slackbuilds"
 msgstr "verfügbare SlackBuilds suchen"
 
 msgid "show specified slackbuilds"
-msgstr "gewählte SlackBuilds anzeigen"
+msgstr "gewählte(s) SlackBuild(s) anzeigen"
 
 msgid "update local cache of remote slackbuilds"
 msgstr "lokal gespeicherte SlackBuilds aktualisieren"
