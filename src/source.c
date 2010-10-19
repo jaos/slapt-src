@@ -26,6 +26,7 @@ slapt_src_config *slapt_src_config_init (void)
   config->builddir = NULL;
   config->pkgext = NULL;
   config->pkgtag = NULL;
+  config->postcmd = NULL;
   config->do_dep = SLAPT_FALSE;
   return config;
 }
@@ -39,6 +40,8 @@ void slapt_src_config_free (slapt_src_config *config)
     free (config->pkgext);
   if (config->pkgtag != NULL)
     free (config->pkgtag);
+  if (config->postcmd != NULL)
+    free (config->postcmd);
   free (config);
 }
 
@@ -598,6 +601,51 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
   return 0;
 }
 
+/* reads directory listing of current directory for a package */
+static char *_get_pkg_filename()
+{
+  char *filename = NULL;
+  DIR *d = NULL;
+  struct dirent *file = NULL;
+  struct stat stat_buf;
+  slapt_regex_t *pkg_regex = NULL;
+
+  d = opendir (".");
+  if (d == NULL) {
+    printf (gettext ("Failed to open current directory\n"));
+    exit (EXIT_FAILURE);
+  }
+
+  if ((pkg_regex = slapt_init_regex (SLAPT_PKG_PARSE_REGEX)) == NULL) {
+    exit (EXIT_FAILURE);
+  }
+
+  while ((file = readdir (d)) != NULL) {
+
+    if (strcmp (file->d_name, "..") == 0 || strcmp (file->d_name, ".") == 0)
+      continue;
+
+    if (lstat (file->d_name, &stat_buf) == -1)
+        continue;
+
+    if (! S_ISREG (stat_buf.st_mode))
+      continue;
+
+    slapt_execute_regex (pkg_regex,file->d_name);
+    if (pkg_regex->reg_return != 0)
+      continue;
+
+    filename = strdup(file->d_name);
+    break;
+    
+  }
+
+  closedir (d);
+  slapt_free_regex (pkg_regex);
+
+  return filename;
+}
+
 int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *sb)
 {
   char *cwd = NULL;
@@ -657,6 +705,30 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
 
   free (command);
 
+  if (config->postcmd != NULL) {
+    char *filename = NULL;
+    if ( (filename = _get_pkg_filename()) != NULL) {
+      char *command = NULL;
+      int r = 0, command_len = strlen (config->postcmd) + strlen (filename) + 2;
+      command = slapt_malloc (sizeof *command * command_len);
+      r = snprintf (command, command_len, "%s %s", config->postcmd, filename);
+      if (r+1 != command_len) {
+        printf (gettext ("Failed to construct command string\n"));
+        exit (EXIT_FAILURE);
+      }
+      r = system (command);
+      if (r != 0) {
+        printf ("%s %s\n", command, gettext ("Failed\n"));
+        exit (EXIT_FAILURE);
+      }
+      free (command);
+    } else { 
+      printf (gettext ("Unable to find generated package\n"));
+      exit (EXIT_FAILURE);
+    }
+    free (filename);
+  }
+
   /* go back */
   if (chdir (config->builddir) != 0) {
     printf (gettext ("Failed to chdir to %s\n"), config->builddir);
@@ -668,45 +740,19 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
 
 int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild *sb)
 {
-  DIR *d = NULL;
-  struct dirent *file = NULL;
-  struct stat stat_buf;
-  slapt_regex_t *pkg_regex = NULL;
+  char *filename = NULL;
+  char *command = NULL;
+  int command_len = 38, r = 0;
+
   if (chdir (sb->location) != 0) {
     printf (gettext ("Failed to chdir to %s\n"), sb->location);
     exit (EXIT_FAILURE);
   }
 
-  d = opendir (".");
-  if (d == NULL) {
-    printf (gettext ("Failed to open current directory\n"));
-    exit (EXIT_FAILURE);
-  }
-
-  if ((pkg_regex = slapt_init_regex (SLAPT_PKG_PARSE_REGEX)) == NULL) {
-    exit (EXIT_FAILURE);
-  }
-
-  while ((file = readdir (d)) != NULL) {
-    char *command = NULL;
-    int command_len = 38, r = 0;
-
-    if (strcmp (file->d_name, "..") == 0 || strcmp (file->d_name, ".") == 0)
-      continue;
-
-    if (lstat (file->d_name, &stat_buf) == -1)
-        continue;
-
-    if (! S_ISREG (stat_buf.st_mode))
-      continue;
-
-    slapt_execute_regex (pkg_regex,file->d_name);
-    if (pkg_regex->reg_return != 0)
-      continue;
-
-    command_len += strlen (file->d_name);
+  if ( (filename = _get_pkg_filename()) != NULL) {
+    command_len += strlen (filename);
     command = slapt_malloc (sizeof *command * command_len);
-    r = snprintf (command, command_len, "upgradepkg --reinstall --install-new %s", file->d_name);
+    r = snprintf (command, command_len, "upgradepkg --reinstall --install-new %s", filename);
     if (r+1 != command_len) {
       printf (gettext ("Failed to construct command string\n"));
       exit (EXIT_FAILURE);
@@ -718,11 +764,12 @@ int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild
       exit (EXIT_FAILURE);
     }
 
+    free (filename);
     free (command);
+  } else { 
+    printf (gettext ("Unable to find generated package\n"));
+    exit (EXIT_FAILURE);
   }
-
-  closedir (d);
-  slapt_free_regex (pkg_regex);
 
   /* go back */
   if (chdir (config->builddir) != 0) {

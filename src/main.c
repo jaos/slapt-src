@@ -44,14 +44,15 @@ void help (void)
   printf ("  --update |-u  - %s\n", gettext ("update local cache of remote slackbuilds"));
   printf ("  --list   |-l  - %s\n", gettext ("list available slackbuilds"));
   printf (gettext ("Usage: %s [option(s)] [action] [slackbuild(s)]\n"), PACKAGE);
-  printf ("  --search |-s  - %s\n", gettext ("search available slackbuilds"));
-  printf ("  --show   |-w  - %s\n", gettext ("show specified slackbuilds"));
-  printf ("  --install|-i  - %s\n", gettext ("fetch, build, and install the specified slackbuild(s)"));
-  printf ("  --build  |-b  - %s\n", gettext ("only fetch and build the specified slackbuild(s)"));
-  printf ("  --fetch  |-f  - %s\n", gettext ("only fetch the specified slackbuild(s)"));
-  printf ("  --yes    |-y  - %s\n", gettext ("do not prompt"));
-  printf ("  --config |-c  - %s\n", gettext ("use the specified configuration file"));
-  printf ("  --no-dep |-n  - %s\n", gettext ("do not look for dependencies"));
+  printf ("  --search      |-s  - %s\n", gettext ("search available slackbuilds"));
+  printf ("  --show        |-w  - %s\n", gettext ("show specified slackbuilds"));
+  printf ("  --install     |-i  - %s\n", gettext ("fetch, build, and install the specified slackbuild(s)"));
+  printf ("  --build       |-b  - %s\n", gettext ("only fetch and build the specified slackbuild(s)"));
+  printf ("  --fetch       |-f  - %s\n", gettext ("only fetch the specified slackbuild(s)"));
+  printf ("  --yes         |-y  - %s\n", gettext ("do not prompt"));
+  printf ("  --config      |-c  - %s\n", gettext ("use the specified configuration file"));
+  printf ("  --no-dep      |-n  - %s\n", gettext ("do not look for dependencies"));
+  printf ("  --postprocess |-p  - %s\n", gettext ("run specified command on generated package"));
 }
 
 #define VERSION_OPT 'v'
@@ -66,6 +67,7 @@ void help (void)
 #define YES_OPT 'y'
 #define CONFIG_OPT 'c'
 #define NODEP_OPT 'n'
+#define POSTCMD_OPT 'p'
 
 struct utsname uname_v; /* for .machine */
 
@@ -97,23 +99,24 @@ int main (int argc, char *argv[])
   slapt_src_slackbuild_list *remote_sbs = NULL;
   slapt_pkg_list_t *installed = NULL;
   SLAPT_BOOL_T prompt = SLAPT_TRUE, do_dep = SLAPT_TRUE;
-  char *config_file = NULL;
+  char *config_file = NULL, *postcmd = NULL;
 
   static struct option long_options[] = {
-    {"version", no_argument,        0, VERSION_OPT},
-    {"help",    no_argument,        0, HELP_OPT},
-    {"update",  no_argument,        0, UPDATE_OPT},
-    {"list",    no_argument,        0, LIST_OPT},
-    {"search",  required_argument,  0, SEARCH_OPT},
-    {"s",       required_argument,  0, SEARCH_OPT},
-    {"show",    required_argument,  0, SHOW_OPT},
-    {"w",       required_argument,  0, SHOW_OPT},
-    {"fetch",   required_argument,  0, FETCH_OPT},
-    {"build",   required_argument,  0, BUILD_OPT},
-    {"install", required_argument,  0, INSTALL_OPT},
-    {"yes",     no_argument,        0, YES_OPT},
-    {"no-dep",  no_argument,        0, NODEP_OPT},
-    {"config",  required_argument,  0, CONFIG_OPT},
+    {"version",     no_argument,        0, VERSION_OPT},
+    {"help",        no_argument,        0, HELP_OPT},
+    {"update",      no_argument,        0, UPDATE_OPT},
+    {"list",        no_argument,        0, LIST_OPT},
+    {"search",      required_argument,  0, SEARCH_OPT},
+    {"s",           required_argument,  0, SEARCH_OPT},
+    {"show",        required_argument,  0, SHOW_OPT},
+    {"w",           required_argument,  0, SHOW_OPT},
+    {"fetch",       required_argument,  0, FETCH_OPT},
+    {"build",       required_argument,  0, BUILD_OPT},
+    {"install",     required_argument,  0, INSTALL_OPT},
+    {"yes",         no_argument,        0, YES_OPT},
+    {"no-dep",      no_argument,        0, NODEP_OPT},
+    {"config",      required_argument,  0, CONFIG_OPT},
+    {"postprocess", required_argument,  0, POSTCMD_OPT},
     {0, 0, 0, 0}
   };
 
@@ -152,6 +155,7 @@ int main (int argc, char *argv[])
       case YES_OPT: prompt = SLAPT_FALSE; break;
       case NODEP_OPT: do_dep = SLAPT_FALSE; break;
       case CONFIG_OPT: config_file = strdup (optarg); break;
+      case POSTCMD_OPT: postcmd = strdup (optarg); break;
       default: help (); exit (EXIT_SUCCESS);
     }
   }
@@ -173,6 +177,7 @@ int main (int argc, char *argv[])
 
   /* honor command line option */
   config->do_dep = do_dep;
+  config->postcmd = postcmd;
 
   init_builddir (config);
   if ( (chdir (config->builddir)) != 0) {

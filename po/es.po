@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-13 22:16+0000\n"
+"POT-Creation-Date: 2010-10-19 22:50+0000\n"
 "PO-Revision-Date: 2010-10-04 20:22-0300\n"
 "Last-Translator: seacat <seacat.linux@gmail.com>\n"
 "Language-Team: \n"
@@ -131,6 +131,10 @@ msgid "Unable to find all specified slackbuilds.\n"
 msgstr "Imposible encontrar todos los slackbuilds especificados.\n"
 
 #, c-format
+msgid "Unable to find generated package\n"
+msgstr ""
+
+#, c-format
 msgid "Usage: %s [action]\n"
 msgstr "Uso: %s [acción]\n"
 
@@ -164,6 +168,9 @@ msgstr "recuperar y compilar solamente el(los) slackbuild(s) especificado(s)"
 
 msgid "only fetch the specified slackbuild(s)"
 msgstr "recuperar solamente el(los) slackbuild(s) especificado(s)"
+
+msgid "run specified command on generated package"
+msgstr ""
 
 msgid "search available slackbuilds"
 msgstr "buscar los slackbuilds disponibles"

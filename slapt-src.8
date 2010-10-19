@@ -29,6 +29,9 @@ slapt-src \- slackbuild utility
 [
 .B --no-dep | -n
 ]
+[
+.B --postprocess | -p
+]
 .LP
 .B action:
 [
@@ -66,6 +69,9 @@ Use the specified configuration file instead of /etc/slapt-get/slapt-srcrc
 .TP
 .B --no-dep | -n
 Do not look for dependencies.
+.TP
+.B --postprocess | -p [command]
+Run specified command on generated package after the package is created.  This is handy for transforming packages into SLAX/Linux-Live modules using the various *2lzm utilities.
 .SH ACTIONS
 .TP
 .B --update|-u

@@ -18,6 +18,7 @@ typedef struct _slapt_src_config_
   char *builddir;
   char *pkgext;
   char *pkgtag;
+  char *postcmd;
   SLAPT_BOOL_T do_dep;
 } slapt_src_config;
 slapt_src_config *slapt_src_config_init (void);

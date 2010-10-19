@@ -1,5 +1,6 @@
 
-0.2 Oct  17, 2010
+0.2 Oct  19, 2010
+ * added --postprocess option
  * added de translation from Manfred
  * added fr translation from Cyrille
  * added ru translation from Igor

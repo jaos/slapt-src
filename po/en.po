@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-13 22:16+0000\n"
+"POT-Creation-Date: 2010-10-19 22:50+0000\n"
 "PO-Revision-Date: 2010-09-30 18:30+0000\n"
 "Last-Translator: Jason Woodward <woodwardj at jaos dot org>\n"
 "Language-Team: slapt-get-devel@jaos.org\n"
@@ -130,6 +130,10 @@ msgid "Unable to find all specified slackbuilds.\n"
 msgstr "Unable to find all specified slackbuilds.\n"
 
 #, c-format
+msgid "Unable to find generated package\n"
+msgstr ""
+
+#, c-format
 msgid "Usage: %s [action]\n"
 msgstr "Usage: %s [action]\n"
 
@@ -163,6 +167,9 @@ msgstr "only fetch and build the specified slackbuild(s)"
 
 msgid "only fetch the specified slackbuild(s)"
 msgstr "only fetch the specified slackbuild(s)"
+
+msgid "run specified command on generated package"
+msgstr ""
 
 msgid "search available slackbuilds"
 msgstr "search available slackbuilds"

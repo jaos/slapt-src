@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-13 22:16+0000\n"
+"POT-Creation-Date: 2010-10-19 22:50+0000\n"
 "PO-Revision-Date: 2010-10-18 08:17+0100\n"
 "Last-Translator: M.Mueller aka Quax <quax@lin2go.com>\n"
 "Language-Team: German\n"
@@ -130,6 +130,10 @@ msgid "Unable to find all specified slackbuilds.\n"
 msgstr "Konnte nicht alle angegebenen SlackBuilds finden.\n"
 
 #, c-format
+msgid "Unable to find generated package\n"
+msgstr ""
+
+#, c-format
 msgid "Usage: %s [action]\n"
 msgstr "Aufruf: %s [Aktion]\n"
 
@@ -164,6 +168,9 @@ msgstr "gewählte(s) SlackBuild(s) nur holen und erstellen"
 msgid "only fetch the specified slackbuild(s)"
 msgstr "gewählte(s) SlackBuild(s) nur holen"
 
+msgid "run specified command on generated package"
+msgstr ""
+
 msgid "search available slackbuilds"
 msgstr "verfügbare SlackBuilds suchen"
 
@@ -175,4 +182,3 @@ msgstr "lokal gespeicherte SlackBuilds aktualisieren"
 
 msgid "use the specified configuration file"
 msgstr "angegebene Konfigurationsdatei nutzen"
-

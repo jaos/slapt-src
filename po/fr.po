@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-13 22:16+0000\n"
+"POT-Creation-Date: 2010-10-19 22:50+0000\n"
 "PO-Revision-Date: 2010-10-12 02:12+0100\n"
 "Last-Translator: Cyrille Pontvieux <jrd@enialis.net>\n"
 "Language-Team:  <jrd@enialis.net>\n"
@@ -132,6 +132,10 @@ msgstr ""
 msgid "Unable to find all specified slackbuilds.\n"
 msgstr "Impossible de trouver tous les slackbuilds spécifiés.\n"
 
+#, c-format
+msgid "Unable to find generated package\n"
+msgstr ""
+
 # "update local cache of remote slackbuilds"
 # and
 # "list available slackbuilds"
@@ -171,6 +175,9 @@ msgstr "uniquement récupère et construit les slackbuilds spécifiés"
 
 msgid "only fetch the specified slackbuild(s)"
 msgstr "uniquement récupère les slackbuilds spécifiés"
+
+msgid "run specified command on generated package"
+msgstr ""
 
 msgid "search available slackbuilds"
 msgstr "rechercher les slackbuilds disponibles"
