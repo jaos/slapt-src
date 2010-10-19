@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-10-19 22:50+0000\n"
-"PO-Revision-Date: 2010-10-18 08:17+0100\n"
+"PO-Revision-Date: 2010-10-20 05:21+0100\n"
 "Last-Translator: M.Mueller aka Quax <quax@lin2go.com>\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -169,7 +169,7 @@ msgid "only fetch the specified slackbuild(s)"
 msgstr "gewählte(s) SlackBuild(s) nur holen"
 
 msgid "run specified command on generated package"
-msgstr ""
+msgstr "angegebenen Befehl auf fertige(s) Paket(e) anwenden"
 
 msgid "search available slackbuilds"
 msgstr "verfügbare SlackBuilds suchen"
@@ -182,3 +182,4 @@ msgstr "lokal gespeicherte SlackBuilds aktualisieren"
 
 msgid "use the specified configuration file"
 msgstr "angegebene Konfigurationsdatei nutzen"
+
