@@ -723,6 +723,12 @@ int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild
 
   closedir (d);
   slapt_free_regex (pkg_regex);
+
+  /* go back */
+  if (chdir (config->builddir) != 0) {
+    printf (gettext ("Failed to chdir to %s\n"), config->builddir);
+    exit (EXIT_FAILURE);
+  }
   return 0;
 }
 
