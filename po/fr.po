@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-19 22:50+0000\n"
+"POT-Creation-Date: 2010-10-28 10:43+0000\n"
 "PO-Revision-Date: 2010-10-12 02:12+0100\n"
 "Last-Translator: Cyrille Pontvieux <jrd@enialis.net>\n"
 "Language-Team:  <jrd@enialis.net>\n"
@@ -95,6 +95,10 @@ msgstr ""
 #, c-format
 msgid "Missing slackbuild: %s requires %s\n"
 msgstr "Dépendances manquantes pour le slackbuild : %s nécessite %s\n"
+
+#, c-format
+msgid "No BUILDDIR specified in the configuration\n"
+msgstr ""
 
 #, c-format
 msgid "SlackBuild Category: %s\n"

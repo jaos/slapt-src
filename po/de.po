@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-19 22:50+0000\n"
+"POT-Creation-Date: 2010-10-28 10:43+0000\n"
 "PO-Revision-Date: 2010-10-20 05:21+0100\n"
 "Last-Translator: M.Mueller aka Quax <quax@lin2go.com>\n"
 "Language-Team: German\n"
@@ -92,6 +92,10 @@ msgstr "Differenz zwischen geholten Dateien und MD5-Summen\n"
 #, c-format
 msgid "Missing slackbuild: %s requires %s\n"
 msgstr "Fehlendes SlackBuild: % erfordert %s\n"
+
+#, c-format
+msgid "No BUILDDIR specified in the configuration\n"
+msgstr ""
 
 #, c-format
 msgid "SlackBuild Category: %s\n"
@@ -182,4 +186,3 @@ msgstr "lokal gespeicherte SlackBuilds aktualisieren"
 
 msgid "use the specified configuration file"
 msgstr "angegebene Konfigurationsdatei nutzen"
-

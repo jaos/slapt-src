@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-19 22:50+0000\n"
+"POT-Creation-Date: 2010-10-28 10:43+0000\n"
 "PO-Revision-Date: 2010-10-12 01:07+0400\n"
 "Last-Translator: Igor Murzov <igor@gplsoft.org>\n"
 "Language-Team: slackware-current@conference.jabber.ru\n"
@@ -90,6 +90,10 @@ msgstr "md5-суммы для загруженных файлов не совп�
 #, c-format
 msgid "Missing slackbuild: %s requires %s\n"
 msgstr "Слакбилд отсутствует: %s требует %s\n"
+
+#, c-format
+msgid "No BUILDDIR specified in the configuration\n"
+msgstr ""
 
 #, c-format
 msgid "SlackBuild Category: %s\n"

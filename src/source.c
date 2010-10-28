@@ -54,7 +54,8 @@ slapt_src_config *slapt_src_read_config (const char *filename)
   ssize_t g_size;
 
   rc = slapt_open_file (filename, "r");
-  if (rc == NULL) return NULL;
+  if (rc == NULL)
+    exit (EXIT_FAILURE);
 
   config = slapt_src_config_init ();
 
@@ -95,6 +96,12 @@ slapt_src_config *slapt_src_read_config (const char *filename)
 
     }
 
+  }
+
+  /* sanity checks */
+  if (config->builddir == NULL) {
+    fprintf (stderr, gettext ("No BUILDDIR specified in the configuration\n") );
+    exit (EXIT_FAILURE);
   }
 
   fclose (rc);

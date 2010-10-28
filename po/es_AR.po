@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-19 22:50+0000\n"
+"POT-Creation-Date: 2010-10-28 10:43+0000\n"
 "PO-Revision-Date: 2010-10-04 20:22-0300\n"
 "Last-Translator: seacat <seacat.linux@gmail.com>\n"
 "Language-Team: \n"
@@ -93,6 +93,10 @@ msgstr "Falta de coincidencia entre los archivos de descarga y md5sums\n"
 #, c-format
 msgid "Missing slackbuild: %s requires %s\n"
 msgstr "Slackbuild faltante: %s necesita %s\n"
+
+#, c-format
+msgid "No BUILDDIR specified in the configuration\n"
+msgstr ""
 
 #, c-format
 msgid "SlackBuild Category: %s\n"
