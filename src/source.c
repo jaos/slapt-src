@@ -517,8 +517,18 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
   /* download slackbuild files */
   for (i = 0; i < sb->files->count; i++) {
     int curl_rv = 0;
-    FILE *f = slapt_open_file (sb->files->items[i], "w+b");
-    char *url = add_part_to_url (sb_location, sb->files->items[i]);
+    char *s = NULL, *url = add_part_to_url (sb_location, sb->files->items[i]);
+    FILE *f = NULL;
+
+    /* some files contain paths, create as necessary */
+    if ((s = rindex (sb->files->items[i], '/')) != NULL) {
+      char *initial_dir = strndup(sb->files->items[i], strlen(sb->files->items[i]) - strlen(s) +1);
+      if (initial_dir != NULL) {
+        slapt_create_dir_structure (initial_dir);
+        free(initial_dir);
+      }
+    }
+    f = slapt_open_file (sb->files->items[i], "w+b");
 
     /* TODO support file resume */
     printf (gettext ("Fetching %s..."), sb->files->items[i]);
