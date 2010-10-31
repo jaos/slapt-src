@@ -16,6 +16,7 @@ extern int optind, opterr, optopt;
 
 static int show_summary (slapt_src_slackbuild_list *, slapt_list_t *, int, SLAPT_BOOL_T);
 static char *gen_short_pkg_description (slapt_src_slackbuild *);
+static void clean (slapt_src_config *config);
 
 void version (void)
 {
@@ -43,6 +44,7 @@ void help (void)
   printf (gettext ("Usage: %s [action]\n"), PACKAGE);
   printf ("  --update |-u  - %s\n", gettext ("update local cache of remote slackbuilds"));
   printf ("  --list   |-l  - %s\n", gettext ("list available slackbuilds"));
+  printf ("  --clean  |-e  - %s\n", gettext ("clean build directory"));
   printf (gettext ("Usage: %s [option(s)] [action] [slackbuild(s)]\n"), PACKAGE);
   printf ("  --search      |-s  - %s\n", gettext ("search available slackbuilds"));
   printf ("  --show        |-w  - %s\n", gettext ("show specified slackbuilds"));
@@ -68,6 +70,7 @@ void help (void)
 #define CONFIG_OPT 'c'
 #define NODEP_OPT 'n'
 #define POSTCMD_OPT 'p'
+#define CLEAN_OPT 'e'
 
 struct utsname uname_v; /* for .machine */
 
@@ -106,6 +109,7 @@ int main (int argc, char *argv[])
     {"help",        no_argument,        0, HELP_OPT},
     {"update",      no_argument,        0, UPDATE_OPT},
     {"list",        no_argument,        0, LIST_OPT},
+    {"clean",       no_argument,        0, CLEAN_OPT},
     {"search",      required_argument,  0, SEARCH_OPT},
     {"s",           required_argument,  0, SEARCH_OPT},
     {"show",        required_argument,  0, SHOW_OPT},
@@ -147,6 +151,7 @@ int main (int argc, char *argv[])
       case VERSION_OPT: version (); break;
       case UPDATE_OPT: action = UPDATE_OPT; break;
       case LIST_OPT: action = LIST_OPT; break;
+      case CLEAN_OPT: action = CLEAN_OPT; break;
       case FETCH_OPT: action = FETCH_OPT; slapt_add_list_item (names, optarg); break;
       case SEARCH_OPT: action = SEARCH_OPT; slapt_add_list_item (names, optarg); break;
       case SHOW_OPT: action = SHOW_OPT; slapt_add_list_item (names, optarg); break;
@@ -304,6 +309,9 @@ int main (int argc, char *argv[])
         }
       }
     break;
+    case CLEAN_OPT:
+      clean (config);
+    break;
   }
 
   if (names != NULL)
@@ -389,3 +397,27 @@ static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, in
   return action;
 }
 
+static void clean (slapt_src_config *config)
+{
+  struct dirent *file = NULL;
+  DIR *builddir = opendir (config->builddir);
+  if ( builddir != NULL ) {
+    while ((file = readdir (builddir)) != NULL) {
+      struct stat stat_buf;
+
+      if (strcmp (file->d_name, "..") == 0 || strcmp (file->d_name, ".") == 0)
+      continue;
+
+      if (lstat (file->d_name, &stat_buf) == -1)
+          continue;
+
+      if ( S_ISDIR (stat_buf.st_mode)) {
+        int r = 0, command_len = strlen(file->d_name)+8;
+        char *command = slapt_malloc (sizeof *command * command_len);
+        r = snprintf (command, command_len, "rm -rf %s", file->d_name);
+        if (r+1 == command_len)
+          system (command);
+      }
+    }
+  }
+}

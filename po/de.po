@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-28 10:43+0000\n"
+"POT-Creation-Date: 2010-10-31 21:14+0000\n"
 "PO-Revision-Date: 2010-10-29 18:26+0100\n"
 "Last-Translator: M.Mueller aka Quax <quax@lin2go.com>\n"
 "Language-Team: German\n"
@@ -147,6 +147,9 @@ msgstr "Aufruf: %s [Option(en)] [Aktion] [SlackBuild(s)]\n"
 
 msgid "built"
 msgstr "erstellt"
+
+msgid "clean build directory"
+msgstr ""
 
 msgid "do not look for dependencies"
 msgstr "nicht nach Abhängigkeiten suchen"

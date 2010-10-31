@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-28 10:43+0000\n"
+"POT-Creation-Date: 2010-10-31 21:14+0000\n"
 "PO-Revision-Date: 2010-09-30 18:30+0000\n"
 "Last-Translator: Jason Woodward <woodwardj at jaos dot org>\n"
 "Language-Team: slapt-get-devel@jaos.org\n"
@@ -147,6 +147,9 @@ msgstr "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
 
 msgid "built"
 msgstr "built"
+
+msgid "clean build directory"
+msgstr ""
 
 msgid "do not look for dependencies"
 msgstr "do not look for dependencies"

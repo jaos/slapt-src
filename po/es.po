@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-28 10:43+0000\n"
+"POT-Creation-Date: 2010-10-31 21:14+0000\n"
 "PO-Revision-Date: 2010-10-04 20:22-0300\n"
 "Last-Translator: seacat <seacat.linux@gmail.com>\n"
 "Language-Team: \n"
@@ -149,6 +149,9 @@ msgstr "Uso: %s [opciones] [acción] [slackbuild(s)]\n"
 msgid "built"
 msgstr "compilado"
 
+msgid "clean build directory"
+msgstr ""
+
 msgid "do not look for dependencies"
 msgstr "no buscar dependencias"
 
@@ -187,5 +190,3 @@ msgstr "actualizar el caché local de slackbuilds remotos"
 
 msgid "use the specified configuration file"
 msgstr "usar el archivo de configuración especificado"
-
-
