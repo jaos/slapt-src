@@ -52,15 +52,15 @@ msgid "Failed to chdir to %s\n"
 msgstr "No se pudo hacer chdir a %s\n"
 
 msgid "Failed to chdir to build directory"
-msgstr ""
+msgstr "No se pudo hace chdir al directorio de compilación"
 
 #, c-format
 msgid "Failed to construct command string\n"
-msgstr ""
+msgstr "No se pudo construir la cadena del comando\n"
 
 #, c-format
 msgid "Failed to create build directory [%s]\n"
-msgstr ""
+msgstr "No se pudo crear el directorio de compilación [%s]\n"
 
 #, c-format
 msgid "Failed to open %s for reading\n"
@@ -68,11 +68,11 @@ msgstr "No se pudo abrir %s para lectura\n"
 
 #, c-format
 msgid "Failed to open current directory\n"
-msgstr ""
+msgstr "No se pudo abrir el directorio actual\n"
 
 #, c-format
 msgid "Failed to read %s\n"
-msgstr ""
+msgstr "No se pudo leer %s\n"
 
 #, c-format
 msgid "Fetching %s..."
@@ -96,7 +96,7 @@ msgstr "Slackbuild faltante: %s necesita %s\n"
 
 #, c-format
 msgid "No BUILDDIR specified in the configuration\n"
-msgstr ""
+msgstr "No se especificó BUILDDIR en la configuración\n"
 
 #, c-format
 msgid "SlackBuild Category: %s\n"
@@ -124,11 +124,11 @@ msgstr "Versión de slackBuild: %s\n"
 
 #, c-format
 msgid "The following dependent slackbuilds will be built and installed:\n"
-msgstr ""
+msgstr "Se compilarán e instalarán los siguientes slackbuilds dependientes:\n"
 
 #, c-format
 msgid "The following packages will be %s:\n"
-msgstr ""
+msgstr "Los siguientes paquetes serán %s:\n"
 
 #, c-format
 msgid "Unable to find all specified slackbuilds.\n"
@@ -136,7 +136,7 @@ msgstr "Imposible encontrar todos los slackbuilds especificados.\n"
 
 #, c-format
 msgid "Unable to find generated package\n"
-msgstr ""
+msgstr "No se puede encontrar el paquete generado\n"
 
 #, c-format
 msgid "Usage: %s [action]\n"
@@ -165,7 +165,7 @@ msgid "installed"
 msgstr "instalado"
 
 msgid "list available slackbuilds"
-msgstr ""
+msgstr "listar slackbuilds disponibles"
 
 msgid "only fetch and build the specified slackbuild(s)"
 msgstr "recuperar y compilar solamente el(los) slackbuild(s) especificado(s)"
@@ -174,7 +174,7 @@ msgid "only fetch the specified slackbuild(s)"
 msgstr "recuperar solamente el(los) slackbuild(s) especificado(s)"
 
 msgid "run specified command on generated package"
-msgstr ""
+msgstr "ejecutar comando especificado para el paquete generado"
 
 msgid "search available slackbuilds"
 msgstr "buscar los slackbuilds disponibles"
@@ -183,7 +183,9 @@ msgid "show specified slackbuilds"
 msgstr "mostrar los slackbuilds especificados"
 
 msgid "update local cache of remote slackbuilds"
-msgstr ""
+msgstr "actualizar el caché local de slackbuilds remotos"
 
 msgid "use the specified configuration file"
 msgstr "usar el archivo de configuración especificado"
+
+
