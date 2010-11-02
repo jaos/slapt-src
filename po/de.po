@@ -149,7 +149,7 @@ msgid "built"
 msgstr "erstellt"
 
 msgid "clean build directory"
-msgstr ""
+msgstr "Arbeitsverzeichnis säubern"
 
 msgid "do not look for dependencies"
 msgstr "nicht nach Abhängigkeiten suchen"
