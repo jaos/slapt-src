@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: slapt-src\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-10-31 21:14+0000\n"
-"PO-Revision-Date: 2010-10-29 01:36+0200\n"
+"PO-Revision-Date: 2010-11-05 00:35+0200\n"
 "Last-Translator: George Vlahavas <vlahavas~at~gmail~dot~com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -126,8 +126,7 @@ msgstr "Έκδοση SlackBuild: %s\n"
 
 #, c-format
 msgid "The following dependent slackbuilds will be built and installed:\n"
-msgstr ""
-"Τα ακόλουθα slackbuild εξαρτήσεις θα δημιουργηθούν και εγκατασταθούν:\n"
+msgstr "Οι ακόλουθες slackbuild εξαρτήσεις θα δημιουργηθούν και θα εγκατασταθούν:\n"
 
 #, c-format
 msgid "The following packages will be %s:\n"
@@ -153,7 +152,7 @@ msgid "built"
 msgstr "δημιουργηθούν"
 
 msgid "clean build directory"
-msgstr ""
+msgstr "καθαρισμός καταλόγου εργασίας"
 
 msgid "do not look for dependencies"
 msgstr "παράλειψη ελέγχου απαιτούμενων πακέτων"
@@ -193,3 +192,4 @@ msgstr "ενημέρωση τοπικής αποθήκης απομακρυσμ�
 
 msgid "use the specified configuration file"
 msgstr "προσδιορίστε εναλλακτική τοποθεσία για το αρχείο ρυθμίσεων"
+

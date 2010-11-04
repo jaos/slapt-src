@@ -1,5 +1,7 @@
 
-0.3 Oct  31, 2010
+0.3 Nov  04, 2010
+ * updated ru translation from Igor
+ * updated Greek translation from George Vlahavas
  * added --clean option
  * some files contain paths, create those paths as necessary
  * es and es_AR translation from seacat
