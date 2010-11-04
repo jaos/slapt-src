@@ -93,7 +93,7 @@ msgstr "Слакбилд отсутствует: %s требует %s\n"
 
 #, c-format
 msgid "No BUILDDIR specified in the configuration\n"
-msgstr ""
+msgstr "Значение BUILDDIR не задано в конфигурационном файле\n"
 
 #, c-format
 msgid "SlackBuild Category: %s\n"
@@ -133,7 +133,7 @@ msgstr "Не удалось найти все указанные слакбил�
 
 #, c-format
 msgid "Unable to find generated package\n"
-msgstr ""
+msgstr "Не удалось найти сгенерированный пакет\n"
 
 #, c-format
 msgid "Usage: %s [action]\n"
@@ -147,7 +147,7 @@ msgid "built"
 msgstr "собраны"
 
 msgid "clean build directory"
-msgstr ""
+msgstr "очистить каталог сборки"
 
 msgid "do not look for dependencies"
 msgstr "игнорировать зависимости"
