@@ -258,7 +258,7 @@ int main (int argc, char *argv[])
         slapt_src_slackbuild_list *search = slapt_src_search_slackbuild_cache (remote_sbs, names);
         for (i = 0; i < search->count; i++) {
           slapt_src_slackbuild *sb = search->slackbuilds[i];
-          printf ("%s-%s: %s\n",
+          printf ("%s:%s - %s\n",
             sb->name,
             sb->version,
             sb->short_desc != NULL ? sb->short_desc : ""
@@ -271,7 +271,7 @@ int main (int argc, char *argv[])
     case LIST_OPT:
       for (i = 0; i < remote_sbs->count; i++) {
         slapt_src_slackbuild *sb = remote_sbs->slackbuilds[i];
-        printf ("%s-%s: %s\n",
+        printf ("%s:%s - %s\n",
           sb->name,
           sb->version,
           sb->short_desc != NULL ? sb->short_desc : ""
@@ -283,7 +283,7 @@ int main (int argc, char *argv[])
       {
         int c;
         for (i = 0; i < names->count; i++) {
-          slapt_src_slackbuild *sb = slapt_src_get_slackbuild (remote_sbs, names->items[i]);
+          slapt_src_slackbuild *sb = slapt_src_get_slackbuild (remote_sbs, names->items[i], NULL);
 
           if (sb != NULL) {
 
@@ -341,7 +341,8 @@ static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, in
   );
 
   for (i = 0; i < names->count; i++) {
-    const char *name = names->items[i];
+    slapt_list_t *parts = slapt_parse_delimited_list (names->items[i], ':');
+    const char *name = parts->items[0];
     int name_len = strlen (name);
 
     if (line_len == 0) {
@@ -355,6 +356,7 @@ static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, in
       line_len = name_len + 2;
     }
 
+    slapt_free_list (parts);
   }
   printf ("\n");
 
@@ -365,8 +367,11 @@ static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, in
 
     for (i = 0; i < sbs->count; i++) {
       const char *name = sbs->slackbuilds[i]->name;
+      const char *version = sbs->slackbuilds[i]->version;
+      char *namever = slapt_malloc (sizeof *namever * (strlen (name) + strlen (version) + 2));
+      sprintf(namever, "%s:%s", name, version);
 
-      if (slapt_search_list (names, name) == NULL) {
+      if (slapt_search_list (names, name) == NULL && slapt_search_list (names, namever) == NULL) {
         int name_len = strlen (name);
 
         if (line_len == 0) {
@@ -382,9 +387,9 @@ static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, in
 
       }
 
+      free (namever);
     }
     printf ("\n");
-
   }
 
   if (prompt == SLAPT_TRUE) {

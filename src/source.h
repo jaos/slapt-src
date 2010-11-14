@@ -61,6 +61,6 @@ slapt_src_slackbuild_list *slapt_src_names_to_slackbuilds (slapt_src_config *, s
 slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *);
 void slapt_src_write_slackbuilds_to_file (slapt_src_slackbuild_list *, const char *);
 slapt_src_slackbuild_list *slapt_src_search_slackbuild_cache (slapt_src_slackbuild_list *, slapt_list_t *);
-slapt_src_slackbuild *slapt_src_get_slackbuild (slapt_src_slackbuild_list *, const char *);
+slapt_src_slackbuild *slapt_src_get_slackbuild (slapt_src_slackbuild_list *, const char *, const char *);
 
 #endif

@@ -273,10 +273,15 @@ int slapt_src_update_slackbuild_cache (slapt_src_config *config)
 
 static int sb_cmp (const void *a, const void *b)
 {
+  int cmp;
   slapt_src_slackbuild *sb1 = *(slapt_src_slackbuild * const *)a;
   slapt_src_slackbuild *sb2 = *(slapt_src_slackbuild * const *)b;
 
-  return strcmp (sb1->name, sb2->name);
+  cmp = strcmp (sb1->name, sb2->name);
+  if (cmp != 0)
+    return cmp;
+  else
+    return slapt_cmp_pkg_versions (sb1->version, sb2->version);
 }
 
 void slapt_src_write_slackbuilds_to_file (slapt_src_slackbuild_list *sbs, const char *datafile)
@@ -796,16 +801,28 @@ int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild
   return 0;
 }
 
-slapt_src_slackbuild *slapt_src_get_slackbuild (slapt_src_slackbuild_list *sbs, const char *name)
+slapt_src_slackbuild *slapt_src_get_slackbuild (slapt_src_slackbuild_list *sbs, const char *name, const char *version)
 {
   int min = 0, max = sbs->count - 1;
 
   while (max >= min) {
     int pivot    = (min + max) / 2;
     int name_cmp  = strcmp (sbs->slackbuilds[pivot]->name, name); 
+    int ver_cmp = 0;
 
     if ( name_cmp == 0 ) {
-      return sbs->slackbuilds[pivot];   
+      if (version == NULL)
+        return sbs->slackbuilds[pivot];   
+
+      ver_cmp = slapt_cmp_pkg_versions (sbs->slackbuilds[pivot]->version, version);
+      if (ver_cmp == 0)
+        return sbs->slackbuilds[pivot];   
+
+      if (ver_cmp < 0)
+        min = pivot + 1;
+      else
+        max = pivot - 1;
+
     } else {
       if ( name_cmp < 0 )
         min = pivot + 1;
@@ -846,7 +863,7 @@ static int slapt_src_resolve_dependencies (
 
   for (r = 0; r < requires->count; r++) {
     const char *dep_name = requires->items[r];
-    slapt_src_slackbuild *sb_dep = slapt_src_get_slackbuild (available, dep_name);
+    slapt_src_slackbuild *sb_dep = slapt_src_get_slackbuild (available, dep_name, NULL);
       
     /* we will try and resolve its dependencies no matter what,
        in case there are new deps we don't yet have */
@@ -888,7 +905,14 @@ slapt_src_slackbuild_list *slapt_src_names_to_slackbuilds (
   slapt_src_slackbuild_list *sbs = slapt_src_slackbuild_list_init ();
 
   for (i = 0; i < names->count; i++) {
-    slapt_src_slackbuild *sb = slapt_src_get_slackbuild (available, names->items[i]);
+    slapt_src_slackbuild *sb = NULL;
+    slapt_list_t *parts = slapt_parse_delimited_list (names->items[i], ':');
+    if (parts->count > 1)
+      sb = slapt_src_get_slackbuild (available, parts->items[0], parts->items[1]);
+    else
+      sb = slapt_src_get_slackbuild (available, names->items[i], NULL);
+
+    slapt_free_list (parts);
 
     if (sb != NULL) {
 
