@@ -93,7 +93,7 @@ Search available slackbuilds from enabled remote slackbuild sources.
 Show information about specified slackbuilds.
 .TP
 .B --install|-i [expression(s)]
-Fetch, build, and install the specified slackbuild(s).
+Fetch, build, and install the specified slackbuild(s).  The named slackbuild can be postfixed by a colon followed by a version string to specify the exact version if multiple versions are available.  For example, given foo-1.0 and foo-1.2, specifying foo:1.2 specifies the preference for the later.
 .TP
 .B --build|-b [expression(s)]
 Only fetch and build the specified slackbuild(s).
