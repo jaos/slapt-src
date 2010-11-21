@@ -1,5 +1,6 @@
 
-0.3a Nov  10, 2010
+0.3a Nov  21, 2010
+ * return non-zero on faulty command line argument or failed cache download
  * hungarian translation by Peter Polonkai
 
 0.3 Nov  04, 2010

@@ -195,7 +195,7 @@ void slapt_src_slackbuild_list_add (slapt_src_slackbuild_list *sbs, slapt_src_sl
 
 int slapt_src_update_slackbuild_cache (slapt_src_config *config)
 {
-  int i;
+  int i, rval = 0;
   slapt_rc_config *slapt_config = slapt_init_config ();
   slapt_src_slackbuild_list *slackbuilds = slapt_src_slackbuild_list_init ();
 
@@ -237,10 +237,13 @@ int slapt_src_update_slackbuild_cache (slapt_src_config *config)
         } else {
           fprintf (stderr, gettext ("Download failed: %s\n"), err);
           slapt_clear_head_cache (filename);
+          rval = 1;
         }
       } else {
-        if (strcmp (files[fc], SLAPT_SRC_SOURCES_LIST_GZ) != 0)
+        if (strcmp (files[fc], SLAPT_SRC_SOURCES_LIST_GZ) != 0) {
           fprintf (stderr, gettext ("Download failed: %s\n"), "404");
+          rval = 1;
+        }
       }
 
       free (filename);
@@ -268,7 +271,7 @@ int slapt_src_update_slackbuild_cache (slapt_src_config *config)
   slapt_free_rc_config (slapt_config);
   slackbuilds->free_slackbuilds = SLAPT_TRUE; /* free here */
   slapt_src_slackbuild_list_free (slackbuilds);
-  return 0;
+  return rval;
 }
 
 static int sb_cmp (const void *a, const void *b)

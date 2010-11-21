@@ -95,7 +95,7 @@ static void init_builddir (slapt_src_config *config)
 
 int main (int argc, char *argv[])
 {
-  int c = -1, option_index = 0, action = 0, i = 0;
+  int c = -1, option_index = 0, action = 0, i = 0, rval = 0;
   slapt_list_t *names = slapt_init_list ();
   slapt_src_config *config = NULL;
   slapt_src_slackbuild_list *sbs = NULL;
@@ -161,7 +161,7 @@ int main (int argc, char *argv[])
       case NODEP_OPT: do_dep = SLAPT_FALSE; break;
       case CONFIG_OPT: config_file = strdup (optarg); break;
       case POSTCMD_OPT: postcmd = strdup (optarg); break;
-      default: help (); exit (EXIT_SUCCESS);
+      default: help (); exit (EXIT_FAILURE);
     }
   }
 
@@ -220,7 +220,7 @@ int main (int argc, char *argv[])
   switch (action) {
 
     case UPDATE_OPT:
-      slapt_src_update_slackbuild_cache (config);
+      rval = slapt_src_update_slackbuild_cache (config);
     break;
 
     case FETCH_OPT:
@@ -327,7 +327,7 @@ int main (int argc, char *argv[])
 
   slapt_src_config_free (config);
 
-  return 0;
+  return rval;
 }
 
 static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, int action, SLAPT_BOOL_T prompt)
