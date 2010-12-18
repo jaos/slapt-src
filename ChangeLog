@@ -1,5 +1,6 @@
 
-0.3a Nov  21, 2010
+0.3.1 Dec  18, 2010
+ * support download resume for the slackbuild downloads
  * return non-zero on faulty command line argument or failed cache download
  * hungarian translation by Peter Polonkai
 

@@ -581,17 +581,23 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
     int curl_rv     = 0;
     char *md5sum    = md5sum_parts->items[i];
     char *filename  = filename_from_url (download_parts->items[i]);
-    FILE *f         = slapt_open_file (filename, "w+b");
+    FILE *f         = NULL;
     char md5sum_to_prove[SLAPT_MD5_STR_LEN];
+    struct stat file_stat;
+    size_t file_size = 0;
 
+    if (stat(filename,&file_stat) == 0 ) {
+      file_size = file_stat.st_size;
+    }
+
+    f = slapt_open_file (filename, "a+b");
     if (f == NULL) {
       perror ("Cannot open file for writing");
       exit (EXIT_FAILURE);
     }
 
     printf (gettext ("Fetching %s..."), download_parts->items[i]);
-    /* TODO support file resume */
-    curl_rv = slapt_download_data (f, download_parts->items[i], 0, NULL, slapt_config);
+    curl_rv = slapt_download_data (f, download_parts->items[i], file_size, NULL, slapt_config);
     if (curl_rv == 0) {
       printf (gettext ("Done\n"));
     } else {
