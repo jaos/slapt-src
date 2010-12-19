@@ -369,7 +369,7 @@ static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, in
       const char *name = sbs->slackbuilds[i]->name;
       const char *version = sbs->slackbuilds[i]->version;
       char *namever = slapt_malloc (sizeof *namever * (strlen (name) + strlen (version) + 2));
-      sprintf(namever, "%s:%s", name, version);
+      sprintf (namever, "%s:%s", name, version);
 
       if (slapt_search_list (names, name) == NULL && slapt_search_list (names, namever) == NULL) {
         int name_len = strlen (name);
@@ -417,7 +417,7 @@ static void clean (slapt_src_config *config)
           continue;
 
       if ( S_ISDIR (stat_buf.st_mode)) {
-        int r = 0, command_len = strlen(file->d_name)+8;
+        int r = 0, command_len = strlen (file->d_name)+8;
         char *command = slapt_malloc (sizeof *command * command_len);
         r = snprintf (command, command_len, "rm -rf %s", file->d_name);
         if (r+1 == command_len)
