@@ -530,10 +530,10 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
 
     /* some files contain paths, create as necessary */
     if ((s = rindex (sb->files->items[i], '/')) != NULL) {
-      char *initial_dir = strndup(sb->files->items[i], strlen(sb->files->items[i]) - strlen(s) +1);
+      char *initial_dir = strndup (sb->files->items[i], strlen (sb->files->items[i]) - strlen (s) +1);
       if (initial_dir != NULL) {
         slapt_create_dir_structure (initial_dir);
-        free(initial_dir);
+        free (initial_dir);
       }
     }
     f = slapt_open_file (sb->files->items[i], "w+b");
@@ -591,7 +591,7 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
     struct stat file_stat;
     size_t file_size = 0;
 
-    if (stat(filename,&file_stat) == 0 ) {
+    if (stat (filename,&file_stat) == 0 ) {
       /* if already exists, find out how much we already have */
       file_size = file_stat.st_size;
     }
@@ -646,7 +646,7 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
 }
 
 /* reads directory listing of current directory for a package */
-static char *_get_pkg_filename(const char *version, const char *pkgtag)
+static char *_get_pkg_filename (const char *version, const char *pkgtag)
 {
   char *filename = NULL;
   DIR *d = NULL;
@@ -685,7 +685,7 @@ static char *_get_pkg_filename(const char *version, const char *pkgtag)
     if (strstr (file->d_name, pkgtag) == NULL)
       continue;
 
-    filename = strdup(file->d_name);
+    filename = strdup (file->d_name);
     break;
     
   }
@@ -757,7 +757,7 @@ int slapt_src_build_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
 
   if (config->postcmd != NULL) {
     char *filename = NULL;
-    if ( (filename = _get_pkg_filename(sb->version, config->pkgtag)) != NULL) {
+    if ( (filename = _get_pkg_filename (sb->version, config->pkgtag)) != NULL) {
       char *command = NULL;
       int r = 0, command_len = strlen (config->postcmd) + strlen (filename) + 2;
       command = slapt_malloc (sizeof *command * command_len);
@@ -799,7 +799,7 @@ int slapt_src_install_slackbuild (slapt_src_config *config, slapt_src_slackbuild
     exit (EXIT_FAILURE);
   }
 
-  if ( (filename = _get_pkg_filename(sb->version, config->pkgtag)) != NULL) {
+  if ( (filename = _get_pkg_filename (sb->version, config->pkgtag)) != NULL) {
     command_len += strlen (filename);
     command = slapt_malloc (sizeof *command * command_len);
     r = snprintf (command, command_len, "upgradepkg --reinstall --install-new %s", filename);
