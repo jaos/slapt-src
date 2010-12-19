@@ -538,6 +538,11 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
     }
     f = slapt_open_file (sb->files->items[i], "w+b");
 
+    if (f == NULL) {
+      perror ("Cannot open file for writing");
+      exit (EXIT_FAILURE);
+    }
+
     /* TODO support file resume */
     printf (gettext ("Fetching %s..."), sb->files->items[i]);
     curl_rv = slapt_download_data (f, url, 0, NULL, slapt_config);
