@@ -682,8 +682,9 @@ static char *_get_pkg_filename (const char *version, const char *pkgtag)
     if (strstr (file->d_name, version) == NULL)
       continue;
 
-    if (strstr (file->d_name, pkgtag) == NULL)
-      continue;
+    if (pkgtag != NULL)
+      if (strstr (file->d_name, pkgtag) == NULL)
+        continue;
 
     filename = strdup (file->d_name);
     break;
