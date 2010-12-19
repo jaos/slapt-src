@@ -592,6 +592,7 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
     size_t file_size = 0;
 
     if (stat(filename,&file_stat) == 0 ) {
+      /* if already exists, find out how much we already have */
       file_size = file_stat.st_size;
     }
 
@@ -601,23 +602,30 @@ int slapt_src_fetch_slackbuild (slapt_src_config *config, slapt_src_slackbuild *
       exit (EXIT_FAILURE);
     }
 
-    printf (gettext ("Fetching %s..."), download_parts->items[i]);
-    curl_rv = slapt_download_data (f, download_parts->items[i], file_size, NULL, slapt_config);
-    if (curl_rv == 0) {
-      printf (gettext ("Done\n"));
-    } else {
-      printf (gettext ("Failed\n"));
-      exit (EXIT_FAILURE);
-    }
-
+    /* check checksum to see if we need to continue */
     slapt_gen_md5_sum_of_file (f, md5sum_to_prove);
-    fclose (f);
-
     if (strcmp (md5sum_to_prove, md5sum) != 0 ) {
-      printf (gettext ("MD5SUM mismatch for %s\n"), filename);
-      exit (EXIT_FAILURE);
+
+      printf (gettext ("Fetching %s..."), download_parts->items[i]);
+      /* download/resume */
+      curl_rv = slapt_download_data (f, download_parts->items[i], file_size, NULL, slapt_config);
+      if (curl_rv == 0) {
+        printf (gettext ("Done\n"));
+      } else {
+        printf (gettext ("Failed\n"));
+        exit (EXIT_FAILURE);
+      }
+
+      /* verify checksum of downloaded file */
+      slapt_gen_md5_sum_of_file (f, md5sum_to_prove);
+      if (strcmp (md5sum_to_prove, md5sum) != 0 ) {
+        printf (gettext ("MD5SUM mismatch for %s\n"), filename);
+        exit (EXIT_FAILURE);
+      }
+
     }
 
+    fclose (f);
     free (filename);
   }
 
