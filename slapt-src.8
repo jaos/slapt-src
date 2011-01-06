@@ -1,140 +1,107 @@
-.\" -*- nroff -*-
-.ds g \" empty
-.ds G \" empty
-.\" Like TP, but if specified indent is more than half
-.\" the current line-length - indent, use the default indent.
-.de Tp
-.ie \\n(.$=0:((0\\$1)*2u>(\\n(.lu-\\n(.iu)) .TP
-.el .TP "\\$1"
-..
-.TH slapt-src 8 
+.TH slapt-src 8 2011-01-06
+
 .SH NAME
 slapt-src \- slackbuild utility
+
 .SH SYNOPSIS
 .B slapt-src
-[
-.BI option(s)
-]
-[
-.BI action
-]
+[\fIOPTION\fR]... [\fIACTION\fR]
 .LP
 .B options:
-[
-.B --yes | -y
-]
-[
-.B --config | -c
-]
-[
-.B --no-dep | -n
-]
-[
-.B --postprocess | -p
-]
+\fB--yes\fR|\fB-y\fR,
+\fB--config\fR|\fB-c\fR \fIFILE\fR,
+\fB--no-dep\fR|\fB-n\fR,
+\fB--postprocess\fR|\fB-p\fr
 .LP
-.B action:
-[
-.B --update|-u
-]
-[
-.B --list   |-l
-]
-[
-.B --clean  |-e
-]
-[
-.B --search |-s
-]
-[
-.B --show   |-w
-]
-[
-.B --install|-i
-]
-[
-.B --build  |-b
-]
-[
-.B --fetch  |-f
-]
+.B actions:
+\fB--update\fR|\fB-u\fR,
+\fB--list\fR|\fB-l\fR,
+\fB--clean\fR|\fB-e\fR,
+\fB--search\fR|\fB-s\fR,
+\fB--show\fR|\fB-w\fR,
+\fB--install\fR|\fB-i\fR,
+\fB--build\fR|\fB-b\fR,
+\fB--fetch\fR|\fB-f\fR
+
 .SH DESCRIPTION
 .B slapt-src
 is a utility to make querying, retrieving, and building slackbuilds
-as easy as working with binary packages with slapt-get.
+as easy as working with binary packages with \fBslapt-get\fR.
+
 .SH OPTIONS
 .TP
-.B --yes | -y
-Do not prompt
+\fB\-\-yes\fR, \fB\-y\fR
+Do not prompt.
 .TP
-.B --config | -c [configuration file]
-Use the specified configuration file instead of /etc/slapt-get/slapt-srcrc
+\fB\-\-config\fR, \fB\-c\fR \fIFILE\fR
+Use the specified configuration file instead of \fI/etc/slapt-get/slapt-srcrc\fR.
 .TP
-.B --no-dep | -n
+\fB\-\-no\-dep\fR, \fB\-n\fR
 Do not look for dependencies.
 .TP
-.B --postprocess | -p [command]
-Run specified command on generated package after the package is created.  This is handy for transforming packages into SLAX/Linux-Live modules using the various *2lzm utilities.
+\fB\-\-postprocess\fR, \fB\-p\fR \fICOMMAND\fR
+Run specified command on generated package after the package is created.
+This is handy for transforming packages into SLAX/Linux-Live modules using
+the various *2lzm utilities.
+
 .SH ACTIONS
 .TP
-.B --update|-u
+\fB\-\-update\fR, \fB\-u\fR
 Update the local cache of remote slackbuilds.
 .TP
-.B --list|-l
+\fB\-\-list\fR, \fB\-l\fR
 List available slackbuilds from enabled remote slackbuild sources.
 .TP
-.B --clean|-e
+\fB\-\-clean\fR, \fB\-e\fR
 Clean out the build directories for prior built slackbuilds.
 .TP
-.B --search|-s [expression(s)]
+\fB\-\-search\fR, \fB\-s\fR \fIexpression\fR...
 Search available slackbuilds from enabled remote slackbuild sources.
 .TP
-.B --show|-w [expression(s)]
+\fB\-\-show\fR, \fB\-w\fR \fIname\fR...
 Show information about specified slackbuilds.
 .TP
-.B --install|-i [expression(s)]
-Fetch, build, and install the specified slackbuild(s).  The named slackbuild can be postfixed by a colon followed by a version string to specify the exact version if multiple versions are available.  For example, given foo-1.0 and foo-1.2, specifying foo:1.2 specifies the preference for the later.
+\fB\-\-install\fR, \fB\-i\fR \fIname\fR...
+Fetch, build, and install the specified slackbuilds.  The named slackbuilds
+can be postfixed by a colon followed by a version string to specify the exact
+version if multiple versions are available.  For example, given \fIfoo-1.0\fR and
+\fIfoo-1.2\fR, specifying \fIfoo:1.2\fR specifies the preference for the later.
 .TP
-.B --build|-b [expression(s)]
-Only fetch and build the specified slackbuild(s).
+\fB\-\-build\fR, \fB\-b\fR \fIname\fR...
+Only fetch and build the specified slackbuilds.
 .TP
-.B --fetch|-f [expression(s)]
-Only fetch the specified slackbuild(s).
+\fB\-\-fetch\fR, \fB\-f\fR \fIname\fR...
+Only fetch the specified slackbuilds.
+
 .SH CONFIGURATION
-
 .B slapt-src
-checks The configuration file
-.B /etc/slapt-get/slapt-srcrc
-for options and slackbuild locations.
+checks The configuration file \fI/etc/slapt-get/slapt-srcrc\fR for options and
+slackbuild locations.
 
-Each slackbuild location is defined with a a 
-.B SOURCE
-token.
+Each slackbuild location is defined with a \fBSOURCE\fR token.
 
-The default package file extension is defined by specifying the
-.B PKGEXT
-token.
+The default package file extension is defined by specifying the \fBPKGEXT\fR token.
 
-The default package tag can be set by specifying the
-.B PKGTAG
-token.
+The default package tag can be set by specifying the \fBPKGTAG\fR token.
 
 An example configuration file may look like this:
+.in +4n
 .nf
+.sp
 # sample slapt-getrc
-SOURCE=http://www.slackware.org.uk/html/slapt-src/slackbuilds.org/13.1/
+SOURCE=http://www.slackware.org.uk/slackbuilds.org/13.1/
 BUILDDIR=/tmp
 PKGEXT=txz
 PKGTAG=me
 .fi
-
-
+.in
 
 .SH AUTHOR
 Jason Woodward <woodwardj@jaos.org>
+
 .SH "SEE ALSO"
-.BR installpkg(8),
-.BR makepkg(8),
-.BR pkgtool(8), 
-.BR upgradepkg(8),
-.BR slapt-get(8)
+.BR installpkg (8),
+.BR makepkg (8),
+.BR pkgtool (8),
+.BR upgradepkg (8),
+.BR slapt-get (8)
