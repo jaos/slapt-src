@@ -33,7 +33,6 @@ extern char *optarg;
 extern int optind, opterr, optopt;
 
 static int show_summary (slapt_src_slackbuild_list *, slapt_list_t *, int, SLAPT_BOOL_T);
-static char *gen_short_pkg_description (slapt_src_slackbuild *);
 static void clean (slapt_src_config *config);
 
 void version (void)
