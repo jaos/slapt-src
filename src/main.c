@@ -443,4 +443,5 @@ static void clean (slapt_src_config *config)
       }
     }
   }
+  closedir (builddir);
 }
