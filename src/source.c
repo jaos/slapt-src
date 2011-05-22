@@ -904,7 +904,7 @@ static int slapt_src_resolve_dependencies (
   if (sb->requires == NULL)
     return 0;
 
-  requires = slapt_parse_delimited_list (sb->requires, ' ');
+  requires = slapt_parse_delimited_list (sb->requires, ',');
   if (requires == NULL)
     return 0;
 
