@@ -28,7 +28,7 @@
 #else
   #define SLAPTSRC_CMD_LEN 15
   #define SLAPTSRC_CMD "sh"
-  #define SLAPTSRC_SLKBUILD_CMD_LEN 11
+  #define SLAPTSRC_SLKBUILD_CMD_LEN 12
   #define SLAPTSRC_SLKBUILD_CMD "slkbuild -X"
 #endif
 
