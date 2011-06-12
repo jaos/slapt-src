@@ -127,6 +127,7 @@ int main (int argc, char *argv[])
     {"update",      no_argument,        0, UPDATE_OPT},
     {"list",        no_argument,        0, LIST_OPT},
     {"clean",       no_argument,        0, CLEAN_OPT},
+    {"e",           no_argument,        0, CLEAN_OPT},
     {"search",      required_argument,  0, SEARCH_OPT},
     {"s",           required_argument,  0, SEARCH_OPT},
     {"show",        required_argument,  0, SHOW_OPT},
@@ -137,6 +138,7 @@ int main (int argc, char *argv[])
     {"yes",         no_argument,        0, YES_OPT},
     {"no-dep",      no_argument,        0, NODEP_OPT},
     {"config",      required_argument,  0, CONFIG_OPT},
+    {"c",           required_argument,  0, CONFIG_OPT},
     {"postprocess", required_argument,  0, POSTCMD_OPT},
     {0, 0, 0, 0}
   };
