@@ -1,4 +1,13 @@
 
+0.3.2 Jun  12, 2011
+ * make sure to accept short hand --clean (-e) and short hand --config (-c)
+ * mention --help and --version in the manual
+ * SLAPTSRC_SLKBUILD_CMD_LEN too short when using SLKBUILDS
+ * removed unimplemented function declaration
+ * SLACKBUILD_REQUIRES is comma delimited
+ * close builddir after clean
+ * updated slapt-srcrc for 13.37 sources
+
 0.3.1a Jan  06, 2011
 * Igor reformatted the slapt-src man page
 
