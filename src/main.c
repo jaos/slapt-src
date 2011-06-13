@@ -58,6 +58,8 @@ void version (void)
 void help (void)
 {
   printf (gettext ("%s - A SlackBuild utility\n"), PACKAGE);
+  printf ("  --version |-v\n");
+  printf ("  --help    |-h\n");
   printf (gettext ("Usage: %s [action]\n"), PACKAGE);
   printf ("  --update |-u  - %s\n", gettext ("update local cache of remote slackbuilds"));
   printf ("  --list   |-l  - %s\n", gettext ("list available slackbuilds"));
