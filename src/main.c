@@ -58,22 +58,22 @@ void version (void)
 void help (void)
 {
   printf (gettext ("%s - A SlackBuild utility\n"), PACKAGE);
-  printf ("  --version |-v\n");
-  printf ("  --help    |-h\n");
-  printf (gettext ("Usage: %s [action]\n"), PACKAGE);
-  printf ("  --update |-u  - %s\n", gettext ("update local cache of remote slackbuilds"));
-  printf ("  --list   |-l  - %s\n", gettext ("list available slackbuilds"));
-  printf ("  --clean  |-e  - %s\n", gettext ("clean build directory"));
   printf (gettext ("Usage: %s [option(s)] [action] [slackbuild(s)]\n"), PACKAGE);
-  printf ("  --search      |-s  - %s\n", gettext ("search available slackbuilds"));
-  printf ("  --show        |-w  - %s\n", gettext ("show specified slackbuilds"));
-  printf ("  --install     |-i  - %s\n", gettext ("fetch, build, and install the specified slackbuild(s)"));
-  printf ("  --build       |-b  - %s\n", gettext ("only fetch and build the specified slackbuild(s)"));
-  printf ("  --fetch       |-f  - %s\n", gettext ("only fetch the specified slackbuild(s)"));
-  printf ("  --yes         |-y  - %s\n", gettext ("do not prompt"));
-  printf ("  --config      |-c  - %s\n", gettext ("use the specified configuration file"));
-  printf ("  --no-dep      |-n  - %s\n", gettext ("do not look for dependencies"));
-  printf ("  --postprocess |-p  - %s\n", gettext ("run specified command on generated package"));
+  printf ("  -u, --update           %s\n", gettext ("update local cache of remote slackbuilds"));
+  printf ("  -l, --list             %s\n", gettext ("list available slackbuilds"));
+  printf ("  -e, --clean            %s\n", gettext ("clean build directory"));
+  printf ("  -s, --search           %s\n", gettext ("search available slackbuilds"));
+  printf ("  -w, --show             %s\n", gettext ("show specified slackbuilds"));
+  printf ("  -i, --install          %s\n", gettext ("fetch, build, and install the specified slackbuild(s)"));
+  printf ("  -b, --build            %s\n", gettext ("only fetch and build the specified slackbuild(s)"));
+  printf ("  -f, --fetch            %s\n", gettext ("only fetch the specified slackbuild(s)"));
+  printf ("  -v, --version\n");
+  printf ("  -h, --help\n");
+  printf (" %s:\n", gettext ("Options") );
+  printf ("  -y, --yes              %s\n", gettext ("do not prompt"));
+  printf ("  -c, --config=FILE      %s\n", gettext ("use the specified configuration file"));
+  printf ("  -n, --no-dep           %s\n", gettext ("do not look for dependencies"));
+  printf ("  -p, --postprocess=CMD  %s\n", gettext ("run specified command on generated package"));
 }
 
 #define VERSION_OPT 'v'

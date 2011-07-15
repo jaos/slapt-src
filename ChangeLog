@@ -1,4 +1,7 @@
 
+0.3.2a Jul 15, 2011
+ * updated --help output (thanks Igor)
+
 0.3.2 Jun  12, 2011
  * make sure to accept short hand --clean (-e) and short hand --config (-c)
  * mention --help and --version in the manual

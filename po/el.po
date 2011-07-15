@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-31 21:14+0000\n"
+"POT-Creation-Date: 2011-07-15 23:00+0000\n"
 "PO-Revision-Date: 2010-11-05 00:35+0200\n"
 "Last-Translator: George Vlahavas <vlahavas~at~gmail~dot~com>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -100,6 +101,9 @@ msgstr "Αδυναμία εύρεσης του slackbuild: το %s απαιτε�
 msgid "No BUILDDIR specified in the configuration\n"
 msgstr "Δεν έχει προσδιοριστεί το BUILDDIR στις ρυθμίσεις\n"
 
+msgid "Options"
+msgstr ""
+
 #, c-format
 msgid "SlackBuild Category: %s\n"
 msgstr "Κατηγορία SlackBuild: %s\n"
@@ -126,7 +130,8 @@ msgstr "Έκδοση SlackBuild: %s\n"
 
 #, c-format
 msgid "The following dependent slackbuilds will be built and installed:\n"
-msgstr "Οι ακόλουθες slackbuild εξαρτήσεις θα δημιουργηθούν και θα εγκατασταθούν:\n"
+msgstr ""
+"Οι ακόλουθες slackbuild εξαρτήσεις θα δημιουργηθούν και θα εγκατασταθούν:\n"
 
 #, c-format
 msgid "The following packages will be %s:\n"
@@ -139,10 +144,6 @@ msgstr "Αδυναμία εύρεσης όλων των slackbuilds.\n"
 #, c-format
 msgid "Unable to find generated package\n"
 msgstr "Αδυναμία εύρεσης του πακέτου που δημιουργήθηκε\n"
-
-#, c-format
-msgid "Usage: %s [action]\n"
-msgstr "Χρήση: %s [ενέργεια]\n"
 
 #, c-format
 msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
@@ -192,4 +193,3 @@ msgstr "ενημέρωση τοπικής αποθήκης απομακρυσμ�
 
 msgid "use the specified configuration file"
 msgstr "προσδιορίστε εναλλακτική τοποθεσία για το αρχείο ρυθμίσεων"
-

@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-31 21:14+0000\n"
+"POT-Creation-Date: 2011-07-15 23:00+0000\n"
 "PO-Revision-Date: 2010-10-04 20:22-0300\n"
 "Last-Translator: seacat <seacat.linux@gmail.com>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -98,6 +99,9 @@ msgstr "Slackbuild faltante: %s necesita %s\n"
 msgid "No BUILDDIR specified in the configuration\n"
 msgstr "No se especificó BUILDDIR en la configuración\n"
 
+msgid "Options"
+msgstr ""
+
 #, c-format
 msgid "SlackBuild Category: %s\n"
 msgstr "Categoría de slackBuild: %s\n"
@@ -137,10 +141,6 @@ msgstr "Imposible encontrar todos los slackbuilds especificados.\n"
 #, c-format
 msgid "Unable to find generated package\n"
 msgstr "No se puede encontrar el paquete generado\n"
-
-#, c-format
-msgid "Usage: %s [action]\n"
-msgstr "Uso: %s [acción]\n"
 
 #, c-format
 msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
