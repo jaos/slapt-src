@@ -1,0 +1,111 @@
+.TH slapt-src 8 2011-06-27
+
+.SH ИМЯ
+slapt-src \- утилита для SlackBuild'ов
+
+.SH ИСПОЛЬЗОВАНИЕ
+.B slapt-src
+[\fIОПЦИЯ\fR]... [\fIДЕЙСТВИЕ\fR]
+.LP
+.B опции:
+\fB--yes\fR|\fB-y\fR,
+\fB--config\fR|\fB-c\fR \fIFILE\fR,
+\fB--no-dep\fR|\fB-n\fR,
+\fB--postprocess\fR|\fB-p\fr
+.LP
+.B действия:
+\fB--update\fR|\fB-u\fR,
+\fB--list\fR|\fB-l\fR,
+\fB--clean\fR|\fB-e\fR,
+\fB--search\fR|\fB-s\fR,
+\fB--show\fR|\fB-w\fR,
+\fB--install\fR|\fB-i\fR,
+\fB--build\fR|\fB-b\fR,
+\fB--fetch\fR|\fB-f\fR,
+\fB--version\fR|\fB-v\fr,
+\fB--help\fR|\fB-h\fr
+
+.SH ОПИСАНИЕ
+.B slapt-src
+это утилита, которая призвана сделать работу со slackbuild'ами такой же простой
+как работу с бинарными пакетами с помощью \fBslapt-get\fR.
+Она позволяет запрашивать информацию о slackbuild'ах, получать их и собирать.
+
+.SH ОПЦИИ
+.TP
+\fB\-\-yes\fR, \fB\-y\fR
+Не задавать вопросов.
+.TP
+\fB\-\-config\fR, \fB\-c\fR \fIФАЙЛ\fR
+Указать расположение конфигурационного файла, который будет использоваться
+вместо \fI/etc/slapt-get/slapt-srcrc\fR.
+.TP
+\fB\-\-no\-dep\fR, \fB\-n\fR
+Не проверять зависимости.
+.TP
+\fB\-\-postprocess\fR, \fB\-p\fR \fIКОМАНДА\fR
+Выполнить указанную команду для сгенерированного пакета после того как он будет
+создан. Это удобно, например, для преобразования пакетов в модули для SLAX Linux
+при помощи различных *2lzm утилит.
+
+.SH ДЕЙСТВИЯ
+.TP
+\fB\-\-update\fR, \fB\-u\fR
+Обновить локальный кэш slackbuild'ов с сервера.
+.TP
+\fB\-\-list\fR, \fB\-l\fR
+Перечислить slackbuild'ы доступные на указанных вами источниках.
+.TP
+\fB\-\-clean\fR, \fB\-e\fR
+Удалить каталоги сборки оставшиеся от ранее собранных slackbuild'ов.
+.TP
+\fB\-\-search\fR, \fB\-s\fR \fIвыражение\fR...
+Поиск в slackbuild'ах доступных на прописанных вами источниках.
+.TP
+\fB\-\-show\fR, \fB\-w\fR \fIимя\fR...
+Показать информацию об указанных slackbuild'ах.
+.TP
+\fB\-\-install\fR, \fB\-i\fR \fIимя\fR...
+Получить, собрать и установить указанные slackbuild'ы. После имени slackbuild'а
+через двоеточие можно указать версию, чтобы установить какую-то конкретную
+версию, если доступно несколько разных версий. Например, если есть \fIfoo-1.0\fR
+и \fIfoo-1.2\fR, то указав \fIfoo:1.2\fR вы сделаете выбор в пользу последнего.
+.TP
+\fB\-\-build\fR, \fB\-b\fR \fIимя\fR...
+Получить и собрать указанные slackbuild'ы.
+.TP
+\fB\-\-fetch\fR, \fB\-f\fR \fIимя\fR...
+Только получить указанные slackbuild'ы.
+
+.SH НАСТРОЙКА
+.B slapt-src
+считывает настройки и расположение slackbuild'ов из конфигурационного файла
+\fI/etc/slapt-get/slapt-srcrc\fR.
+
+Источники slackbuild'ов определяются с помощью метки \fBSOURCE\fR.
+
+Расширение по умолчанию для пакетов задаётся с помощью \fBPKGEXT\fR.
+
+Тег пакетов по умолчанию можно задать с помощью \fBPKGTAG\fR.
+
+Ниже приведён пример конфигурационного файла:
+.in +4n
+.nf
+.sp
+# пример slapt-srcrc
+SOURCE=http://www.slackware.org.uk/slackbuilds.org/13.1/
+BUILDDIR=/tmp
+PKGEXT=txz
+PKGTAG=me
+.fi
+.in
+
+.SH АВТОР
+Jason Woodward <woodwardj@jaos.org>
+
+.SH "СМОТРИ ТАКЖЕ"
+.BR installpkg (8),
+.BR makepkg (8),
+.BR pkgtool (8),
+.BR upgradepkg (8),
+.BR slapt-get (8)

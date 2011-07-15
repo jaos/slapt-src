@@ -1,7 +1,7 @@
 SUBDIRS = src po
 
 SLACK_FILES = slack-desc slack-required slapt-srcrc
-EXTRA_DIST = $(SLACK_FILES) slapt-src.8
+EXTRA_DIST = $(SLACK_FILES) slapt-src.8 slapt-src.ru.8
 
 PKGDIR=`pwd`/pkg
 
@@ -18,6 +18,9 @@ install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(mandir)/man8
 	install slapt-src.8 $(DESTDIR)$(mandir)/man8/
 	gzip -f $(DESTDIR)$(mandir)/man8/slapt-src.8
+	$(mkinstalldirs) $(DESTDIR)$(mandir)/ru/man8
+	install slapt-src.ru.8 $(DESTDIR)$(mandir)/ru/man8/slapt-src.8
+	gzip -f $(DESTDIR)$(mandir)/ru/man8/slapt-src.8
 	strip --strip-unneeded $(DESTDIR)/$(bindir)/@PACKAGE@
 	$(mkinstalldirs) $(DESTDIR)/usr/src/slapt-src
 	-chown -R root:users $(DESTDIR)/usr/src/slapt-src
