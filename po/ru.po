@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: slapt-src 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-07-15 23:00+0000\n"
-"PO-Revision-Date: 2010-10-12 01:07+0400\n"
+"PO-Revision-Date: 2011-07-16 01:07+0400\n"
 "Last-Translator: Igor Murzov <igor@gplsoft.org>\n"
 "Language-Team: slackware-current@conference.jabber.ru\n"
 "Language: \n"
@@ -97,7 +97,7 @@ msgid "No BUILDDIR specified in the configuration\n"
 msgstr "Значение BUILDDIR не задано в конфигурационном файле\n"
 
 msgid "Options"
-msgstr ""
+msgstr "Опции"
 
 #, c-format
 msgid "SlackBuild Category: %s\n"
@@ -174,7 +174,7 @@ msgid "only fetch the specified slackbuild(s)"
 msgstr "только получить указанные слакбилды"
 
 msgid "run specified command on generated package"
-msgstr ""
+msgstr "выполнить указанную команду для сгенерированного пакета"
 
 msgid "search available slackbuilds"
 msgstr "найти доступные слакбилды"
