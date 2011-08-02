@@ -1,5 +1,6 @@
 
-0.3.2a Jul 15, 2011
+0.3.2a Au  02, 2011
+ * --show now recognizes the name:version notation
  * updated --help output (thanks Igor)
 
 0.3.2 Jun  12, 2011

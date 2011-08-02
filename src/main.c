@@ -304,7 +304,15 @@ int main (int argc, char *argv[])
       {
         int c;
         for (i = 0; i < names->count; i++) {
-          slapt_src_slackbuild *sb = slapt_src_get_slackbuild (remote_sbs, names->items[i], NULL);
+          slapt_src_slackbuild *sb = NULL;
+          slapt_list_t *parts      = slapt_parse_delimited_list (names->items[i], ':');
+          const char *name         = parts->items[0];
+          const char *ver          = NULL;
+
+          if (parts->count > 1)
+            ver = parts->items[1];
+
+          sb = slapt_src_get_slackbuild (remote_sbs, name, ver);
 
           if (sb != NULL) {
 
@@ -327,6 +335,7 @@ int main (int argc, char *argv[])
 
             /* slapt_src_slackbuild_free (sb); NO FREE */
           }
+          slapt_free_list (parts);
         }
       }
     break;
