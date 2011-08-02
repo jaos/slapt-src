@@ -450,8 +450,11 @@ static void clean (slapt_src_config *config)
         int r = 0, command_len = strlen (file->d_name)+8;
         char *command = slapt_malloc (sizeof *command * command_len);
         r = snprintf (command, command_len, "rm -rf %s", file->d_name);
-        if (r+1 == command_len)
-          system (command);
+        if (r+1 == command_len) {
+          int sys_r = system (command);
+          if (sys_r != 0)
+            exit (EXIT_FAILURE);
+        }
       }
     }
   }
