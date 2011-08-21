@@ -3,10 +3,10 @@
 # This file is distributed under the same license as the slapt-src package.
 msgid ""
 msgstr ""
-"Project-Id-Version: slapt-src 0.1\n"
+"Project-Id-Version: slapt-src 0.3.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-07-15 23:00+0000\n"
-"PO-Revision-Date: 2011-07-16 01:07+0400\n"
+"PO-Revision-Date: 2011-08-21 01:07+0400\n"
 "Last-Translator: Igor Murzov <igor@gplsoft.org>\n"
 "Language-Team: slackware-current@conference.jabber.ru\n"
 "Language: \n"
@@ -183,7 +183,7 @@ msgid "show specified slackbuilds"
 msgstr "показать указанные слакбилды"
 
 msgid "update local cache of remote slackbuilds"
-msgstr "обновить локальный кеш удалённых слакбилдов"
+msgstr "обновить локальный кэш удалённых слакбилдов"
 
 msgid "use the specified configuration file"
 msgstr "использовать указанный конфигурационный файл"
