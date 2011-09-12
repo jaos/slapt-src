@@ -203,7 +203,7 @@ int main (int argc, char *argv[])
 
   /* honor command line option */
   config->do_dep = do_dep;
-  config->postcmd = postcmd;
+  config->postcmd = postcmd; /* to be freed in slapt_src_config_free */
 
   init_builddir (config);
   if ( (chdir (config->builddir)) != 0) {
