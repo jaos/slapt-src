@@ -1,5 +1,8 @@
 
-0.3.2a Au  02, 2011
+0.3.2b Oct  05, 2011
+ * --build name:version no longer auto installs
+
+0.3.2a Aug  02, 2011
  * --show now recognizes the name:version notation
  * updated --help output (thanks Igor)
 

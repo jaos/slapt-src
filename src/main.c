@@ -253,14 +253,22 @@ int main (int argc, char *argv[])
     case BUILD_OPT:
       for (i = 0; i < sbs->count; i++) {
         slapt_src_slackbuild *sb = sbs->slackbuilds[i];
+        int r = 0, nv_len = strlen (sb->name) + strlen (sb->version) + 2;
+        char *namever = slapt_malloc (sizeof *namever * nv_len);
+        r = snprintf (namever, nv_len, "%s:%s", sb->name, sb->version);
+        
+        if (r+1 != nv_len)
+           exit (EXIT_FAILURE);
 
         slapt_src_fetch_slackbuild (config, sb);
         slapt_src_build_slackbuild (config, sb);
 
         /* XXX we assume if we didn't request the slackbuild, then
            it is a dependency, and needs to be installed */
-        if (slapt_search_list (names, sb->name) == NULL)
+        if (slapt_search_list (names, sb->name) == NULL && slapt_search_list (names, namever) == NULL)
           slapt_src_install_slackbuild (config, sbs->slackbuilds[i]);
+
+        free (namever);
       }
     break;
 
