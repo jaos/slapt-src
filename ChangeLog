@@ -1,4 +1,7 @@
 
+0.3.2c Oct  15, 2011
+ * drop extra version comparison in finding the generated package
+
 0.3.2b Oct  05, 2011
  * --build name:version no longer auto installs
 

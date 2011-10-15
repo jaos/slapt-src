@@ -697,8 +697,12 @@ static char *_get_pkg_filename (const char *version, const char *pkgtag)
     if (pkg_regex->reg_return != 0)
       continue;
 
+    /* version from .info file may not match resulting
+       pkg version
+        libva: VERSION="0.31.1-1+sds4" and VERSION=0.31.1_1+sds4
     if (strstr (file->d_name, version) == NULL)
       continue;
+      */
 
     if (pkgtag != NULL)
       if (strstr (file->d_name, pkgtag) == NULL)
