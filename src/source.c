@@ -373,7 +373,7 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
 
   /* support reading from gzip'd files */
   if (strstr (datafile, ".gz") != NULL) {
-    gzFile *data = NULL;
+    gzFile data = NULL;
     char gzbuffer[SLAPT_MAX_ZLIB_BUFFER];
 
     if ((f = tmpfile ()) == NULL)
