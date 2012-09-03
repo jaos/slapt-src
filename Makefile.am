@@ -27,7 +27,8 @@ install-data-local:
 	-chmod g+s $(DESTDIR)/usr/src/slapt-src
 	$(mkinstalldirs) $(DESTDIR)/$(datadir)/doc/@PACKAGE@
 	install COPYING ChangeLog README TODO $(DESTDIR)/$(datadir)/doc/@PACKAGE@/
-	-chown -R $$(stat --format "%u:%g" $(bindir)) $(DESTDIR)/$(bindir)
+	-chown $$(stat --format "%u:%g" $(bindir)) $(DESTDIR)/$(bindir)
+	-chown $$(stat --format "%u:%g" $(bindir)) $(DESTDIR)/$(bindir)/@PACKAGE@
 
 pkg: all
 	$(MAKE) install DESTDIR=$(PKGDIR)
