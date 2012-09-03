@@ -1,4 +1,7 @@
 
+0.3.2d Sep  03, 2012
+ * add explicit openssl autoconf check
+
 0.3.2c Apr  23, 2012
  * updated zlib usage to fix "expected 'gzFile' but argument is of type
    'struct gzFile_s **'".  Thanks Igor

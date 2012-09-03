@@ -1,4 +1,4 @@
-AC_INIT([slapt-src], [0.3.2c], [slapt-get-devel@software.jaos.org])
+AC_INIT([slapt-src], [0.3.2d], [slapt-get-devel@software.jaos.org])
 AM_INIT_AUTOMAKE([-Wall foreign])
 AC_CONFIG_SRCDIR([src/])
 AC_CONFIG_HEADERS([config.h])
@@ -24,6 +24,7 @@ AC_CHECK_HEADER(slapt.h, [], [AC_MSG_ERROR(libslapt headers are missing)])
 # Checks for library functions.
 AC_CHECK_LIB(z,gzopen, [LIBS="$LIBS -lz"], [AC_MSG_ERROR(libz is missing)])
 AC_CHECK_LIB(curl,curl_global_init, [LIBS="$LIBS `curl-config --libs`"], [AC_MSG_ERROR(curl libs are missing)])
+AC_CHECK_LIB(ssl,EVP_md5, [LIBS="$LIBS -lssl"], [AC_MSG_ERROR(openssl libs are missing)])
 AC_CHECK_LIB(gpgme,gpgme_new, [
     LIBS="`gpgme-config --libs` $LIBS"
     AC_CHECK_LIB(slapt,slapt_add_pkg_source_gpg_key,
