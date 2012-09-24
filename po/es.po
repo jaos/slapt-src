@@ -1,21 +1,22 @@
-# es slapt-src translation
-# Copyright (C) 2010 Jason Woodward
-# This file is distributed under the same license as the slapt-src package.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
 # seacat <seacat.linux at gmail dot com>, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: slapt-src 0.1\n"
+"Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-07-15 23:00+0000\n"
-"PO-Revision-Date: 2010-10-04 20:22-0300\n"
-"Last-Translator: seacat <seacat.linux@gmail.com>\n"
-"Language-Team: \n"
-"Language: \n"
+"PO-Revision-Date: 2012-09-17 22:12+0000\n"
+"Last-Translator: gapan <vlahavas@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Spanish\n"
-"X-Poedit-Country: SPAIN\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
 msgid "%s - A SlackBuild utility\n"

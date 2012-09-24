@@ -1,21 +1,22 @@
-# Copyright (C) 2010 <jrd@enialis.net>
-# This file is distributed under the same license as the slapt-src package.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
 # Cyrille Pontvieux <jrd@enialis.net>, 2010.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: slapt-src\n"
+"Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-07-15 23:00+0000\n"
-"PO-Revision-Date: 2010-10-12 02:12+0100\n"
-"Last-Translator: Cyrille Pontvieux <jrd@enialis.net>\n"
-"Language-Team:  <jrd@enialis.net>\n"
-"Language: \n"
+"PO-Revision-Date: 2012-09-17 22:12+0000\n"
+"Last-Translator: gapan <vlahavas@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #, c-format
 msgid "%s - A SlackBuild utility\n"
@@ -89,9 +90,7 @@ msgstr "Les sommes de contrôle (md5sum) ne correspondent pas pour %s\n"
 
 #, c-format
 msgid "Mismatch between download files and md5sums\n"
-msgstr ""
-"Incohérence entre les fichiers téléchargés et les sommes de contrôle "
-"(md5sum)\n"
+msgstr "Incohérence entre les fichiers téléchargés et les sommes de contrôle (md5sum)\n"
 
 #, c-format
 msgid "Missing slackbuild: %s requires %s\n"
@@ -148,7 +147,6 @@ msgstr ""
 msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
 msgstr "Utilisation : %s [option(s)] [action] [slackbuild(s)]\n"
 
-# "The following packages will be %s:\n" has not been gettextified!
 msgid "built"
 msgstr "construits"
 

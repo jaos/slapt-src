@@ -1,22 +1,22 @@
-# hu slapt-src translation
-# Copyright (C) 2010 Jason Woodward
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Peter Polonkai <polesz at nedudu dot hu>, 2010
-#
+# 
+# Translators:
+# Peter Polonkai <polesz at nedudu dot hu>, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: slapt-src 0.3\n"
+"Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-07-15 23:00+0000\n"
-"PO-Revision-Date: 2010-11-10 21:29+0100\n"
-"Last-Translator: Peter Polonkai <polesz@nedudu.hu>\n"
-"Language-Team: ned <polesz@nedudu.hu>\n"
-"Language: \n"
+"PO-Revision-Date: 2012-09-17 22:12+0000\n"
+"Last-Translator: gapan <vlahavas@gmail.com>\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/slapt-get/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Hungarian\n"
-"X-Poedit-Country: HUNGARY\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
 msgid "%s - A SlackBuild utility\n"
@@ -58,8 +58,7 @@ msgstr "Nem sikerült a fordítási könyvtárba lépni"
 
 #, c-format
 msgid "Failed to construct command string\n"
-msgstr ""
-"Nem sikerült a parancs végrehajtásához szükséges szöveg összeállítása\n"
+msgstr "Nem sikerült a parancs végrehajtásához szükséges szöveg összeállítása\n"
 
 #, c-format
 msgid "Failed to create build directory [%s]\n"
@@ -161,8 +160,7 @@ msgid "do not prompt"
 msgstr "nem kérdez"
 
 msgid "fetch, build, and install the specified slackbuild(s)"
-msgstr ""
-"a meghatározott slackbuild csomag(ok) letöltése, fordítása és telepítése"
+msgstr "a meghatározott slackbuild csomag(ok) letöltése, fordítása és telepítése"
 
 msgid "fetched"
 msgstr "fogadott"
