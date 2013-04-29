@@ -1,0 +1,193 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Yarema aka Knedlyk <yupadmin@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: slapt-get\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-07-15 23:00+0000\n"
+"PO-Revision-Date: 2013-04-29 08:36+0000\n"
+"Last-Translator: Jason Woodward <woodwardj@jaos.org>\n"
+"Language-Team: Ukrainian (http://www.transifex.com/projects/p/slapt-get/language/uk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: uk\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#, c-format
+msgid "%s - A SlackBuild utility\n"
+msgstr "%s - утиліта для SlackBuild\n"
+
+#, c-format
+msgid "%s version %s\n"
+msgstr "%s версія %s\n"
+
+#, c-format
+msgid "Abort.\n"
+msgstr "Перервати.\n"
+
+#, c-format
+msgid "Cached\n"
+msgstr "Збережено\n"
+
+msgid "Do you want to continue? [y/N] "
+msgstr "Продовжити? [y/N] "
+
+#, c-format
+msgid "Done\n"
+msgstr "Готово\n"
+
+#, c-format
+msgid "Download failed: %s\n"
+msgstr "Звантаження не вдалося: %s\n"
+
+#, c-format
+msgid "Failed\n"
+msgstr "Не вдалося\n"
+
+#, c-format
+msgid "Failed to chdir to %s\n"
+msgstr "Не можу перейти в каталог %s.\n"
+
+msgid "Failed to chdir to build directory"
+msgstr "Не вдалося перейти до теки збирання"
+
+#, c-format
+msgid "Failed to construct command string\n"
+msgstr "Не вдалося створити командну стрічку\n"
+
+#, c-format
+msgid "Failed to create build directory [%s]\n"
+msgstr "Не вдалося створити теку збирання [%s]\n"
+
+#, c-format
+msgid "Failed to open %s for reading\n"
+msgstr "Не в змозі відкрити %s для читання\n"
+
+#, c-format
+msgid "Failed to open current directory\n"
+msgstr "Неможливо відкрити поточну теку\n"
+
+#, c-format
+msgid "Failed to read %s\n"
+msgstr "Не в змозі прочитати %s\n"
+
+#, c-format
+msgid "Fetching %s..."
+msgstr "Отримую %s..."
+
+#, c-format
+msgid "Fetching slackbuild list from %s..."
+msgstr "Отримання списку slackbuild'ів з %s..."
+
+#, c-format
+msgid "MD5SUM mismatch for %s\n"
+msgstr "MD5SUM не співпадає для %s\n"
+
+#, c-format
+msgid "Mismatch between download files and md5sums\n"
+msgstr "Невідповідність між звантаженими файлами і контрольною сумою md5sums\n"
+
+#, c-format
+msgid "Missing slackbuild: %s requires %s\n"
+msgstr "Пропущено slackbuild: %s потребує %s\n"
+
+#, c-format
+msgid "No BUILDDIR specified in the configuration\n"
+msgstr "Не вказано BUILDDIR в налаштуваннях\n"
+
+msgid "Options"
+msgstr "Параметри"
+
+#, c-format
+msgid "SlackBuild Category: %s\n"
+msgstr "Категорія SlackBuild'а: %s\n"
+
+#, c-format
+msgid "SlackBuild Description: %s\n"
+msgstr "Опис SlackBuild'а: %s\n"
+
+#, c-format
+msgid "SlackBuild Files:\n"
+msgstr "Файли в SlackBuild'і:\n"
+
+#, c-format
+msgid "SlackBuild Name: %s\n"
+msgstr "Назва SlackBuild'а: %s\n"
+
+#, c-format
+msgid "SlackBuild Requires: %s\n"
+msgstr "SlackBuild потребує: %s\n"
+
+#, c-format
+msgid "SlackBuild Version: %s\n"
+msgstr "Версія SlackBuild'а: %s\n"
+
+#, c-format
+msgid "The following dependent slackbuilds will be built and installed:\n"
+msgstr "Наступні slackbuild-залежності будуть зібрані і встановлені:\n"
+
+#, c-format
+msgid "The following packages will be %s:\n"
+msgstr "Наступні пакунки будуть %s:\n"
+
+#, c-format
+msgid "Unable to find all specified slackbuilds.\n"
+msgstr "Неможливо знайти всі вказані slackbuild'и.\n"
+
+#, c-format
+msgid "Unable to find generated package\n"
+msgstr "Неможливо знайти створений пакунок\n"
+
+#, c-format
+msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
+msgstr "Використання: %s [опція(ї)] [дія] [slackbuild(и)]\n"
+
+msgid "built"
+msgstr "зібрано"
+
+msgid "clean build directory"
+msgstr "очистити теку збирання"
+
+msgid "do not look for dependencies"
+msgstr "не шукати залежності"
+
+msgid "do not prompt"
+msgstr "не запитувати"
+
+msgid "fetch, build, and install the specified slackbuild(s)"
+msgstr "отримати, зібрати і встановити вказаний slackbuild(и)"
+
+msgid "fetched"
+msgstr "отримано"
+
+msgid "installed"
+msgstr "встановлено"
+
+msgid "list available slackbuilds"
+msgstr "список доступних slackbuild'ів"
+
+msgid "only fetch and build the specified slackbuild(s)"
+msgstr "тільки отримати і зібрати вказаний slackbuild(и)"
+
+msgid "only fetch the specified slackbuild(s)"
+msgstr "тільки отримати вказаний slackbuild(и)"
+
+msgid "run specified command on generated package"
+msgstr "запустити вказану команду у створеному пакунку"
+
+msgid "search available slackbuilds"
+msgstr "шукати доступні slackbuild'и"
+
+msgid "show specified slackbuilds"
+msgstr "показати вказані slackbuild'и"
+
+msgid "update local cache of remote slackbuilds"
+msgstr "оновити локальний кеш віддалених slackbuild'ів"
+
+msgid "use the specified configuration file"
+msgstr "використовувати вказаний файл налаштувань"
