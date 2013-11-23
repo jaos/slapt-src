@@ -1,6 +1,6 @@
 # preferred mirror
-SOURCE=http://www.slackware.org.uk/slackbuilds.org/13.37/
+SOURCE=http://www.slackware.org.uk/slackbuilds.org/14.0/
 # official source
-#SOURCE=http://www.slackbuilds.org/slackbuilds/13.37/
+#SOURCE=http://www.slackbuilds.org/slackbuilds/14.0/
 BUILDDIR=/usr/src/slapt-src
 PKGEXT=txz
