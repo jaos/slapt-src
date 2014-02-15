@@ -1,4 +1,7 @@
 
+0.3.2f Feb  14, 2014
+ * tweak search to return exact name matches in case of regex characters
+
 0.3.2e Apr  29, 2013
  * Updated translations
 

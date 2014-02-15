@@ -1015,6 +1015,11 @@ slapt_src_slackbuild_list *slapt_src_search_slackbuild_cache (slapt_src_slackbui
     for (i = 0; i < remote_sbs->count; i++) {
       int name_r = -1, version_r = -1, short_desc_r = -1;
 
+      if (strcmp (remote_sbs->slackbuilds[i]->name, names->items[n]) == 0) {
+        slapt_src_slackbuild_list_add (sbs, remote_sbs->slackbuilds[i]);
+        continue;
+      }
+
       slapt_execute_regex (search_regex, remote_sbs->slackbuilds[i]->name);
       name_r    = search_regex->reg_return;
 
