@@ -1,0 +1,192 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: slapt-get\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-07-15 23:00+0000\n"
+"PO-Revision-Date: 2012-09-17 22:00+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Polish (http://www.transifex.com/projects/p/slapt-get/language/pl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#, c-format
+msgid "%s - A SlackBuild utility\n"
+msgstr ""
+
+#, c-format
+msgid "%s version %s\n"
+msgstr "%s wersja %s\n"
+
+#, c-format
+msgid "Abort.\n"
+msgstr "Koniec.\n"
+
+#, c-format
+msgid "Cached\n"
+msgstr "Zachowane\n"
+
+msgid "Do you want to continue? [y/N] "
+msgstr "Czy chcesz kontynuować? [y/N] "
+
+#, c-format
+msgid "Done\n"
+msgstr "Gotowe\n"
+
+#, c-format
+msgid "Download failed: %s\n"
+msgstr ""
+
+#, c-format
+msgid "Failed\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to chdir to %s\n"
+msgstr "Zmiana katalogu na %s nie powiodła się.\n"
+
+msgid "Failed to chdir to build directory"
+msgstr ""
+
+#, c-format
+msgid "Failed to construct command string\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to create build directory [%s]\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to open %s for reading\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to open current directory\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to read %s\n"
+msgstr ""
+
+#, c-format
+msgid "Fetching %s..."
+msgstr ""
+
+#, c-format
+msgid "Fetching slackbuild list from %s..."
+msgstr ""
+
+#, c-format
+msgid "MD5SUM mismatch for %s\n"
+msgstr ""
+
+#, c-format
+msgid "Mismatch between download files and md5sums\n"
+msgstr ""
+
+#, c-format
+msgid "Missing slackbuild: %s requires %s\n"
+msgstr ""
+
+#, c-format
+msgid "No BUILDDIR specified in the configuration\n"
+msgstr ""
+
+msgid "Options"
+msgstr ""
+
+#, c-format
+msgid "SlackBuild Category: %s\n"
+msgstr ""
+
+#, c-format
+msgid "SlackBuild Description: %s\n"
+msgstr ""
+
+#, c-format
+msgid "SlackBuild Files:\n"
+msgstr ""
+
+#, c-format
+msgid "SlackBuild Name: %s\n"
+msgstr ""
+
+#, c-format
+msgid "SlackBuild Requires: %s\n"
+msgstr ""
+
+#, c-format
+msgid "SlackBuild Version: %s\n"
+msgstr ""
+
+#, c-format
+msgid "The following dependent slackbuilds will be built and installed:\n"
+msgstr ""
+
+#, c-format
+msgid "The following packages will be %s:\n"
+msgstr ""
+
+#, c-format
+msgid "Unable to find all specified slackbuilds.\n"
+msgstr ""
+
+#, c-format
+msgid "Unable to find generated package\n"
+msgstr ""
+
+#, c-format
+msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
+msgstr ""
+
+msgid "built"
+msgstr ""
+
+msgid "clean build directory"
+msgstr ""
+
+msgid "do not look for dependencies"
+msgstr ""
+
+msgid "do not prompt"
+msgstr ""
+
+msgid "fetch, build, and install the specified slackbuild(s)"
+msgstr ""
+
+msgid "fetched"
+msgstr ""
+
+msgid "installed"
+msgstr ""
+
+msgid "list available slackbuilds"
+msgstr ""
+
+msgid "only fetch and build the specified slackbuild(s)"
+msgstr ""
+
+msgid "only fetch the specified slackbuild(s)"
+msgstr ""
+
+msgid "run specified command on generated package"
+msgstr ""
+
+msgid "search available slackbuilds"
+msgstr ""
+
+msgid "show specified slackbuilds"
+msgstr ""
+
+msgid "update local cache of remote slackbuilds"
+msgstr ""
+
+msgid "use the specified configuration file"
+msgstr ""
