@@ -1,4 +1,7 @@
 
+0.3.2g Jan  12, 2015
+ * support space delimited dependency list
+
 0.3.2f Apr  05, 2014
  * slapt-get build compatibility
  * translation updates
