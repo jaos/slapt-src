@@ -1,4 +1,7 @@
 
+0.3.2h May  06, 2015
+ * skip non-deps (like %README%)
+
 0.3.2g Jan  12, 2015
  * support space delimited dependency list
 

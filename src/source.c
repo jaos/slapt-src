@@ -918,7 +918,13 @@ static int slapt_src_resolve_dependencies (
 
   for (r = 0; r < requires->count; r++) {
     const char *dep_name = requires->items[r];
-    slapt_src_slackbuild *sb_dep = slapt_src_get_slackbuild (available, dep_name, NULL);
+    slapt_src_slackbuild *sb_dep = NULL;
+
+    /* skip non-deps */
+    if (strcmp (dep_name,"%README%") == 0)
+      continue;
+
+    sb_dep = slapt_src_get_slackbuild (available, dep_name, NULL);
       
     /* we will try and resolve its dependencies no matter what,
        in case there are new deps we don't yet have */
