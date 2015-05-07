@@ -71,6 +71,7 @@ void help (void)
   printf ("  -h, --help\n");
   printf (" %s:\n", gettext ("Options") );
   printf ("  -y, --yes              %s\n", gettext ("do not prompt"));
+  printf ("  -t, --simulate         %s\n", gettext ("show what will be done"));
   printf ("  -c, --config=FILE      %s\n", gettext ("use the specified configuration file"));
   printf ("  -n, --no-dep           %s\n", gettext ("do not look for dependencies"));
   printf ("  -p, --postprocess=CMD  %s\n", gettext ("run specified command on generated package"));
@@ -90,6 +91,7 @@ void help (void)
 #define NODEP_OPT 'n'
 #define POSTCMD_OPT 'p'
 #define CLEAN_OPT 'e'
+#define SIMULATE_OPT 't'
 
 struct utsname uname_v; /* for .machine */
 
@@ -120,7 +122,7 @@ int main (int argc, char *argv[])
   slapt_src_slackbuild_list *sbs = NULL;
   slapt_src_slackbuild_list *remote_sbs = NULL;
   slapt_pkg_list_t *installed = NULL;
-  SLAPT_BOOL_T prompt = SLAPT_TRUE, do_dep = SLAPT_TRUE;
+  SLAPT_BOOL_T prompt = SLAPT_TRUE, do_dep = SLAPT_TRUE, simulate = SLAPT_FALSE;
   char *config_file = NULL, *postcmd = NULL;
 
   static struct option long_options[] = {
@@ -138,6 +140,8 @@ int main (int argc, char *argv[])
     {"build",       required_argument,  0, BUILD_OPT},
     {"install",     required_argument,  0, INSTALL_OPT},
     {"yes",         no_argument,        0, YES_OPT},
+    {"simulate",    no_argument,        0, SIMULATE_OPT},
+    {"t",           no_argument,        0, SIMULATE_OPT},
     {"no-dep",      no_argument,        0, NODEP_OPT},
     {"config",      required_argument,  0, CONFIG_OPT},
     {"c",           required_argument,  0, CONFIG_OPT},
@@ -179,6 +183,7 @@ int main (int argc, char *argv[])
       case BUILD_OPT: action = BUILD_OPT; slapt_add_list_item (names, optarg); break;
       case INSTALL_OPT: action = INSTALL_OPT; slapt_add_list_item (names, optarg); break;
       case YES_OPT: prompt = SLAPT_FALSE; break;
+      case SIMULATE_OPT: simulate = SLAPT_TRUE; break;
       case NODEP_OPT: do_dep = SLAPT_FALSE; break;
       case CONFIG_OPT: config_file = strdup (optarg); break;
       case POSTCMD_OPT: postcmd = strdup (optarg); break;
@@ -232,7 +237,8 @@ int main (int argc, char *argv[])
         }
       }
       /* provide summary */
-      action = show_summary (sbs, names, action, prompt);
+      if (!simulate)
+        action = show_summary (sbs, names, action, prompt);
     break;
   }
 
@@ -246,7 +252,11 @@ int main (int argc, char *argv[])
 
     case FETCH_OPT:
       for (i = 0; i < sbs->count; i++) {
-        slapt_src_fetch_slackbuild (config, sbs->slackbuilds[i]);
+        if (simulate) {
+          printf (gettext ("FETCH: %s\n"), sbs->slackbuilds[i]->name);
+          continue;
+        } else
+          slapt_src_fetch_slackbuild (config, sbs->slackbuilds[i]);
       }
     break;
 
@@ -259,6 +269,12 @@ int main (int argc, char *argv[])
         
         if (r+1 != nv_len)
            exit (EXIT_FAILURE);
+
+        if (simulate) {
+          printf (gettext ("BUILD: %s\n"), sb->name);
+          free (namever);
+          continue;
+        }
 
         slapt_src_fetch_slackbuild (config, sb);
         slapt_src_build_slackbuild (config, sb);
@@ -275,6 +291,11 @@ int main (int argc, char *argv[])
     case INSTALL_OPT:
       for (i = 0; i < sbs->count; i++) {
         slapt_src_slackbuild *sb = sbs->slackbuilds[i];
+
+        if (simulate) {
+          printf (gettext ("INSTALL: %s\n"), sb->name);
+          continue;
+        }
 
         slapt_src_fetch_slackbuild (config, sb);
         slapt_src_build_slackbuild (config, sb);

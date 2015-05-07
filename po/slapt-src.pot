@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-15 23:00+0000\n"
+"POT-Creation-Date: 2015-05-07 23:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,6 +30,10 @@ msgid "Abort.\n"
 msgstr ""
 
 #, c-format
+msgid "BUILD: %s\n"
+msgstr ""
+
+#, c-format
 msgid "Cached\n"
 msgstr ""
 
@@ -42,6 +46,10 @@ msgstr ""
 
 #, c-format
 msgid "Download failed: %s\n"
+msgstr ""
+
+#, c-format
+msgid "FETCH: %s\n"
 msgstr ""
 
 #, c-format
@@ -81,6 +89,10 @@ msgstr ""
 
 #, c-format
 msgid "Fetching slackbuild list from %s..."
+msgstr ""
+
+#, c-format
+msgid "INSTALL: %s\n"
 msgstr ""
 
 #, c-format
@@ -183,6 +195,9 @@ msgid "search available slackbuilds"
 msgstr ""
 
 msgid "show specified slackbuilds"
+msgstr ""
+
+msgid "show what will be done"
 msgstr ""
 
 msgid "update local cache of remote slackbuilds"

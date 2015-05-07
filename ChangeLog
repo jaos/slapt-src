@@ -1,5 +1,6 @@
 
-0.3.2h May  06, 2015
+0.3.2h May  07, 2015
+ * add -t|--simulate option
  * skip non-deps (like %README%)
 
 0.3.2g Jan  12, 2015

@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # George Vlahavas <vlahavas~at~gmail~dot~com>, 2010
 # gapan <vlahavas@gmail.com>, 2012
@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-15 23:00+0000\n"
+"POT-Creation-Date: 2015-05-07 23:06+0000\n"
 "PO-Revision-Date: 2013-11-20 13:08+0000\n"
 "Last-Translator: Jason Woodward <woodwardj@jaos.org>\n"
 "Language-Team: Greek (http://www.transifex.com/projects/p/slapt-get/language/el/)\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
@@ -32,6 +32,10 @@ msgid "Abort.\n"
 msgstr "Ακύρωση.\n"
 
 #, c-format
+msgid "BUILD: %s\n"
+msgstr ""
+
+#, c-format
 msgid "Cached\n"
 msgstr "Στη μνήμη\n"
 
@@ -45,6 +49,10 @@ msgstr "Έτοιμο\n"
 #, c-format
 msgid "Download failed: %s\n"
 msgstr "Η λήψη του αρχείου απέτυχε: %s\n"
+
+#, c-format
+msgid "FETCH: %s\n"
+msgstr ""
 
 #, c-format
 msgid "Failed\n"
@@ -84,6 +92,10 @@ msgstr "Λήψη του %s..."
 #, c-format
 msgid "Fetching slackbuild list from %s..."
 msgstr "Λήψη της λίστας slackbuild από το %s..."
+
+#, c-format
+msgid "INSTALL: %s\n"
+msgstr ""
 
 #, c-format
 msgid "MD5SUM mismatch for %s\n"
@@ -186,6 +198,9 @@ msgstr "αναζήτηση στα διαθέσιμα slackbuilds"
 
 msgid "show specified slackbuilds"
 msgstr "εμφάνιση ζητούμενο slackbuild"
+
+msgid "show what will be done"
+msgstr ""
 
 msgid "update local cache of remote slackbuilds"
 msgstr "ενημέρωση τοπικής αποθήκης απομακρυσμένων slackbuilds"
