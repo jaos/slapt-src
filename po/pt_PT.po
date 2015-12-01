@@ -1,22 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2014
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2014-2015
 # Sérgio Marques <smarquespt@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-07 23:06+0000\n"
-"PO-Revision-Date: 2014-02-02 19:33+0000\n"
+"PO-Revision-Date: 2015-11-10 19:51+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
-"Language-Team: Portuguese (Portugal) (http://www.transifex.com/projects/p/slapt-get/language/pt_PT/)\n"
-"Language: pt_PT\n"
+"Language-Team: Portuguese (Portugal) (http://www.transifex.com/jaos/slapt-get/language/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: pt_PT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
@@ -33,22 +33,18 @@ msgstr "Abortar.\n"
 
 #, c-format
 msgid "BUILD: %s\n"
-msgstr ""
+msgstr "CRIAR: %s\n"
 
 #, c-format
 msgid "Cached\n"
-msgstr ""
-"Em cache\n"
-"\n"
+msgstr "Em cache\n\n"
 
 msgid "Do you want to continue? [y/N] "
 msgstr "Continuar? [y/N]"
 
 #, c-format
 msgid "Done\n"
-msgstr ""
-"Terminado\n"
-"\n"
+msgstr "Terminado\n\n"
 
 #, c-format
 msgid "Download failed: %s\n"
@@ -56,7 +52,7 @@ msgstr "Falha ao receber: %s\n"
 
 #, c-format
 msgid "FETCH: %s\n"
-msgstr ""
+msgstr "PROCURAR: %s\n"
 
 #, c-format
 msgid "Failed\n"
@@ -99,7 +95,7 @@ msgstr "Obter lista slackbuild de %s..."
 
 #, c-format
 msgid "INSTALL: %s\n"
-msgstr ""
+msgstr "INSTALAR: %s\n"
 
 #, c-format
 msgid "MD5SUM mismatch for %s\n"
@@ -134,9 +130,7 @@ msgstr "Ficheiros SlackBuild:\n"
 
 #, c-format
 msgid "SlackBuild Name: %s\n"
-msgstr ""
-"Nome SlackBuild: %s\n"
-"\n"
+msgstr "Nome SlackBuild: %s\n\n"
 
 #, c-format
 msgid "SlackBuild Requires: %s\n"
@@ -152,9 +146,7 @@ msgstr "As seguintes slackbuilds serão compiladas e instaladas:\n"
 
 #, c-format
 msgid "The following packages will be %s:\n"
-msgstr ""
-"Os pacotes seguintes serão %s:\n"
-"\n"
+msgstr "Os pacotes seguintes serão %s:\n\n"
 
 #, c-format
 msgid "Unable to find all specified slackbuilds.\n"
@@ -166,9 +158,7 @@ msgstr "Incapaz de localizar os pacotes gerados\n"
 
 #, c-format
 msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
-msgstr ""
-"Utilização: %s [opção(ões)] [ação(ões)] [slackbuild(s)]\n"
-"\n"
+msgstr "Utilização: %s [opção(ões)] [ação(ões)] [slackbuild(s)]\n\n"
 
 msgid "built"
 msgstr "criado"
@@ -210,7 +200,7 @@ msgid "show specified slackbuilds"
 msgstr "mostrar slackbuilds especificadas"
 
 msgid "show what will be done"
-msgstr ""
+msgstr "mostrar o que será feito"
 
 msgid "update local cache of remote slackbuilds"
 msgstr "atualizar cache local de slackbuilds remotas"

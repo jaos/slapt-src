@@ -1,22 +1,22 @@
-# Russian translation of slapt-src
-# Copyright (C) 2010-2012 Jason Woodward
-# This file is distributed under the same license as the slapt-src package.
-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
 # Translators:
-# Igor Murzov <e-mail@date.by>, 2010-2012.
+# goriy <wolfr2@gmail.com>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: slapt-src\n"
+"Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-07 23:06+0000\n"
-"PO-Revision-Date: 2012-09-28 18:40+0400\n"
-"Last-Translator: Igor Murzov <e-mail@date.by>\n"
-"Language-Team: slapt-get-devel <slapt-get-devel@software.jaos.org>\n"
-"Language: ru\n"
+"PO-Revision-Date: 2015-09-06 22:05+0000\n"
+"Last-Translator: goriy <wolfr2@gmail.com>\n"
+"Language-Team: Russian (http://www.transifex.com/jaos/slapt-get/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #, c-format
 msgid "%s - A SlackBuild utility\n"
@@ -32,7 +32,7 @@ msgstr "Отмена.\n"
 
 #, c-format
 msgid "BUILD: %s\n"
-msgstr ""
+msgstr "СОБРАТЬ: %s\n"
 
 #, c-format
 msgid "Cached\n"
@@ -51,7 +51,7 @@ msgstr "Не удалось загрузить: %s\n"
 
 #, c-format
 msgid "FETCH: %s\n"
-msgstr ""
+msgstr "ИЗВЛЕЧЬ: %s\n"
 
 #, c-format
 msgid "Failed\n"
@@ -94,7 +94,7 @@ msgstr "Получение списка слакбилдов с %s..."
 
 #, c-format
 msgid "INSTALL: %s\n"
-msgstr ""
+msgstr "УСТАНОВИТЬ: %s\n"
 
 #, c-format
 msgid "MD5SUM mismatch for %s\n"
@@ -199,7 +199,7 @@ msgid "show specified slackbuilds"
 msgstr "показать указанные слакбилды"
 
 msgid "show what will be done"
-msgstr ""
+msgstr "показать что будет сделано"
 
 msgid "update local cache of remote slackbuilds"
 msgstr "обновить локальный кэш удалённых слакбилдов"
