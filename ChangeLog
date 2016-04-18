@@ -1,4 +1,7 @@
 
+0.3.2i Apr  17, 2016
+ * translation updates
+
 0.3.2h May  07, 2015
  * add -t|--simulate option
  * skip non-deps (like %README%)
