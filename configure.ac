@@ -7,7 +7,8 @@ IT_PROG_INTLTOOL([0.35.0])
 AC_CANONICAL_HOST
 
 case "$host_cpu" in
-i[[3456]]86) host_cpu=i386 ;
+i[[3456]]86) host_cpu=i386 ;;
+arm*) host_cpu=arm ;;
 esac
 
 # Checks for programs.
