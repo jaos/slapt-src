@@ -3,14 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# ふうせん Fu-sen. | BALLOON a.k.a. Fu-sen., 2016
+# ふうせん Fu-sen. | BALLOON a.k.a. Fu-sen., 2016
 # tsuren <hydrangea_and_snail@hotmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-07 23:06+0000\n"
-"PO-Revision-Date: 2015-09-06 15:27+0000\n"
-"Last-Translator: Jason Woodward <woodwardj@jaos.org>\n"
+"PO-Revision-Date: 2016-11-26 08:50+0000\n"
+"Last-Translator: ふうせん Fu-sen. | BALLOON a.k.a. Fu-sen.\n"
 "Language-Team: Japanese (http://www.transifex.com/jaos/slapt-get/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,11 +22,11 @@ msgstr ""
 
 #, c-format
 msgid "%s - A SlackBuild utility\n"
-msgstr "%s - SlackBuildユーティリティ\n"
+msgstr "%s - SlackBuild ユーティリティ\n"
 
 #, c-format
 msgid "%s version %s\n"
-msgstr "%s version %s\n"
+msgstr "%s バージョン %s\n"
 
 #, c-format
 msgid "Abort.\n"
@@ -32,14 +34,14 @@ msgstr "中止\n"
 
 #, c-format
 msgid "BUILD: %s\n"
-msgstr ""
+msgstr "ビルド: %s\n"
 
 #, c-format
 msgid "Cached\n"
-msgstr "Cached\n"
+msgstr "キャッシュ済み\n"
 
 msgid "Do you want to continue? [y/N] "
-msgstr "このまま続けますか？ [y/N] "
+msgstr "このまま続けてよろしいですか？ [y/N] "
 
 #, c-format
 msgid "Done\n"
@@ -51,18 +53,18 @@ msgstr "ダウンロード失敗: %s\n"
 
 #, c-format
 msgid "FETCH: %s\n"
-msgstr ""
+msgstr "取得: %s\n"
 
 #, c-format
 msgid "Failed\n"
-msgstr "不成功\n"
+msgstr "失敗\n"
 
 #, c-format
 msgid "Failed to chdir to %s\n"
-msgstr "Failed to chdir to %s\n"
+msgstr "%s への chdir に失敗しました\n"
 
 msgid "Failed to chdir to build directory"
-msgstr "chdirでディレクトリの制作に失敗"
+msgstr "build ディレクトリの chdir に失敗"
 
 #, c-format
 msgid "Failed to construct command string\n"
@@ -70,7 +72,7 @@ msgstr "コマンド文字列の構築に失敗しました\n"
 
 #, c-format
 msgid "Failed to create build directory [%s]\n"
-msgstr "作業ディレクトリ [%s]のビルドに失敗しました\n"
+msgstr "build ディレクトリ [%s] の作成に失敗しました\n"
 
 #, c-format
 msgid "Failed to open %s for reading\n"
@@ -90,66 +92,66 @@ msgstr "%sを取得中"
 
 #, c-format
 msgid "Fetching slackbuild list from %s..."
-msgstr "%sからslackbuildのリストを取得中"
+msgstr "%sから slackbuild のリストを取得中"
 
 #, c-format
 msgid "INSTALL: %s\n"
-msgstr ""
+msgstr "インストール: %s\n"
 
 #, c-format
 msgid "MD5SUM mismatch for %s\n"
-msgstr "%sのmd5sumの不一致\n"
+msgstr "%sの MD5SUM が一致していません\n"
 
 #, c-format
 msgid "Mismatch between download files and md5sums\n"
-msgstr "ダウンロードファイルとmd5sums間のミスマッチ\n"
+msgstr "ダウンロードファイルと md5sums 間が一致していません\n"
 
 #, c-format
 msgid "Missing slackbuild: %s requires %s\n"
-msgstr "slackbuildがありません：%s は %s が必要です。\n"
+msgstr "slackbuild ミス：%s には %s が必要です\n"
 
 #, c-format
 msgid "No BUILDDIR specified in the configuration\n"
-msgstr "設定でBUILDDIRが指定されません\n"
+msgstr "設定で BUILDDIR が指定されません\n"
 
 msgid "Options"
 msgstr "オプション:"
 
 #, c-format
 msgid "SlackBuild Category: %s\n"
-msgstr "SlackBuildカテゴリ: %s\n"
+msgstr "SlackBuild カテゴリ: %s\n"
 
 #, c-format
 msgid "SlackBuild Description: %s\n"
-msgstr "SlackBuildの説明: %s\n"
+msgstr "SlackBuild の説明: %s\n"
 
 #, c-format
 msgid "SlackBuild Files:\n"
-msgstr "SlackBuildファイル：\n"
+msgstr "SlackBuild ファイル：\n"
 
 #, c-format
 msgid "SlackBuild Name: %s\n"
-msgstr "SlackBuild名：%s\n"
+msgstr "SlackBuild の名称：%s\n"
 
 #, c-format
 msgid "SlackBuild Requires: %s\n"
-msgstr "必要なSlackBuild: %s\n"
+msgstr "SlackBuild 必須: %s\n"
 
 #, c-format
 msgid "SlackBuild Version: %s\n"
-msgstr "SlackBuildバージョン: %s\n"
+msgstr "SlackBuild バージョン: %s\n"
 
 #, c-format
 msgid "The following dependent slackbuilds will be built and installed:\n"
-msgstr "次の依存slackbuildsが構築され、インストールされます。\n"
+msgstr "次の依存 slackbuildsが構築され、インストールされます:\n"
 
 #, c-format
 msgid "The following packages will be %s:\n"
-msgstr "次のパッケージは%s です:\n"
+msgstr "次のパッケージは %s になります:\n"
 
 #, c-format
 msgid "Unable to find all specified slackbuilds.\n"
-msgstr "指定されたすべてのslackbuildを見つけることができません。\n"
+msgstr "指定されたすべての slackbuild を見つけることができません。\n"
 
 #, c-format
 msgid "Unable to find generated package\n"
@@ -157,13 +159,13 @@ msgstr "コンパイルされたパッケージを見つけることができま
 
 #, c-format
 msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
-msgstr "使用法：%s の[オプション] [アクション] [slackbuild]\n"
+msgstr "使用方法: %s [オプション] [アクション] [slackbuild]\n"
 
 msgid "built"
 msgstr "ビルド"
 
 msgid "clean build directory"
-msgstr "ビルド用のディレクトリをきれいにする。"
+msgstr "build ディレクトリを消去する"
 
 msgid "do not look for dependencies"
 msgstr "依存関係のあるパッケージを探さない"
@@ -172,37 +174,37 @@ msgid "do not prompt"
 msgstr "プロンプト·ウィンドウを表示しない"
 
 msgid "fetch, build, and install the specified slackbuild(s)"
-msgstr "選択されたパッケージを取得、ビルド、そしてインストールする"
+msgstr "選択 slackbiuld を取得・ビルド・インストールする"
 
 msgid "fetched"
 msgstr "取得中"
 
 msgid "installed"
-msgstr "インスタールしました"
+msgstr "インストール中"
 
 msgid "list available slackbuilds"
-msgstr "利用可能なslackbuild"
+msgstr "利用可能な slackbuild"
 
 msgid "only fetch and build the specified slackbuild(s)"
-msgstr "選択されたslackbuildを取得そしてビルドだけする。"
+msgstr "選択 slackbuild を取得・ビルドのみ行う"
 
 msgid "only fetch the specified slackbuild(s)"
-msgstr "指定されたのslackbuildを取得"
+msgstr "指定された slackbuild を取得のみ行う"
 
 msgid "run specified command on generated package"
-msgstr "選択されたslackbuildを取得だけする。"
+msgstr "生成パッケージで指定されたコマンドを実行する"
 
 msgid "search available slackbuilds"
-msgstr "slackbuildを検索する。"
+msgstr "有効な slackbuild を検索する"
 
 msgid "show specified slackbuilds"
-msgstr "指定されたslackbuildを表示する"
+msgstr "指定 slackbuild を表示する"
 
 msgid "show what will be done"
-msgstr ""
+msgstr "作業手順を表示する"
 
 msgid "update local cache of remote slackbuilds"
-msgstr "リモート·slackbuildsのローカル·キャッシュを更新する。"
+msgstr "リモート slackbuilds のローカル·キャッシュを更新する"
 
 msgid "use the specified configuration file"
 msgstr "指定された設定ファイルを使用する"
