@@ -28,12 +28,17 @@
 #include <config.h>
 #include "source.h"
 
+
+#define BUILD_ONLY_FLAG 1
+#define FETCH_ONLY_FLAG 2
+
 /* getopt */
 extern char *optarg;
 extern int optind, opterr, optopt;
 
 static int show_summary (slapt_src_slackbuild_list *, slapt_list_t *, int, SLAPT_BOOL_T);
 static void clean (slapt_src_config *config);
+static int sb_compare_by_name (const void *a, const void *b);
 
 void version (void)
 {
@@ -60,6 +65,7 @@ void help (void)
   printf (gettext ("%s - A SlackBuild utility\n"), PACKAGE);
   printf (gettext ("Usage: %s [option(s)] [action] [slackbuild(s)]\n"), PACKAGE);
   printf ("  -u, --update           %s\n", gettext ("update local cache of remote slackbuilds"));
+  printf ("  -U, --upgrade-all      %s\n", gettext ("upgrade all installed slackbuilds"));
   printf ("  -l, --list             %s\n", gettext ("list available slackbuilds"));
   printf ("  -e, --clean            %s\n", gettext ("clean build directory"));
   printf ("  -s, --search           %s\n", gettext ("search available slackbuilds"));
@@ -75,11 +81,14 @@ void help (void)
   printf ("  -c, --config=FILE      %s\n", gettext ("use the specified configuration file"));
   printf ("  -n, --no-dep           %s\n", gettext ("do not look for dependencies"));
   printf ("  -p, --postprocess=CMD  %s\n", gettext ("run specified command on generated package"));
+  printf ("  -B, --build-only       %s\n", gettext ("applicable only to --upgrade-all"));
+  printf ("  -F, --fetch-only       %s\n", gettext ("applicable only to --upgrade-all"));
 }
 
 #define VERSION_OPT 'v'
 #define HELP_OPT 'h'
 #define UPDATE_OPT 'u'
+#define UPGRADE_OPT 'U'
 #define LIST_OPT 'l'
 #define SEARCH_OPT 's'
 #define SHOW_OPT 'w'
@@ -92,6 +101,8 @@ void help (void)
 #define POSTCMD_OPT 'p'
 #define CLEAN_OPT 'e'
 #define SIMULATE_OPT 't'
+#define BUILD_ONLY_OPT 'B'
+#define FETCH_ONLY_OPT 'F'
 
 struct utsname uname_v; /* for .machine */
 
@@ -124,11 +135,13 @@ int main (int argc, char *argv[])
   slapt_pkg_list_t *installed = NULL;
   SLAPT_BOOL_T prompt = SLAPT_TRUE, do_dep = SLAPT_TRUE, simulate = SLAPT_FALSE;
   char *config_file = NULL, *postcmd = NULL;
+  int only_flags = 0;
 
   static struct option long_options[] = {
     {"version",     no_argument,        0, VERSION_OPT},
     {"help",        no_argument,        0, HELP_OPT},
     {"update",      no_argument,        0, UPDATE_OPT},
+    {"upgrade-all", no_argument,        0, UPGRADE_OPT},
     {"list",        no_argument,        0, LIST_OPT},
     {"clean",       no_argument,        0, CLEAN_OPT},
     {"e",           no_argument,        0, CLEAN_OPT},
@@ -146,6 +159,8 @@ int main (int argc, char *argv[])
     {"config",      required_argument,  0, CONFIG_OPT},
     {"c",           required_argument,  0, CONFIG_OPT},
     {"postprocess", required_argument,  0, POSTCMD_OPT},
+    {"build-only",  no_argument,        0, BUILD_ONLY_OPT},
+    {"fetch-only",  no_argument,        0, FETCH_ONLY_OPT},
     {0, 0, 0, 0}
   };
 
@@ -170,11 +185,12 @@ int main (int argc, char *argv[])
     exit (EXIT_SUCCESS);
   }
 
-  while ( (c = getopt_long_only (argc, argv, "", long_options, &option_index)) != -1) {
+  while ( (c = getopt_long_only (argc, argv, "UBF", long_options, &option_index)) != -1) {
     switch (c) {
       case HELP_OPT: help (); break;
       case VERSION_OPT: version (); break;
       case UPDATE_OPT: action = UPDATE_OPT; break;
+      case UPGRADE_OPT: action = UPGRADE_OPT; break;
       case LIST_OPT: action = LIST_OPT; break;
       case CLEAN_OPT: action = CLEAN_OPT; break;
       case FETCH_OPT: action = FETCH_OPT; slapt_add_list_item (names, optarg); break;
@@ -187,8 +203,20 @@ int main (int argc, char *argv[])
       case NODEP_OPT: do_dep = SLAPT_FALSE; break;
       case CONFIG_OPT: config_file = strdup (optarg); break;
       case POSTCMD_OPT: postcmd = strdup (optarg); break;
+      case BUILD_ONLY_OPT: only_flags |= BUILD_ONLY_FLAG; break;
+      case FETCH_ONLY_OPT: only_flags |= FETCH_ONLY_FLAG; break;
       default: help (); exit (EXIT_FAILURE);
     }
+  }
+
+  if ((action == UPGRADE_OPT) && (optind < argc)) {
+    fprintf (stderr, gettext ("Individual packages not accepted when upgrading all slackbuilds\n"));
+    exit (EXIT_FAILURE);
+  }
+
+  if ((only_flags & BUILD_ONLY_FLAG) && (only_flags & FETCH_ONLY_FLAG)) {
+    fprintf (stderr, gettext ("build-only and fetch-only options are mutually exclusive\n"));
+    exit (EXIT_FAILURE);
   }
 
   /* add extra arguments */
@@ -226,6 +254,7 @@ int main (int argc, char *argv[])
     case FETCH_OPT:
     case BUILD_OPT:
     case INSTALL_OPT:
+    case UPGRADE_OPT:
       remote_sbs = slapt_src_get_available_slackbuilds ();
       installed = slapt_get_installed_pkgs ();
       /* convert all names to slackbuilds */
@@ -235,6 +264,46 @@ int main (int argc, char *argv[])
           printf (gettext ("Unable to find all specified slackbuilds.\n"));
           exit (EXIT_FAILURE);
         }
+      } else if (action == UPGRADE_OPT) {
+        slapt_src_slackbuild search_key;
+        slapt_src_slackbuild *search_key_p[1];
+        slapt_src_slackbuild **found;
+        slapt_pkg_info_t *pkg;
+
+        search_key_p[0] = &search_key;
+
+        memset (&search_key, 0, sizeof(search_key));
+
+        /* for each entry in 'installed' see if it's available as a slackbuild */
+        for (i = 0, pkg = installed->pkgs[0]; i < installed->pkg_count; pkg = installed->pkgs[++i]) {
+          /* sb_compare_by_name is only going to examine the 'name' member */
+          search_key.name = pkg->name;
+          if ((found = bsearch (&search_key_p, remote_sbs->slackbuilds, remote_sbs->count,
+              sizeof (remote_sbs->slackbuilds[0]), sb_compare_by_name))) {
+
+            printf (gettext ("Package: %s %s => %s"), pkg->name, pkg->version, (*found)->version);
+
+            switch (slapt_cmp_pkg_versions((*found)->version, pkg->version)) {
+              case 0:
+                printf (gettext (" UPDATE-TO-DATE"));
+                break;
+
+              case 1:
+                printf (gettext (" UPGRADE"));
+                slapt_add_list_item (names, search_key.name);
+                break;
+
+              case -1:
+                printf (gettext (" DOWNGRADE *IGNORED*"));
+                break;
+            }
+
+            printf ("\n");
+
+          }
+        }
+
+        sbs = slapt_src_names_to_slackbuilds (config, remote_sbs, names, installed);
       }
       /* provide summary */
       if (!simulate)
@@ -242,6 +311,20 @@ int main (int argc, char *argv[])
     break;
   }
 
+  /*
+  ** When upgrade-all is specified the sbs list is automatically
+  ** determined. Transform the action flag accord to any additional
+  ** flags.
+  */
+  if (action == UPGRADE_OPT) {
+    if (only_flags & BUILD_ONLY_FLAG) {
+      action = BUILD_OPT;
+    } else if (only_flags & FETCH_ONLY_FLAG) {
+      action = FETCH_OPT;
+    } else {
+      action = INSTALL_OPT;
+    }
+  }
 
   /* now, actually do what was requested */
   switch (action) {
@@ -488,4 +571,12 @@ static void clean (slapt_src_config *config)
     }
   }
   closedir (builddir);
+}
+
+static int sb_compare_by_name (const void *a, const void *b)
+{
+  const slapt_src_slackbuild * const sb_a = *(slapt_src_slackbuild * const *)a;
+  const slapt_src_slackbuild * const sb_b = *(slapt_src_slackbuild * const *)b;
+
+  return strcmp(sb_a->name, sb_b->name);
 }
