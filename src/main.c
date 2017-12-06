@@ -142,6 +142,7 @@ int main (int argc, char *argv[])
     {"help",        no_argument,        0, HELP_OPT},
     {"update",      no_argument,        0, UPDATE_OPT},
     {"upgrade-all", no_argument,        0, UPGRADE_OPT},
+    {"U",           no_argument,        0, UPGRADE_OPT},
     {"list",        no_argument,        0, LIST_OPT},
     {"clean",       no_argument,        0, CLEAN_OPT},
     {"e",           no_argument,        0, CLEAN_OPT},
@@ -160,7 +161,9 @@ int main (int argc, char *argv[])
     {"c",           required_argument,  0, CONFIG_OPT},
     {"postprocess", required_argument,  0, POSTCMD_OPT},
     {"build-only",  no_argument,        0, BUILD_ONLY_OPT},
+    {"B",           no_argument,        0, BUILD_ONLY_OPT},
     {"fetch-only",  no_argument,        0, FETCH_ONLY_OPT},
+    {"F",           no_argument,        0, FETCH_ONLY_OPT},
     {0, 0, 0, 0}
   };
 
@@ -185,7 +188,7 @@ int main (int argc, char *argv[])
     exit (EXIT_SUCCESS);
   }
 
-  while ( (c = getopt_long_only (argc, argv, "UBF", long_options, &option_index)) != -1) {
+  while ( (c = getopt_long_only (argc, argv, "", long_options, &option_index)) != -1) {
     switch (c) {
       case HELP_OPT: help (); break;
       case VERSION_OPT: version (); break;
@@ -281,25 +284,9 @@ int main (int argc, char *argv[])
           if ((found = bsearch (&search_key_p, remote_sbs->slackbuilds, remote_sbs->count,
               sizeof (remote_sbs->slackbuilds[0]), sb_compare_by_name))) {
 
-            printf (gettext ("Package: %s %s => %s"), pkg->name, pkg->version, (*found)->version);
-
-            switch (slapt_cmp_pkg_versions((*found)->version, pkg->version)) {
-              case 0:
-                printf (gettext (" UPDATE-TO-DATE"));
-                break;
-
-              case 1:
-                printf (gettext (" UPGRADE"));
+            if (slapt_cmp_pkg_versions((*found)->version, pkg->version) == 1) {
                 slapt_add_list_item (names, search_key.name);
-                break;
-
-              case -1:
-                printf (gettext (" DOWNGRADE *IGNORED*"));
-                break;
             }
-
-            printf ("\n");
-
           }
         }
 
@@ -534,7 +521,7 @@ static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, in
     printf ("\n");
   }
 
-  if (prompt == SLAPT_TRUE) {
+  if ((sbs->count > 0) && (prompt == SLAPT_TRUE)) {
     if (slapt_ask_yes_no (gettext ("Do you want to continue? [y/N] ")) != 1) {
       printf (gettext ("Abort.\n"));
       return 0;
