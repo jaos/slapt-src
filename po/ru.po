@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# goriy <wolfr2@gmail.com>, 2015
+# Gregory None <wolfr2@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-07 23:06+0000\n"
-"PO-Revision-Date: 2015-09-06 22:05+0000\n"
-"Last-Translator: goriy <wolfr2@gmail.com>\n"
+"PO-Revision-Date: 2017-09-19 14:08+0000\n"
+"Last-Translator: Gregory None <wolfr2@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/jaos/slapt-get/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
