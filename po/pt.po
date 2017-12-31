@@ -1,21 +1,21 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Sérgio Marques <smarquespt@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-07 23:06+0000\n"
+"POT-Creation-Date: 2017-12-30 20:02-0500\n"
 "PO-Revision-Date: 2017-09-19 15:17+0000\n"
 "Last-Translator: Jason Woodward <woodwardj@jaos.org>\n"
 "Language-Team: Portuguese (http://www.transifex.com/jaos/slapt-get/language/pt/)\n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
@@ -36,14 +36,18 @@ msgstr ""
 
 #, c-format
 msgid "Cached\n"
-msgstr "Em cache\n\n"
+msgstr ""
+"Em cache\n"
+"\n"
 
 msgid "Do you want to continue? [y/N] "
 msgstr "Continuar? [Y/N]"
 
 #, c-format
 msgid "Done\n"
-msgstr "Terminado\n\n"
+msgstr ""
+"Terminado\n"
+"\n"
 
 #, c-format
 msgid "Download failed: %s\n"
@@ -97,6 +101,10 @@ msgid "INSTALL: %s\n"
 msgstr ""
 
 #, c-format
+msgid "Individual packages not accepted when upgrading all slackbuilds\n"
+msgstr ""
+
+#, c-format
 msgid "MD5SUM mismatch for %s\n"
 msgstr "MD5SUM diferente para %s\n"
 
@@ -129,7 +137,9 @@ msgstr "Ficheiros SlackBuild:\n"
 
 #, c-format
 msgid "SlackBuild Name: %s\n"
-msgstr "Nome SlackBuild: %s\n\n"
+msgstr ""
+"Nome SlackBuild: %s\n"
+"\n"
 
 #, c-format
 msgid "SlackBuild Requires: %s\n"
@@ -145,7 +155,9 @@ msgstr "As seguintes slackbuilds serão compiladas e instaladas:\n"
 
 #, c-format
 msgid "The following packages will be %s:\n"
-msgstr "Os pacotes seguintes serão %s:\n\n"
+msgstr ""
+"Os pacotes seguintes serão %s:\n"
+"\n"
 
 #, c-format
 msgid "Unable to find all specified slackbuilds.\n"
@@ -157,7 +169,16 @@ msgstr "Incapaz de localizar os pacotes gerados\n"
 
 #, c-format
 msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
-msgstr "Utilização: %s [opção(ões)] [ação(ões)] [slackbuild(s)]\n\n"
+msgstr ""
+"Utilização: %s [opção(ões)] [ação(ões)] [slackbuild(s)]\n"
+"\n"
+
+msgid "applicable only to --upgrade-all"
+msgstr ""
+
+#, c-format
+msgid "build-only and fetch-only options are mutually exclusive\n"
+msgstr ""
 
 msgid "built"
 msgstr "criado"
@@ -203,6 +224,9 @@ msgstr ""
 
 msgid "update local cache of remote slackbuilds"
 msgstr "atualizar cache local de slackbuilds remotas"
+
+msgid "upgrade all installed slackbuilds"
+msgstr ""
 
 msgid "use the specified configuration file"
 msgstr "utilizar ficheiro de configuração especificado"

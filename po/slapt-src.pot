@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-07 23:06+0000\n"
+"POT-Creation-Date: 2017-12-30 20:02-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -96,6 +96,10 @@ msgid "INSTALL: %s\n"
 msgstr ""
 
 #, c-format
+msgid "Individual packages not accepted when upgrading all slackbuilds\n"
+msgstr ""
+
+#, c-format
 msgid "MD5SUM mismatch for %s\n"
 msgstr ""
 
@@ -158,6 +162,13 @@ msgstr ""
 msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
 msgstr ""
 
+msgid "applicable only to --upgrade-all"
+msgstr ""
+
+#, c-format
+msgid "build-only and fetch-only options are mutually exclusive\n"
+msgstr ""
+
 msgid "built"
 msgstr ""
 
@@ -201,6 +212,9 @@ msgid "show what will be done"
 msgstr ""
 
 msgid "update local cache of remote slackbuilds"
+msgstr ""
+
+msgid "upgrade all installed slackbuilds"
 msgstr ""
 
 msgid "use the specified configuration file"

@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Jiří Vírava <appukonrad@gmail.com>, 2013
 # Jiří Vírava <appukonrad@gmail.com>, 2013-2014
@@ -10,19 +10,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-07 23:06+0000\n"
+"POT-Creation-Date: 2017-12-30 20:02-0500\n"
 "PO-Revision-Date: 2017-09-19 22:01+0000\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/jaos/slapt-get/language/cs/)\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #, c-format
 msgid "%s - A SlackBuild utility\n"
-msgstr "%s - Nástroj SlackBuild\n\n"
+msgstr ""
+"%s - Nástroj SlackBuild\n"
+"\n"
 
 #, c-format
 msgid "%s version %s\n"
@@ -99,6 +101,10 @@ msgid "INSTALL: %s\n"
 msgstr "INSTALACE: %s\n"
 
 #, c-format
+msgid "Individual packages not accepted when upgrading all slackbuilds\n"
+msgstr ""
+
+#, c-format
 msgid "MD5SUM mismatch for %s\n"
 msgstr "MD5SUM pro %s se neshoduje\n"
 
@@ -161,6 +167,13 @@ msgstr "Nelze najít vygenerované balíčky\n"
 msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
 msgstr "Použití: %s [volby] [akce] [slackbuild(y)]\n"
 
+msgid "applicable only to --upgrade-all"
+msgstr ""
+
+#, c-format
+msgid "build-only and fetch-only options are mutually exclusive\n"
+msgstr ""
+
 msgid "built"
 msgstr "sestaveno"
 
@@ -205,6 +218,9 @@ msgstr "zobrazit akce, které se provedou"
 
 msgid "update local cache of remote slackbuilds"
 msgstr "aktualizovat místní mezipaměť vzdálených SslackBuildů"
+
+msgid "upgrade all installed slackbuilds"
+msgstr ""
 
 msgid "use the specified configuration file"
 msgstr "použít určený konfigurační soubor"
