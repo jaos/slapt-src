@@ -1,21 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Gregory None <wolfr2@gmail.com>, 2015
+# Gregory <wolfr2@gmail.com>, 2015
+# Gregory <wolfr2@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 20:02-0500\n"
-"PO-Revision-Date: 2017-09-19 14:08+0000\n"
-"Last-Translator: Gregory None <wolfr2@gmail.com>\n"
+"PO-Revision-Date: 2017-12-31 09:23+0000\n"
+"Last-Translator: Gregory <wolfr2@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/jaos/slapt-get/language/ru/)\n"
-"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #, c-format
@@ -98,7 +99,7 @@ msgstr "УСТАНОВИТЬ: %s\n"
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
-msgstr ""
+msgstr "Индивидуальный выбор слакбилдов игнорируется при обновлении сразу всех слакбилдов\n"
 
 #, c-format
 msgid "MD5SUM mismatch for %s\n"
@@ -164,11 +165,11 @@ msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
 msgstr "Использование: %s [опции] [действие] [слакбилды]\n"
 
 msgid "applicable only to --upgrade-all"
-msgstr ""
+msgstr "применимо только при опции --upgrade-all"
 
 #, c-format
 msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr ""
+msgstr "опции только собрать (build-only) и только получить (fetch-only) являются взаимоисключающими\n"
 
 msgid "built"
 msgstr "собраны"
@@ -216,7 +217,7 @@ msgid "update local cache of remote slackbuilds"
 msgstr "обновить локальный кэш удалённых слакбилдов"
 
 msgid "upgrade all installed slackbuilds"
-msgstr ""
+msgstr "обновить все установленные слакбилды"
 
 msgid "use the specified configuration file"
 msgstr "использовать указанный конфигурационный файл"

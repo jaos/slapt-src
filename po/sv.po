@@ -1,21 +1,21 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Ingemar Karlsson <ingemar@ingk.se>, 2012,2015
+# Ingemar Karlsson <ingemar@ingk.se>, 2012,2015,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 20:02-0500\n"
-"PO-Revision-Date: 2017-09-19 14:10+0000\n"
+"PO-Revision-Date: 2017-12-31 06:58+0000\n"
 "Last-Translator: Ingemar Karlsson <ingemar@ingk.se>\n"
 "Language-Team: Swedish (http://www.transifex.com/jaos/slapt-get/language/sv/)\n"
-"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
@@ -98,7 +98,7 @@ msgstr "INSTALLERA: %s\n"
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
-msgstr ""
+msgstr "Individuella paket accepteras inte vid uppgradering av alla slackbuilds\n"
 
 #, c-format
 msgid "MD5SUM mismatch for %s\n"
@@ -164,11 +164,11 @@ msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
 msgstr "Användning: %s [option(s)] [action] [slackbuild(s)]\n"
 
 msgid "applicable only to --upgrade-all"
-msgstr ""
+msgstr "gäller endast för --upgrade-all"
 
 #, c-format
 msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr ""
+msgstr "Endast byggalternativ och hämtningsalternativ är ömsesidigt uteslutna\n"
 
 msgid "built"
 msgstr "byggd"
@@ -216,7 +216,7 @@ msgid "update local cache of remote slackbuilds"
 msgstr "uppdatera lokal cache av remote slackbuilds"
 
 msgid "upgrade all installed slackbuilds"
-msgstr ""
+msgstr "uppgradera alla installerade slackbuilds"
 
 msgid "use the specified configuration file"
 msgstr "Använd den angivna konfigurationsfilen"

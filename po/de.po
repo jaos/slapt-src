@@ -1,21 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Jason Woodward <woodwardj at jaos dot org>, 2010
+# Manfred Mueller <manfred.mueller@fluxflux.net>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 20:02-0500\n"
-"PO-Revision-Date: 2017-09-19 14:08+0000\n"
+"PO-Revision-Date: 2018-02-28 14:20+0000\n"
 "Last-Translator: Manfred Mueller <manfred.mueller@fluxflux.net>\n"
 "Language-Team: German (http://www.transifex.com/jaos/slapt-get/language/de/)\n"
-"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
@@ -98,7 +99,7 @@ msgstr "INSTALLIEREN: %s\n"
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
-msgstr ""
+msgstr "beim Aktualisieren aller slackbuilds werden individuelle Pakete nicht akzeptiert\n"
 
 #, c-format
 msgid "MD5SUM mismatch for %s\n"
@@ -164,11 +165,11 @@ msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
 msgstr "Aufruf: %s [Option(en)] [Aktion] [SlackBuild(s)]\n"
 
 msgid "applicable only to --upgrade-all"
-msgstr ""
+msgstr "nur auf --upgrade-all anwendbar"
 
 #, c-format
 msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr ""
+msgstr "build-only und fetch-only schließen sich gegenseitig aus\n"
 
 msgid "built"
 msgstr "erstellt"
@@ -216,7 +217,7 @@ msgid "update local cache of remote slackbuilds"
 msgstr "lokal gespeicherte SlackBuilds aktualisieren"
 
 msgid "upgrade all installed slackbuilds"
-msgstr ""
+msgstr "alle installierten slackbuilds aktualisieren"
 
 msgid "use the specified configuration file"
 msgstr "angegebene Konfigurationsdatei nutzen"

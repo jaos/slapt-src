@@ -1,21 +1,21 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Davidmp <medipas@gmail.com>, 2016
+# Davidmp <medipas@gmail.com>, 2016,2018
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 20:02-0500\n"
-"PO-Revision-Date: 2017-09-23 03:02+0000\n"
+"PO-Revision-Date: 2018-01-08 16:09+0000\n"
 "Last-Translator: Davidmp <medipas@gmail.com>\n"
 "Language-Team: Catalan (http://www.transifex.com/jaos/slapt-get/language/ca/)\n"
-"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
@@ -32,7 +32,7 @@ msgstr "Avorta.\n"
 
 #, c-format
 msgid "BUILD: %s\n"
-msgstr "MUNTATGE: %s\n"
+msgstr "CONSTRUCCIÓ: %s\n"
 
 #, c-format
 msgid "Cached\n"
@@ -98,7 +98,7 @@ msgstr "INSTAL·LA: %s\n"
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
-msgstr ""
+msgstr "Paquets individuals no acceptats quan s'actualitzen tots els slackbuilds\n"
 
 #, c-format
 msgid "MD5SUM mismatch for %s\n"
@@ -164,11 +164,11 @@ msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
 msgstr "Ús: %s [opcions] [acció] [slackbuild(s)]\n"
 
 msgid "applicable only to --upgrade-all"
-msgstr ""
+msgstr "aplicable només a --upgrade-all"
 
 #, c-format
 msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr ""
+msgstr "les opcions de només construir i només recollir són mútuament excloents\n"
 
 msgid "built"
 msgstr "construïts"
@@ -216,7 +216,7 @@ msgid "update local cache of remote slackbuilds"
 msgstr "actualitza la cau local d'slackbuilds remots"
 
 msgid "upgrade all installed slackbuilds"
-msgstr ""
+msgstr "actualitza tots els slackbuilds instal·lats"
 
 msgid "use the specified configuration file"
 msgstr "usa el fitxer de configuració especificat"

@@ -1,21 +1,21 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Georgi Georgiev <georgiev_1994@abv.bg>, 2016
+# Georgi Georgiev <georgiev_1994@abv.bg>, 2016,2018
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 20:02-0500\n"
-"PO-Revision-Date: 2017-09-19 22:01+0000\n"
+"PO-Revision-Date: 2018-03-06 23:12+0000\n"
 "Last-Translator: Georgi Georgiev <georgiev_1994@abv.bg>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/jaos/slapt-get/language/bg/)\n"
-"Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
@@ -98,7 +98,7 @@ msgstr "ИНСТАЛИРАЙ: %s\n"
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
-msgstr ""
+msgstr "Индивидуални пакети, които не са приети при обновяването на всички slackbuild-ове\n"
 
 #, c-format
 msgid "MD5SUM mismatch for %s\n"
@@ -164,11 +164,11 @@ msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
 msgstr "Употреба: %s [опция(и)] [действие] [slackbuild(-ове)]\n"
 
 msgid "applicable only to --upgrade-all"
-msgstr ""
+msgstr "приложимо само при --upgrade-all"
 
 #, c-format
 msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr ""
+msgstr "build-only и fetch-only се изключват взаимно\n"
 
 msgid "built"
 msgstr "изгради"
@@ -216,7 +216,7 @@ msgid "update local cache of remote slackbuilds"
 msgstr "обнови локалната кеш памет на отделни slackbuild-ове"
 
 msgid "upgrade all installed slackbuilds"
-msgstr ""
+msgstr "обнови всички инсталирани slackbuild-ове"
 
 msgid "use the specified configuration file"
 msgstr "използвай посоченият конфигурационен файл"
