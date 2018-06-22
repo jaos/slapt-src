@@ -1,5 +1,6 @@
 
 0.3.3 Jun 21, 2018
+ * build fixes
  * tx pull
  * use c99 stdbool (libslapt compat)
 

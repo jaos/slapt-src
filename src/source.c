@@ -756,12 +756,13 @@ int slapt_src_build_slackbuild(slapt_src_config *config, slapt_src_slackbuild *s
     }
 
     free(command);
+    command = NULL;
 
     if (config->postcmd != NULL) {
         char *filename = NULL;
         if ((filename = _get_pkg_filename(sb->version, config->pkgtag)) != NULL) {
-            char *command = NULL;
-            int r = 0, command_len = strlen(config->postcmd) + strlen(filename) + 2;
+            r = 0;
+            command_len = strlen(config->postcmd) + strlen(filename) + 2;
             command = slapt_malloc(sizeof *command * command_len);
             r = snprintf(command, command_len, "%s %s", config->postcmd, filename);
             if (r + 1 != command_len) {

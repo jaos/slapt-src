@@ -435,7 +435,6 @@ int main(int argc, char *argv[])
         break;
 
     case SHOW_OPT: {
-        int c;
         for (i = 0; i < names->count; i++) {
             slapt_src_slackbuild *sb = NULL;
             slapt_list_t *parts = slapt_parse_delimited_list(names->items[i], ':');
@@ -455,8 +454,8 @@ int main(int argc, char *argv[])
 
                 printf(gettext("SlackBuild Files:\n"));
 
-                for (c = 0; c < sb->files->count; c++) {
-                    printf(" %s\n", sb->files->items[c]);
+                for (int ic = 0; ic < sb->files->count; ic++) {
+                    printf(" %s\n", sb->files->items[ic]);
                 }
 
                 if (sb->requires != NULL)
