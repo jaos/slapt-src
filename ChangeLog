@@ -1,4 +1,7 @@
 
+0.3.3 Jun 21, 2018
+ * use c99 stdbool (libslapt compat)
+
 0.3.2i Jul 04, 2016
  * Slackware-arm support
  * translation updates

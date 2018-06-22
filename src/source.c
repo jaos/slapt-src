@@ -45,7 +45,7 @@ slapt_src_config *slapt_src_config_init (void)
   config->pkgext = NULL;
   config->pkgtag = NULL;
   config->postcmd = NULL;
-  config->do_dep = SLAPT_FALSE;
+  config->do_dep = false;
   return config;
 }
 
@@ -180,14 +180,14 @@ slapt_src_slackbuild_list *slapt_src_slackbuild_list_init (void)
   slapt_src_slackbuild_list *sbs = slapt_malloc (sizeof *sbs);
   sbs->slackbuilds = slapt_malloc (sizeof *sbs->slackbuilds);
   sbs->count = 0;
-  sbs->free_slackbuilds = SLAPT_FALSE;
+  sbs->free_slackbuilds = false;
 
   return sbs;
 }
 
 void slapt_src_slackbuild_list_free (slapt_src_slackbuild_list *sbs)
 {
-  if (sbs->free_slackbuilds == SLAPT_TRUE) {
+  if (sbs->free_slackbuilds == true) {
     int i;
     for (i = 0; i < sbs->count; i++) {
       slapt_src_slackbuild_free (sbs->slackbuilds[i]);
@@ -279,7 +279,7 @@ int slapt_src_update_slackbuild_cache (slapt_src_config *config)
           sbs->slackbuilds[c]->sb_source_url = strdup (url);
         slapt_src_slackbuild_list_add (slackbuilds, sbs->slackbuilds[c]);
       }
-      sbs->free_slackbuilds = SLAPT_FALSE; /* don't free the slackbuilds here */
+      sbs->free_slackbuilds = false; /* don't free the slackbuilds here */
       slapt_src_slackbuild_list_free (sbs);
     }
 
@@ -287,7 +287,7 @@ int slapt_src_update_slackbuild_cache (slapt_src_config *config)
 
   slapt_src_write_slackbuilds_to_file (slackbuilds, SLAPT_SRC_DATA_FILE);
   slapt_free_rc_config (slapt_config);
-  slackbuilds->free_slackbuilds = SLAPT_TRUE; /* free here */
+  slackbuilds->free_slackbuilds = true; /* free here */
   slapt_src_slackbuild_list_free (slackbuilds);
   return rval;
 }
@@ -494,7 +494,7 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file (const char *data
 
   fclose (f);
 
-  sbs->free_slackbuilds = SLAPT_TRUE;
+  sbs->free_slackbuilds = true;
   return sbs;
 }
 
@@ -886,14 +886,14 @@ slapt_src_slackbuild *slapt_src_get_slackbuild (slapt_src_slackbuild_list *sbs, 
 }
 
 /* for short, unsorted slackbulid_lists */
-static SLAPT_BOOL_T _slapt_src_search_slackbuild_cache_linear_by_name (slapt_src_slackbuild_list *sbs, const char *name)
+static bool _slapt_src_search_slackbuild_cache_linear_by_name (slapt_src_slackbuild_list *sbs, const char *name)
 {
   int i;
   for (i = 0; i < sbs->count; i++) {
     if (strcmp (sbs->slackbuilds[i]->name, name) == 0)
-      return SLAPT_TRUE;
+      return true;
   }
-  return SLAPT_FALSE;
+  return false;
 }
 
 static int slapt_src_resolve_dependencies (
@@ -937,7 +937,7 @@ static int slapt_src_resolve_dependencies (
       /* if not installed */
       if (slapt_get_newest_pkg (installed, dep_name) == NULL) {
         /* if not already being tracked */
-        if (_slapt_src_search_slackbuild_cache_linear_by_name (deps, dep_name) == SLAPT_FALSE)
+        if (_slapt_src_search_slackbuild_cache_linear_by_name (deps, dep_name) == false)
           slapt_src_slackbuild_list_add (deps, sb_dep);
       }
     }
@@ -977,7 +977,7 @@ slapt_src_slackbuild_list *slapt_src_names_to_slackbuilds (
 
     if (sb != NULL) {
 
-      if (config->do_dep == SLAPT_TRUE) {
+      if (config->do_dep == true) {
         int d;
         slapt_src_slackbuild_list *deps = slapt_src_slackbuild_list_init ();
         slapt_pkg_err_list_t *errors = slapt_init_pkg_err_list ();
@@ -996,14 +996,14 @@ slapt_src_slackbuild_list *slapt_src_names_to_slackbuilds (
         slapt_free_pkg_err_list (errors);
 
         for (d = 0; d < deps->count; d++) {
-          if (_slapt_src_search_slackbuild_cache_linear_by_name (sbs, deps->slackbuilds[d]->name) == SLAPT_FALSE)
+          if (_slapt_src_search_slackbuild_cache_linear_by_name (sbs, deps->slackbuilds[d]->name) == false)
             slapt_src_slackbuild_list_add (sbs, deps->slackbuilds[d]);
         }
 
         slapt_src_slackbuild_list_free (deps);
       }
 
-      if (_slapt_src_search_slackbuild_cache_linear_by_name (sbs, sb->name) == SLAPT_FALSE)
+      if (_slapt_src_search_slackbuild_cache_linear_by_name (sbs, sb->name) == false)
         slapt_src_slackbuild_list_add (sbs, sb);
     }
   }

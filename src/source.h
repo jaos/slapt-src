@@ -37,7 +37,7 @@ typedef struct _slapt_src_config_
   char *pkgext;
   char *pkgtag;
   char *postcmd;
-  SLAPT_BOOL_T do_dep;
+  bool do_dep;
 } slapt_src_config;
 slapt_src_config *slapt_src_config_init (void);
 void slapt_src_config_free (slapt_src_config *config);
@@ -64,7 +64,7 @@ typedef struct _slapt_src_slackbuilds_
 {
   slapt_src_slackbuild **slackbuilds;
   unsigned int count;
-  SLAPT_BOOL_T free_slackbuilds;
+  bool free_slackbuilds;
 } slapt_src_slackbuild_list;
 slapt_src_slackbuild_list *slapt_src_slackbuild_list_init (void);
 void slapt_src_slackbuild_list_free (slapt_src_slackbuild_list *);

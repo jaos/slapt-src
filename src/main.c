@@ -36,7 +36,7 @@
 extern char *optarg;
 extern int optind, opterr, optopt;
 
-static int show_summary (slapt_src_slackbuild_list *, slapt_list_t *, int, SLAPT_BOOL_T);
+static int show_summary (slapt_src_slackbuild_list *, slapt_list_t *, int, bool);
 static void clean (slapt_src_config *config);
 static int sb_compare_by_name (const void *a, const void *b);
 
@@ -133,7 +133,7 @@ int main (int argc, char *argv[])
   slapt_src_slackbuild_list *sbs = NULL;
   slapt_src_slackbuild_list *remote_sbs = NULL;
   slapt_pkg_list_t *installed = NULL;
-  SLAPT_BOOL_T prompt = SLAPT_TRUE, do_dep = SLAPT_TRUE, simulate = SLAPT_FALSE;
+  bool prompt = true, do_dep = true, simulate = false;
   char *config_file = NULL, *postcmd = NULL;
   int only_flags = 0;
 
@@ -201,9 +201,9 @@ int main (int argc, char *argv[])
       case SHOW_OPT: action = SHOW_OPT; slapt_add_list_item (names, optarg); break;
       case BUILD_OPT: action = BUILD_OPT; slapt_add_list_item (names, optarg); break;
       case INSTALL_OPT: action = INSTALL_OPT; slapt_add_list_item (names, optarg); break;
-      case YES_OPT: prompt = SLAPT_FALSE; break;
-      case SIMULATE_OPT: simulate = SLAPT_TRUE; break;
-      case NODEP_OPT: do_dep = SLAPT_FALSE; break;
+      case YES_OPT: prompt = false; break;
+      case SIMULATE_OPT: simulate = true; break;
+      case NODEP_OPT: do_dep = false; break;
       case CONFIG_OPT: config_file = strdup (optarg); break;
       case POSTCMD_OPT: postcmd = strdup (optarg); break;
       case BUILD_ONLY_OPT: only_flags |= BUILD_ONLY_FLAG; break;
@@ -459,7 +459,7 @@ int main (int argc, char *argv[])
   return rval;
 }
 
-static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, int action, SLAPT_BOOL_T prompt)
+static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, int action, bool prompt)
 {
   int i, line_len = 0;
 
@@ -521,7 +521,7 @@ static int show_summary (slapt_src_slackbuild_list *sbs, slapt_list_t *names, in
     printf ("\n");
   }
 
-  if ((sbs->count > 0) && (prompt == SLAPT_TRUE)) {
+  if ((sbs->count > 0) && (prompt == true)) {
     if (slapt_ask_yes_no (gettext ("Do you want to continue? [y/N] ")) != 1) {
       printf (gettext ("Abort.\n"));
       return 0;
