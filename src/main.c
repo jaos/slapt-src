@@ -494,6 +494,11 @@ static int show_summary(slapt_src_slackbuild_list *sbs, slapt_list_t *names, int
 {
     int i, line_len = 0;
 
+    if (sbs->count == 0) {
+        printf(gettext("Done\n"));
+        return action;
+    }
+
     printf(gettext("The following packages will be %s:\n"),
            action == INSTALL_OPT ? gettext("installed")
                                  : action == BUILD_OPT ? gettext("built")
