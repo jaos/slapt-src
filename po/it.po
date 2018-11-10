@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Antonio Sardei <laplume@libero.it>, 2016
+# Antonio Sardei <laplume@libero.it>, 2016,2018
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 20:02-0500\n"
-"PO-Revision-Date: 2017-12-31 01:07+0000\n"
-"Last-Translator: Jason Woodward <woodwardj@jaos.org>\n"
+"PO-Revision-Date: 2018-08-16 18:31+0000\n"
+"Last-Translator: Antonio Sardei <laplume@libero.it>\n"
 "Language-Team: Italian (http://www.transifex.com/jaos/slapt-get/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -98,7 +98,7 @@ msgstr "INSTALLAZIONE: %s\n"
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
-msgstr ""
+msgstr "Singoli pacchetti non accettati durante l'aggiornamento di tutti gli slackbuild. \n"
 
 #, c-format
 msgid "MD5SUM mismatch for %s\n"
@@ -164,11 +164,11 @@ msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
 msgstr "Funzionamento: %s [option(s)] [action] [slackbuild(s)]\n"
 
 msgid "applicable only to --upgrade-all"
-msgstr ""
+msgstr "applicabile solo all'opzione --upgrade-all"
 
 #, c-format
 msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr ""
+msgstr "le opzioni build-only a fetch-only si escludono reciprocamente\n"
 
 msgid "built"
 msgstr "costruito"
@@ -216,7 +216,7 @@ msgid "update local cache of remote slackbuilds"
 msgstr "aggiorna la cache locale degli slackbuilds remoti"
 
 msgid "upgrade all installed slackbuilds"
-msgstr ""
+msgstr "aggiorna tutti gli slackbuild installati"
 
 msgid "use the specified configuration file"
 msgstr "utilizza il file di configurazione selezionato"
