@@ -413,22 +413,22 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file(const char *dataf
             if (strstr(buffer, ": \n") != NULL)
                 continue;
 
-            if ((sscanf(buffer, "SLACKBUILD NAME: %as", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD NAME: %ms", &token)) == 1) {
                 sb->name = strdup(token);
                 free(token);
             }
 
-            if ((sscanf(buffer, "SLACKBUILD SOURCEURL: %as", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD SOURCEURL: %ms", &token)) == 1) {
                 sb->sb_source_url = strdup(token);
                 free(token);
             }
 
-            if ((sscanf(buffer, "SLACKBUILD LOCATION: %as", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD LOCATION: %ms", &token)) == 1) {
                 sb->location = strdup(token);
                 free(token);
             }
 
-            if ((sscanf(buffer, "SLACKBUILD FILES: %a[^\n]", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD FILES: %m[^\n]", &token)) == 1) {
                 int c;
                 slapt_list_t *files = slapt_parse_delimited_list(token, ' ');
                 for (c = 0; c < files->count; c++) {
@@ -438,37 +438,37 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file(const char *dataf
                 free(token);
             }
 
-            if ((sscanf(buffer, "SLACKBUILD VERSION: %a[^\n]", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD VERSION: %m[^\n]", &token)) == 1) {
                 sb->version = strdup(token);
                 free(token);
             }
 
-            if ((sscanf(buffer, "SLACKBUILD DOWNLOAD: %a[^\n]", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD DOWNLOAD: %m[^\n]", &token)) == 1) {
                 sb->download = strdup(token);
                 free(token);
             }
 
-            if ((sscanf(buffer, "SLACKBUILD DOWNLOAD_x86_64: %a[^\n]", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD DOWNLOAD_x86_64: %m[^\n]", &token)) == 1) {
                 sb->download_x86_64 = strdup(token);
                 free(token);
             }
 
-            if ((sscanf(buffer, "SLACKBUILD MD5SUM: %a[^\n]", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD MD5SUM: %m[^\n]", &token)) == 1) {
                 sb->md5sum = strdup(token);
                 free(token);
             }
 
-            if ((sscanf(buffer, "SLACKBUILD MD5SUM_x86_64: %a[^\n]", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD MD5SUM_x86_64: %m[^\n]", &token)) == 1) {
                 sb->md5sum_x86_64 = strdup(token);
                 free(token);
             }
 
-            if ((sscanf(buffer, "SLACKBUILD REQUIRES: %a[^\n]", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD REQUIRES: %m[^\n]", &token)) == 1) {
                 sb->requires = strdup(token);
                 free(token);
             }
 
-            if ((sscanf(buffer, "SLACKBUILD SHORT DESCRIPTION: %a[^\n]", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD SHORT DESCRIPTION: %m[^\n]", &token)) == 1) {
                 sb->short_desc = strdup(token);
                 free(token);
             }
