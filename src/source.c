@@ -979,15 +979,20 @@ slapt_src_slackbuild_list *slapt_src_names_to_slackbuilds(
                 slapt_free_pkg_err_list(errors);
 
                 for (d = 0; d < deps->count; d++) {
-                    if (_slapt_src_search_slackbuild_cache_linear_by_name(sbs, deps->slackbuilds[d]->name) == false)
+                    if (strcmp(sb->name, deps->slackbuilds[d]->name) == 0) {
+                        continue;
+		    }
+                    if (_slapt_src_search_slackbuild_cache_linear_by_name(sbs, deps->slackbuilds[d]->name) == false) {
                         slapt_src_slackbuild_list_add(sbs, deps->slackbuilds[d]);
+                    }
                 }
 
                 slapt_src_slackbuild_list_free(deps);
             }
 
-            if (_slapt_src_search_slackbuild_cache_linear_by_name(sbs, sb->name) == false)
+            if (_slapt_src_search_slackbuild_cache_linear_by_name(sbs, sb->name) == false) {
                 slapt_src_slackbuild_list_add(sbs, sb);
+            }
         }
     }
 
