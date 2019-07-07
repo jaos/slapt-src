@@ -40,7 +40,7 @@ static char *add_part_to_url(char *url, char *part);
 slapt_src_config *slapt_src_config_init(void)
 {
     slapt_src_config *config = slapt_malloc(sizeof *config);
-    config->sources = slapt_init_list();
+    config->sources = slapt_vector_t_init(free);
     config->builddir = NULL;
     config->pkgext = NULL;
     config->pkgtag = NULL;
@@ -51,7 +51,7 @@ slapt_src_config *slapt_src_config_init(void)
 
 void slapt_src_config_free(slapt_src_config *config)
 {
-    slapt_free_list(config->sources);
+    slapt_vector_t_free(config->sources);
     if (config->builddir != NULL)
         free(config->builddir);
     if (config->pkgext != NULL)
@@ -92,7 +92,7 @@ slapt_src_config *slapt_src_read_config(const char *filename)
                     free(source);
                     source = fixed;
                 }
-                slapt_add_list_item(config->sources, source);
+                slapt_vector_t_add(config->sources, strdup(source));
                 free(source);
             }
 
@@ -136,7 +136,7 @@ slapt_src_slackbuild *slapt_src_slackbuild_init(void)
     sb->md5sum = NULL;
     sb->md5sum_x86_64 = NULL;
     sb->requires = NULL;
-    sb->files = slapt_init_list();
+    sb->files = slapt_vector_t_init(free);
 
     return sb;
 }
@@ -164,56 +164,19 @@ void slapt_src_slackbuild_free(slapt_src_slackbuild *sb)
     if (sb->requires != NULL)
         free(sb->requires);
 
-    slapt_free_list(sb->files);
+    slapt_vector_t_free(sb->files);
 
     free(sb);
 }
 
-slapt_src_slackbuild_list *slapt_src_slackbuild_list_init(void)
-{
-    slapt_src_slackbuild_list *sbs = slapt_malloc(sizeof *sbs);
-    sbs->slackbuilds = slapt_malloc(sizeof *sbs->slackbuilds);
-    sbs->count = 0;
-    sbs->free_slackbuilds = false;
-
-    return sbs;
-}
-
-void slapt_src_slackbuild_list_free(slapt_src_slackbuild_list *sbs)
-{
-    if (sbs->free_slackbuilds == true) {
-        int i;
-        for (i = 0; i < sbs->count; i++) {
-            slapt_src_slackbuild_free(sbs->slackbuilds[i]);
-        }
-    }
-
-    free(sbs->slackbuilds);
-    free(sbs);
-}
-
-void slapt_src_slackbuild_list_add(slapt_src_slackbuild_list *sbs, slapt_src_slackbuild *sb)
-{
-    slapt_src_slackbuild **realloc_tmp = realloc(sbs->slackbuilds, sizeof *sbs->slackbuilds * (sbs->count + 1));
-    if (realloc_tmp == NULL) {
-        perror("realloc failed");
-        exit(EXIT_FAILURE);
-    }
-
-    sbs->slackbuilds = realloc_tmp;
-    sbs->slackbuilds[sbs->count] = sb;
-    ++sbs->count;
-}
-
 int slapt_src_update_slackbuild_cache(slapt_src_config *config)
 {
-    int i, rval = 0;
+    int rval = 0;
     slapt_rc_config *slapt_config = slapt_init_config();
-    slapt_src_slackbuild_list *slackbuilds = slapt_src_slackbuild_list_init();
+    slapt_vector_t *slackbuilds = slapt_vector_t_init((slapt_vector_t_free_function)slapt_src_slackbuild_free);
 
-    for (i = 0; i < config->sources->count; i++) {
-        const char *url = config->sources->items[i];
-        slapt_src_slackbuild_list *sbs = NULL;
+    slapt_vector_t_foreach(const char *, url, config->sources) {
+        slapt_vector_t *sbs = NULL;
         char *files[] = {SLAPT_SRC_SOURCES_LIST_GZ, SLAPT_SRC_SOURCES_LIST, NULL};
         int fc;
 
@@ -266,47 +229,41 @@ int slapt_src_update_slackbuild_cache(slapt_src_config *config)
         }
 
         if (sbs != NULL) {
-            int c;
-            for (c = 0; c < sbs->count; c++) {
-                if (sbs->slackbuilds[c]->sb_source_url == NULL)
-                    sbs->slackbuilds[c]->sb_source_url = strdup(url);
-                slapt_src_slackbuild_list_add(slackbuilds, sbs->slackbuilds[c]);
+            slapt_vector_t_foreach(slapt_src_slackbuild *, sb, sbs) {
+                if (sb->sb_source_url == NULL)
+                    sb->sb_source_url = strdup(url);
+                slapt_vector_t_add(slackbuilds, sb);
             }
-            sbs->free_slackbuilds = false; /* don't free the slackbuilds here */
-            slapt_src_slackbuild_list_free(sbs);
+            sbs->free_function = NULL; /* don't free the slackbuilds here */
+            slapt_vector_t_free(sbs);
         }
     }
 
     slapt_src_write_slackbuilds_to_file(slackbuilds, SLAPT_SRC_DATA_FILE);
     slapt_free_rc_config(slapt_config);
-    slackbuilds->free_slackbuilds = true; /* free here */
-    slapt_src_slackbuild_list_free(slackbuilds);
+    slapt_vector_t_free(slackbuilds);
     return rval;
 }
 
 static int sb_cmp(const void *a, const void *b)
 {
-    int cmp;
     slapt_src_slackbuild *sb1 = *(slapt_src_slackbuild *const *)a;
     slapt_src_slackbuild *sb2 = *(slapt_src_slackbuild *const *)b;
 
-    cmp = strcmp(sb1->name, sb2->name);
+    int cmp = strcmp(sb1->name, sb2->name);
     if (cmp != 0)
         return cmp;
     else
         return slapt_cmp_pkg_versions(sb1->version, sb2->version);
 }
 
-void slapt_src_write_slackbuilds_to_file(slapt_src_slackbuild_list *sbs, const char *datafile)
+void slapt_src_write_slackbuilds_to_file(slapt_vector_t *sbs, const char *datafile)
 {
-    int i;
     FILE *f = slapt_open_file(datafile, "w+b");
 
-    qsort(sbs->slackbuilds, sbs->count, sizeof(sbs->slackbuilds[0]), sb_cmp);
+    slapt_vector_t_sort(sbs, sb_cmp);
 
-    for (i = 0; i < sbs->count; i++) {
-        int c;
-        slapt_src_slackbuild *sb = sbs->slackbuilds[i];
+    slapt_vector_t_foreach(slapt_src_slackbuild *, sb, sbs) {
         /* write out package data */
         fprintf(f, "SLACKBUILD NAME: %s\n", sb->name);
         fprintf(f, "SLACKBUILD SOURCEURL: %s\n", sb->sb_source_url);
@@ -332,11 +289,11 @@ void slapt_src_write_slackbuilds_to_file(slapt_src_slackbuild_list *sbs, const c
         }
 
         fprintf(f, "SLACKBUILD FILES: ");
-        for (c = 0; c < sb->files->count; c++) {
-            if (c == (sb->files->count - 1))
-                fprintf(f, "%s\n", sb->files->items[c]);
+        for (uint32_t c = 0; c < sb->files->size; c++) {
+            if (c == (sb->files->size - 1))
+                fprintf(f, "%s\n", (char *)sb->files->items[c]);
             else
-                fprintf(f, "%s ", sb->files->items[c]);
+                fprintf(f, "%s ", (char *)sb->files->items[c]);
         }
 
         fprintf(f, "SLACKBUILD VERSION: %s\n", sb->version);
@@ -352,13 +309,13 @@ void slapt_src_write_slackbuilds_to_file(slapt_src_slackbuild_list *sbs, const c
     fclose(f);
 }
 
-slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file(const char *datafile)
+slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *datafile)
 {
     FILE *f = NULL;
     char *buffer = NULL;
     size_t gb_length = 0;
     ssize_t g_size;
-    slapt_src_slackbuild_list *sbs = slapt_src_slackbuild_list_init();
+    slapt_vector_t *sbs = slapt_vector_t_init((slapt_vector_t_free_function)slapt_src_slackbuild_free);
     slapt_src_slackbuild *sb = NULL;
     enum { SLAPT_SRC_NOT_PARSING,
            SLAPT_SRC_PARSING } parse_state;
@@ -398,10 +355,10 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file(const char *dataf
         }
 
         if ((strcmp(buffer, "\n") == 0) && (parse_state == SLAPT_SRC_PARSING)) {
-            slapt_src_slackbuild_list_add(sbs, sb);
+            slapt_vector_t_add(sbs, sb);
             /* do not free, in use in sbs list
-      slapt_src_slackbuild_free (sb);
-      */
+            slapt_src_slackbuild_free (sb);
+            */
             sb = NULL;
             parse_state = SLAPT_SRC_NOT_PARSING;
         }
@@ -429,12 +386,11 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file(const char *dataf
             }
 
             if ((sscanf(buffer, "SLACKBUILD FILES: %m[^\n]", &token)) == 1) {
-                int c;
-                slapt_list_t *files = slapt_parse_delimited_list(token, ' ');
-                for (c = 0; c < files->count; c++) {
-                    slapt_add_list_item(sb->files, files->items[c]);
+                slapt_vector_t *files = slapt_parse_delimited_list(token, ' ');
+                slapt_vector_t_foreach(const char *, file, files) {
+                    slapt_vector_t_add(sb->files, strdup(file));
                 }
-                slapt_free_list(files);
+                slapt_vector_t_free(files);
                 free(token);
             }
 
@@ -485,11 +441,11 @@ slapt_src_slackbuild_list *slapt_src_get_slackbuilds_from_file(const char *dataf
 
     fclose(f);
 
-    sbs->free_slackbuilds = true;
+    sbs->sorted = true;
     return sbs;
 }
 
-slapt_src_slackbuild_list *slapt_src_get_available_slackbuilds()
+slapt_vector_t *slapt_src_get_available_slackbuilds()
 {
     return slapt_src_get_slackbuilds_from_file(SLAPT_SRC_DATA_FILE);
 }
@@ -497,11 +453,11 @@ slapt_src_slackbuild_list *slapt_src_get_available_slackbuilds()
 static char *filename_from_url(char *url)
 {
     char *filename = NULL;
-    slapt_list_t *parts = slapt_parse_delimited_list(url, '/');
-    if (parts->count > 0) {
-        filename = strdup(parts->items[parts->count - 1]);
+    slapt_vector_t *parts = slapt_parse_delimited_list(url, '/');
+    if (parts->size > 0) {
+        filename = strdup(parts->items[parts->size - 1]);
     }
-    slapt_free_list(parts);
+    slapt_vector_t_free(parts);
 
     return filename;
 }
@@ -519,8 +475,7 @@ static char *add_part_to_url(char *url, char *part)
 
 int slapt_src_fetch_slackbuild(slapt_src_config *config, slapt_src_slackbuild *sb)
 {
-    int i;
-    slapt_list_t *download_parts = NULL, *md5sum_parts = NULL;
+    slapt_vector_t *download_parts = NULL, *md5sum_parts = NULL;
     slapt_rc_config *slapt_config = slapt_init_config();
     char *sb_location = add_part_to_url(sb->sb_source_url, sb->location);
 
@@ -532,20 +487,20 @@ int slapt_src_fetch_slackbuild(slapt_src_config *config, slapt_src_slackbuild *s
     }
 
     /* download slackbuild files */
-    for (i = 0; i < sb->files->count; i++) {
+    slapt_vector_t_foreach(char *, sb_file, sb->files) {
         int curl_rv = 0;
-        char *s = NULL, *url = add_part_to_url(sb_location, sb->files->items[i]);
+        char *s = NULL, *url = add_part_to_url(sb_location, sb_file);
         FILE *f = NULL;
 
         /* some files contain paths, create as necessary */
-        if ((s = rindex(sb->files->items[i], '/')) != NULL) {
-            char *initial_dir = strndup(sb->files->items[i], strlen(sb->files->items[i]) - strlen(s) + 1);
+        if ((s = rindex(sb_file, '/')) != NULL) {
+            char *initial_dir = strndup(sb_file, strlen(sb_file) - strlen(s) + 1);
             if (initial_dir != NULL) {
                 slapt_create_dir_structure(initial_dir);
                 free(initial_dir);
             }
         }
-        f = slapt_open_file(sb->files->items[i], "w+b");
+        f = slapt_open_file(sb_file, "w+b");
 
         if (f == NULL) {
             perror("Cannot open file for writing");
@@ -553,7 +508,7 @@ int slapt_src_fetch_slackbuild(slapt_src_config *config, slapt_src_slackbuild *s
         }
 
         /* TODO support file resume */
-        printf(gettext("Fetching %s..."), sb->files->items[i]);
+        printf(gettext("Fetching %s..."), sb_file);
         curl_rv = slapt_download_data(f, url, 0, NULL, slapt_config);
         if (curl_rv == 0) {
             printf(gettext("Done\n"));
@@ -574,20 +529,20 @@ int slapt_src_fetch_slackbuild(slapt_src_config *config, slapt_src_slackbuild *s
         if (sb->download != NULL)
             download_parts = slapt_parse_delimited_list(sb->download, ' ');
         else
-            download_parts = slapt_init_list(); /* no download files */
+            download_parts = slapt_vector_t_init(free); /* no download files */
 
         if (sb->md5sum != NULL)
             md5sum_parts = slapt_parse_delimited_list(sb->md5sum, ' ');
         else
-            md5sum_parts = slapt_init_list(); /* no md5sum files */
+            md5sum_parts = slapt_vector_t_init(free); /* no md5sum files */
     }
 
-    if (download_parts->count != md5sum_parts->count) {
+    if (download_parts->size != md5sum_parts->size) {
         printf(gettext("Mismatch between download files and md5sums\n"));
         exit(EXIT_FAILURE);
     }
 
-    for (i = 0; i < download_parts->count; i++) {
+    for (uint32_t i = 0; i < download_parts->size; i++) {
         int curl_rv = 0;
         char *md5sum = md5sum_parts->items[i];
         char *filename = filename_from_url(download_parts->items[i]);
@@ -610,7 +565,7 @@ int slapt_src_fetch_slackbuild(slapt_src_config *config, slapt_src_slackbuild *s
         /* check checksum to see if we need to continue */
         slapt_gen_md5_sum_of_file(f, md5sum_to_prove);
         if (strcmp(md5sum_to_prove, md5sum) != 0) {
-            printf(gettext("Fetching %s..."), download_parts->items[i]);
+            printf(gettext("Fetching %s..."), (char *)download_parts->items[i]);
             /* download/resume */
             curl_rv = slapt_download_data(f, download_parts->items[i], file_size, NULL, slapt_config);
             if (curl_rv == 0) {
@@ -633,9 +588,9 @@ int slapt_src_fetch_slackbuild(slapt_src_config *config, slapt_src_slackbuild *s
     }
 
     if (download_parts != NULL)
-        slapt_free_list(download_parts);
+        slapt_vector_t_free(download_parts);
     if (md5sum_parts != NULL)
-        slapt_free_list(md5sum_parts);
+        slapt_vector_t_free(md5sum_parts);
 
     slapt_free_rc_config(slapt_config);
     free(sb_location);
@@ -681,12 +636,12 @@ static char *_get_pkg_filename(const char *version, const char *pkgtag)
         if (pkg_regex->reg_return != 0)
             continue;
 
-        /* version from .info file may not match resulting
-       pkg version
-        libva: VERSION="0.31.1-1+sds4" and VERSION=0.31.1_1+sds4
-    if (strstr (file->d_name, version) == NULL)
-      continue;
-      */
+        /* version from .info file may not match resulting pkg version
+	 * libva: VERSION="0.31.1-1+sds4" and VERSION=0.31.1_1+sds4
+    	if (strstr (file->d_name, version) == NULL)
+            continue;
+        */
+        (void)version;
 
         if (pkgtag != NULL)
             if (strstr(file->d_name, pkgtag) == NULL)
@@ -732,10 +687,12 @@ int slapt_src_build_slackbuild(slapt_src_config *config, slapt_src_slackbuild *s
     }
 
 #if defined(HAS_SLKBUILD)
-    if (slapt_search_list(sb->files, "SLKBUILD") != NULL) {
+    slapt_vector_t *slkbuild_matches = slapt_vector_t_search(sb->files, sb_compare_name_to_name, "SLKBUILD");
+    if (slkbuild_matches) {
         command_len = SLAPTSRC_SLKBUILD_CMD_LEN;
         command = slapt_malloc(sizeof *command * command_len);
         r = snprintf(command, command_len, "%s", SLAPTSRC_SLKBUILD_CMD);
+        slapt_vector_t_free(slkbuild_matches);
     } else {
 #endif
         command_len += strlen(sb->name);
@@ -832,22 +789,22 @@ int slapt_src_install_slackbuild(slapt_src_config *config, slapt_src_slackbuild 
     return 0;
 }
 
-slapt_src_slackbuild *slapt_src_get_slackbuild(slapt_src_slackbuild_list *sbs, const char *name, const char *version)
+slapt_src_slackbuild *slapt_src_get_slackbuild(slapt_vector_t *sbs, const char *name, const char *version)
 {
-    int min = 0, max = sbs->count - 1;
+    int min = 0, max = sbs->size - 1;
 
     while (max >= min) {
         int pivot = (min + max) / 2;
-        int name_cmp = strcmp(sbs->slackbuilds[pivot]->name, name);
+        int name_cmp = strcmp(((slapt_src_slackbuild *)sbs->items[pivot])->name, name);
         int ver_cmp = 0;
 
         if (name_cmp == 0) {
             if (version == NULL)
-                return sbs->slackbuilds[pivot];
+                return sbs->items[pivot];
 
-            ver_cmp = slapt_cmp_pkg_versions(sbs->slackbuilds[pivot]->version, version);
+            ver_cmp = slapt_cmp_pkg_versions(((slapt_src_slackbuild *)sbs->items[pivot])->version, version);
             if (ver_cmp == 0)
-                return sbs->slackbuilds[pivot];
+                return sbs->items[pivot];
 
             if (ver_cmp < 0)
                 min = pivot + 1;
@@ -865,26 +822,14 @@ slapt_src_slackbuild *slapt_src_get_slackbuild(slapt_src_slackbuild_list *sbs, c
     return NULL;
 }
 
-/* for short, unsorted slackbulid_lists */
-static bool _slapt_src_search_slackbuild_cache_linear_by_name(slapt_src_slackbuild_list *sbs, const char *name)
-{
-    int i;
-    for (i = 0; i < sbs->count; i++) {
-        if (strcmp(sbs->slackbuilds[i]->name, name) == 0)
-            return true;
-    }
-    return false;
-}
-
 static int slapt_src_resolve_dependencies(
-    slapt_src_slackbuild_list *available,
+    slapt_vector_t *available,
     slapt_src_slackbuild *sb,
-    slapt_src_slackbuild_list *deps,
-    slapt_pkg_list_t *installed,
-    slapt_pkg_err_list_t *errors)
+    slapt_vector_t *deps,
+    slapt_vector_t *installed,
+    slapt_vector_t *errors)
 {
-    int r = 0;
-    slapt_list_t *requires = NULL;
+    slapt_vector_t *requires = NULL;
     if (sb->requires == NULL)
         return 0;
 
@@ -896,8 +841,7 @@ static int slapt_src_resolve_dependencies(
     if (requires == NULL)
         return 0;
 
-    for (r = 0; r < requires->count; r++) {
-        const char *dep_name = requires->items[r];
+    slapt_vector_t_foreach(const char *, dep_name, requires) {
         slapt_src_slackbuild *sb_dep = NULL;
 
         /* skip non-deps */
@@ -909,89 +853,96 @@ static int slapt_src_resolve_dependencies(
         /* we will try and resolve its dependencies no matter what,
        in case there are new deps we don't yet have */
         if (sb_dep != NULL) {
-            if (_slapt_src_search_slackbuild_cache_linear_by_name(deps, dep_name) == true)
+            slapt_vector_t *matches = slapt_vector_t_search(deps, sb_compare_pkg_to_name, (char *)dep_name);
+            if (matches) {
+                slapt_vector_t_free(matches);
                 continue;
+            }
 
             int dep_check = slapt_src_resolve_dependencies(available, sb_dep, deps, installed, errors);
 
             if (dep_check != 0) {
-                slapt_free_list(requires);
+                slapt_vector_t_free(requires);
                 return dep_check;
             }
 
             /* if not installed */
             if (slapt_get_newest_pkg(installed, dep_name) == NULL) {
-                slapt_src_slackbuild_list_add(deps, sb_dep);
+                slapt_vector_t_add(deps, sb_dep);
             }
         }
         /* we don't have a slackbuild for it */
         else {
             /* if not installed, this is an error */
             if (slapt_get_newest_pkg(installed, dep_name) == NULL) {
-                slapt_add_pkg_err_to_list(errors, sb->name, dep_name);
-                slapt_free_list(requires);
+                slapt_vector_t_add(errors, slapt_pkg_err_t_init(strdup(sb->name), strdup((char *)dep_name)));
+                slapt_vector_t_free(requires);
                 return 1;
             }
         }
     }
 
-    slapt_free_list(requires);
+    slapt_vector_t_free(requires);
     return 0;
 }
 
-slapt_src_slackbuild_list *slapt_src_names_to_slackbuilds(
+slapt_vector_t *slapt_src_names_to_slackbuilds(
     slapt_src_config *config,
-    slapt_src_slackbuild_list *available,
-    slapt_list_t *names,
-    slapt_pkg_list_t *installed)
+    slapt_vector_t *available,
+    slapt_vector_t *names,
+    slapt_vector_t *installed)
 {
-    int i;
-    slapt_src_slackbuild_list *sbs = slapt_src_slackbuild_list_init();
+    slapt_vector_t *sbs = slapt_vector_t_init(NULL);//(slapt_vector_t_free_function)slapt_src_slackbuild_free);
 
-    for (i = 0; i < names->count; i++) {
+    for (uint32_t i = 0; i < names->size; i++) {
         slapt_src_slackbuild *sb = NULL;
-        slapt_list_t *parts = slapt_parse_delimited_list(names->items[i], ':');
-        if (parts->count > 1)
+        slapt_vector_t *parts = slapt_parse_delimited_list(names->items[i], ':');
+        if (parts->size > 1)
             sb = slapt_src_get_slackbuild(available, parts->items[0], parts->items[1]);
         else
             sb = slapt_src_get_slackbuild(available, names->items[i], NULL);
 
-        slapt_free_list(parts);
+        slapt_vector_t_free(parts);
 
         if (sb != NULL) {
             if (config->do_dep == true) {
-                int d;
-                slapt_src_slackbuild_list *deps = slapt_src_slackbuild_list_init();
-                slapt_pkg_err_list_t *errors = slapt_init_pkg_err_list();
-                slapt_src_slackbuild_list_add(deps, sb); /* mark self as dep to prevent recursion */
+                slapt_vector_t *deps = slapt_vector_t_init(NULL);
+                slapt_vector_t *errors = slapt_vector_t_init((slapt_vector_t_free_function)slapt_pkg_err_t_free);
+                slapt_vector_t_add(deps, sb); /* mark self as dep to prevent recursion */
                 int dep_check = slapt_src_resolve_dependencies(available, sb, deps, installed, errors);
 
                 if (dep_check != 0) {
-                    for (d = 0; d < errors->err_count; d++) {
-                        slapt_pkg_err_t *err = errors->errs[d];
+                    slapt_vector_t_foreach(slapt_pkg_err_t *, err, errors) {
                         fprintf(stderr, gettext("Missing slackbuild: %s requires %s\n"), err->pkg, err->error);
                     }
-                    slapt_src_slackbuild_list_free(deps);
-                    slapt_free_pkg_err_list(errors);
+                    slapt_vector_t_free(deps);
+                    slapt_vector_t_free(errors);
                     continue;
                 }
 
-                slapt_free_pkg_err_list(errors);
+                slapt_vector_t_free(errors);
 
-                for (d = 0; d < deps->count; d++) {
-                    if (strcmp(sb->name, deps->slackbuilds[d]->name) == 0) {
+                slapt_vector_t_foreach(slapt_src_slackbuild *, dep, deps) {
+                    if (strcmp(sb->name, dep->name) == 0) {
                         continue;
-		    }
-                    if (_slapt_src_search_slackbuild_cache_linear_by_name(sbs, deps->slackbuilds[d]->name) == false) {
-                        slapt_src_slackbuild_list_add(sbs, deps->slackbuilds[d]);
+                    }
+
+                    slapt_vector_t *dep_matches = slapt_vector_t_search(sbs, sb_compare_pkg_to_name, dep->name);
+                    if (!dep_matches) {
+                        slapt_vector_t_add(sbs, dep);
+                    } else {
+                        slapt_vector_t_free(dep_matches);
                     }
                 }
 
-                slapt_src_slackbuild_list_free(deps);
+                slapt_vector_t_free(deps);
             }
 
-            if (_slapt_src_search_slackbuild_cache_linear_by_name(sbs, sb->name) == false) {
-                slapt_src_slackbuild_list_add(sbs, sb);
+            slapt_vector_t *matches = slapt_vector_t_search(sbs, sb_compare_pkg_to_name, sb->name);
+            if (!matches) {
+                slapt_vector_t_add(sbs, sb);
+            } else {
+                slapt_vector_t_free(matches);
             }
         }
     }
@@ -999,41 +950,54 @@ slapt_src_slackbuild_list *slapt_src_names_to_slackbuilds(
     return sbs;
 }
 
-slapt_src_slackbuild_list *slapt_src_search_slackbuild_cache(slapt_src_slackbuild_list *remote_sbs, slapt_list_t *names)
+slapt_vector_t *slapt_src_search_slackbuild_cache(slapt_vector_t *remote_sbs, slapt_vector_t *names)
 {
-    int i, n;
-    slapt_src_slackbuild_list *sbs = slapt_src_slackbuild_list_init();
+    slapt_vector_t *sbs = slapt_vector_t_init(NULL);
 
-    for (n = 0; n < names->count; n++) {
-        slapt_regex_t *search_regex = slapt_init_regex(names->items[n]);
+    slapt_vector_t_foreach(char *, sb_name, names) {
+        slapt_regex_t *search_regex = slapt_init_regex(sb_name);
         if (search_regex == NULL)
             continue;
 
-        for (i = 0; i < remote_sbs->count; i++) {
+        slapt_vector_t_foreach(slapt_src_slackbuild *, remote_sb, remote_sbs) {
             int name_r = -1, version_r = -1, short_desc_r = -1;
 
-            if (strcmp(remote_sbs->slackbuilds[i]->name, names->items[n]) == 0) {
-                slapt_src_slackbuild_list_add(sbs, remote_sbs->slackbuilds[i]);
+            if (strcmp(remote_sb->name, sb_name) == 0) {
+                slapt_vector_t_add(sbs, remote_sb);
                 continue;
             }
 
-            slapt_execute_regex(search_regex, remote_sbs->slackbuilds[i]->name);
+            slapt_execute_regex(search_regex, remote_sb->name);
             name_r = search_regex->reg_return;
 
-            slapt_execute_regex(search_regex, remote_sbs->slackbuilds[i]->location);
+            slapt_execute_regex(search_regex, remote_sb->location);
             version_r = search_regex->reg_return;
 
-            if (remote_sbs->slackbuilds[i]->short_desc != NULL) {
-                slapt_execute_regex(search_regex, remote_sbs->slackbuilds[i]->short_desc);
+            if (remote_sb->short_desc != NULL) {
+                slapt_execute_regex(search_regex, remote_sb->short_desc);
                 short_desc_r = search_regex->reg_return;
             }
 
             if (name_r == 0 || version_r == 0 || short_desc_r == 0)
-                slapt_src_slackbuild_list_add(sbs, remote_sbs->slackbuilds[i]);
+                slapt_vector_t_add(sbs, remote_sb);
         }
 
         slapt_free_regex(search_regex);
     }
 
     return sbs;
+}
+
+int sb_compare_name_to_name(const void *a, const void *b)
+{
+    char *name_a = (char *)a;
+    char *name_b = (char *)b;
+    return strcmp(name_a, name_b);
+}
+
+int sb_compare_pkg_to_name(const void *a, const void *b)
+{
+    slapt_src_slackbuild *sb = (slapt_src_slackbuild *)a;
+    char *name = (char *)b;
+    return strcmp(sb->name, name);
 }

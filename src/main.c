@@ -35,9 +35,8 @@
 extern char *optarg;
 extern int optind, opterr, optopt;
 
-static int show_summary(slapt_src_slackbuild_list *, slapt_list_t *, int, bool);
+static int show_summary(slapt_vector_t *, slapt_vector_t *, int, bool);
 static void clean(slapt_src_config *config);
-static int sb_compare_by_name(const void *a, const void *b);
 
 void version(void)
 {
@@ -126,12 +125,12 @@ static void init_builddir(slapt_src_config *config)
 
 int main(int argc, char *argv[])
 {
-    int c = -1, option_index = 0, action = 0, i = 0, rval = 0;
-    slapt_list_t *names = slapt_init_list();
+    int c = -1, option_index = 0, action = 0, rval = 0;
+    slapt_vector_t *names = slapt_vector_t_init(free);
     slapt_src_config *config = NULL;
-    slapt_src_slackbuild_list *sbs = NULL;
-    slapt_src_slackbuild_list *remote_sbs = NULL;
-    slapt_pkg_list_t *installed = NULL;
+    slapt_vector_t *sbs = NULL;
+    slapt_vector_t *remote_sbs = NULL;
+    slapt_vector_t *installed = NULL;
     bool prompt = true, do_dep = true, simulate = false;
     char *config_file = NULL, *postcmd = NULL;
     int only_flags = 0;
@@ -208,23 +207,23 @@ int main(int argc, char *argv[])
             break;
         case FETCH_OPT:
             action = FETCH_OPT;
-            slapt_add_list_item(names, optarg);
+            slapt_vector_t_add(names, strdup(optarg));
             break;
         case SEARCH_OPT:
             action = SEARCH_OPT;
-            slapt_add_list_item(names, optarg);
+            slapt_vector_t_add(names, strdup(optarg));
             break;
         case SHOW_OPT:
             action = SHOW_OPT;
-            slapt_add_list_item(names, optarg);
+            slapt_vector_t_add(names, strdup(optarg));
             break;
         case BUILD_OPT:
             action = BUILD_OPT;
-            slapt_add_list_item(names, optarg);
+            slapt_vector_t_add(names, strdup(optarg));
             break;
         case INSTALL_OPT:
             action = INSTALL_OPT;
-            slapt_add_list_item(names, optarg);
+            slapt_vector_t_add(names, strdup(optarg));
             break;
         case YES_OPT:
             prompt = false;
@@ -265,7 +264,7 @@ int main(int argc, char *argv[])
 
     /* add extra arguments */
     while (optind < argc) {
-        slapt_add_list_item(names, argv[optind]);
+        slapt_vector_t_add(names, strdup(argv[optind]));
         ++optind;
     }
 
@@ -302,32 +301,25 @@ int main(int argc, char *argv[])
         remote_sbs = slapt_src_get_available_slackbuilds();
         installed = slapt_get_installed_pkgs();
         /* convert all names to slackbuilds */
-        if (names->count > 0) {
+        if (names->size > 0) {
             sbs = slapt_src_names_to_slackbuilds(config, remote_sbs, names, installed);
-            if (sbs == NULL || sbs->count == 0) {
+            if (sbs == NULL || sbs->size == 0) {
                 printf(gettext("Unable to find all specified slackbuilds.\n"));
                 exit(EXIT_FAILURE);
             }
         } else if (action == UPGRADE_OPT) {
-            slapt_src_slackbuild search_key;
-            slapt_src_slackbuild *search_key_p[1];
-            slapt_src_slackbuild **found;
-            slapt_pkg_info_t *pkg;
-
-            search_key_p[0] = &search_key;
-
-            memset(&search_key, 0, sizeof(search_key));
-
             /* for each entry in 'installed' see if it's available as a slackbuild */
-            for (i = 0, pkg = installed->pkgs[0]; i < installed->pkg_count; pkg = installed->pkgs[++i]) {
-                /* sb_compare_by_name is only going to examine the 'name' member */
-                search_key.name = pkg->name;
-                if ((found = bsearch(&search_key_p, remote_sbs->slackbuilds, remote_sbs->count,
-                                     sizeof(remote_sbs->slackbuilds[0]), sb_compare_by_name))) {
-                    if (slapt_cmp_pkg_versions((*found)->version, pkg->version) == 1) {
-                        slapt_add_list_item(names, search_key.name);
+            slapt_vector_t_foreach(slapt_pkg_info_t *, pkg, installed) {
+                slapt_vector_t *matches = slapt_vector_t_search(remote_sbs, sb_compare_pkg_to_name, pkg->name);
+                if (!matches) {
+                    continue;
+                }
+                slapt_vector_t_foreach(slapt_src_slackbuild *, upgrade_sb, matches) {
+                    if (slapt_cmp_pkg_versions(upgrade_sb->version, pkg->version) == 1) {
+                        slapt_vector_t_add(names, strdup(upgrade_sb->name));
                     }
                 }
+                slapt_vector_t_free(matches);
             }
 
             sbs = slapt_src_names_to_slackbuilds(config, remote_sbs, names, installed);
@@ -360,91 +352,97 @@ int main(int argc, char *argv[])
         break;
 
     case FETCH_OPT:
-        for (i = 0; i < sbs->count; i++) {
+        ;
+        slapt_vector_t_foreach(slapt_src_slackbuild *, fetch_sb, sbs) {
             if (simulate) {
-                printf(gettext("FETCH: %s\n"), sbs->slackbuilds[i]->name);
+                printf(gettext("FETCH: %s\n"), fetch_sb->name);
                 continue;
             } else
-                slapt_src_fetch_slackbuild(config, sbs->slackbuilds[i]);
+                slapt_src_fetch_slackbuild(config, fetch_sb);
         }
         break;
 
     case BUILD_OPT:
-        for (i = 0; i < sbs->count; i++) {
-            slapt_src_slackbuild *sb = sbs->slackbuilds[i];
-            int r = 0, nv_len = strlen(sb->name) + strlen(sb->version) + 2;
+        ;
+        slapt_vector_t_foreach(slapt_src_slackbuild *, build_sb, sbs) {
+            int r = 0, nv_len = strlen(build_sb->name) + strlen(build_sb->version) + 2;
             char *namever = slapt_malloc(sizeof *namever * nv_len);
-            r = snprintf(namever, nv_len, "%s:%s", sb->name, sb->version);
+            r = snprintf(namever, nv_len, "%s:%s", build_sb->name, build_sb->version);
 
             if (r + 1 != nv_len)
                 exit(EXIT_FAILURE);
 
             if (simulate) {
-                printf(gettext("BUILD: %s\n"), sb->name);
+                printf(gettext("BUILD: %s\n"), build_sb->name);
                 free(namever);
                 continue;
             }
 
-            slapt_src_fetch_slackbuild(config, sb);
-            slapt_src_build_slackbuild(config, sb);
+            slapt_src_fetch_slackbuild(config, build_sb);
+            slapt_src_build_slackbuild(config, build_sb);
 
-            /* XXX we assume if we didn't request the slackbuild, then
-           it is a dependency, and needs to be installed */
-            if (slapt_search_list(names, sb->name) == NULL && slapt_search_list(names, namever) == NULL)
-                slapt_src_install_slackbuild(config, sbs->slackbuilds[i]);
+            /* XXX we assume if we didn't request the slackbuild, then it is a dependency, and needs to be installed */
+            slapt_vector_t *name_matches = slapt_vector_t_search(names, sb_compare_name_to_name, build_sb->name);
+            slapt_vector_t *namever_matches = slapt_vector_t_search(names, sb_compare_name_to_name, namever);
+            if (name_matches == NULL && namever_matches == NULL) {
+                slapt_src_install_slackbuild(config, build_sb);
+            }
 
+            if (name_matches)
+                slapt_vector_t_free(name_matches);
+            if (namever_matches)
+                slapt_vector_t_free(namever_matches);
             free(namever);
         }
         break;
 
     case INSTALL_OPT:
-        for (i = 0; i < sbs->count; i++) {
-            slapt_src_slackbuild *sb = sbs->slackbuilds[i];
-
+        ;
+        slapt_vector_t_foreach(slapt_src_slackbuild *, install_sb, sbs) {
             if (simulate) {
-                printf(gettext("INSTALL: %s\n"), sb->name);
+                printf(gettext("INSTALL: %s\n"), install_sb->name);
                 continue;
             }
 
-            slapt_src_fetch_slackbuild(config, sb);
-            slapt_src_build_slackbuild(config, sb);
-            slapt_src_install_slackbuild(config, sb);
+            slapt_src_fetch_slackbuild(config, install_sb);
+            slapt_src_build_slackbuild(config, install_sb);
+            slapt_src_install_slackbuild(config, install_sb);
         }
         break;
 
     case SEARCH_OPT: {
-        slapt_src_slackbuild_list *search = slapt_src_search_slackbuild_cache(remote_sbs, names);
-        for (i = 0; i < search->count; i++) {
-            slapt_src_slackbuild *sb = search->slackbuilds[i];
+        ;
+        slapt_vector_t *search = slapt_src_search_slackbuild_cache(remote_sbs, names);
+        slapt_vector_t_foreach(slapt_src_slackbuild *, search_sb, search) {
             printf("%s:%s - %s\n",
-                   sb->name,
-                   sb->version,
-                   sb->short_desc != NULL ? sb->short_desc : "");
+                   search_sb->name,
+                   search_sb->version,
+                   search_sb->short_desc != NULL ? search_sb->short_desc : "");
         }
-        slapt_src_slackbuild_list_free(search);
+        slapt_vector_t_free(search);
     } break;
 
     case LIST_OPT:
-        for (i = 0; i < remote_sbs->count; i++) {
-            slapt_src_slackbuild *sb = remote_sbs->slackbuilds[i];
+        ;
+        slapt_vector_t_foreach(slapt_src_slackbuild *, list_sb, remote_sbs) {
             printf("%s:%s - %s\n",
-                   sb->name,
-                   sb->version,
-                   sb->short_desc != NULL ? sb->short_desc : "");
+                   list_sb->name,
+                   list_sb->version,
+                   list_sb->short_desc != NULL ? list_sb->short_desc : "");
         }
         break;
 
     case SHOW_OPT: {
-        for (i = 0; i < names->count; i++) {
-            slapt_src_slackbuild *sb = NULL;
-            slapt_list_t *parts = slapt_parse_delimited_list(names->items[i], ':');
+        ;
+        slapt_vector_t_foreach(char *, show_name, names) {
+            slapt_vector_t *parts = slapt_parse_delimited_list(show_name, ':');
             const char *name = parts->items[0];
             const char *ver = NULL;
 
-            if (parts->count > 1)
+            if (parts->size > 1)
                 ver = parts->items[1];
 
-            sb = slapt_src_get_slackbuild(remote_sbs, name, ver);
+            slapt_src_slackbuild *sb = slapt_src_get_slackbuild(remote_sbs, name, ver);
 
             if (sb != NULL) {
                 printf(gettext("SlackBuild Name: %s\n"), sb->name);
@@ -454,19 +452,18 @@ int main(int argc, char *argv[])
 
                 printf(gettext("SlackBuild Files:\n"));
 
-                for (int ic = 0; ic < sb->files->count; ic++) {
-                    printf(" %s\n", sb->files->items[ic]);
+                slapt_vector_t_foreach(char *, f, sb->files) {
+                    printf(" %s\n", f);
                 }
 
                 if (sb->requires != NULL)
                     printf(gettext("SlackBuild Requires: %s\n"), sb->requires);
 
-                if (i + 1 != names->count)
-                    printf("\n");
+                 printf("\n");
 
                 /* slapt_src_slackbuild_free (sb); NO FREE */
             }
-            slapt_free_list(parts);
+            slapt_vector_t_free(parts);
         }
     } break;
     case CLEAN_OPT:
@@ -475,13 +472,13 @@ int main(int argc, char *argv[])
     }
 
     if (names != NULL)
-        slapt_free_list(names);
+        slapt_vector_t_free(names);
     if (sbs != NULL)
-        slapt_src_slackbuild_list_free(sbs);
+        slapt_vector_t_free(sbs);
     if (remote_sbs != NULL)
-        slapt_src_slackbuild_list_free(remote_sbs);
+        slapt_vector_t_free(remote_sbs);
     if (installed != NULL)
-        slapt_free_pkg_list(installed);
+        slapt_vector_t_free(installed);
     if (config_file != NULL)
         free(config_file);
 
@@ -490,11 +487,11 @@ int main(int argc, char *argv[])
     return rval;
 }
 
-static int show_summary(slapt_src_slackbuild_list *sbs, slapt_list_t *names, int action, bool prompt)
+static int show_summary(slapt_vector_t *sbs, slapt_vector_t *names, int action, bool prompt)
 {
-    int i, line_len = 0;
+    int line_len = 0;
 
-    if (sbs->count == 0) {
+    if (sbs->size == 0) {
         printf(gettext("Done\n"));
         return action;
     }
@@ -504,8 +501,8 @@ static int show_summary(slapt_src_slackbuild_list *sbs, slapt_list_t *names, int
                                  : action == BUILD_OPT ? gettext("built")
                                                        : gettext("fetched"));
 
-    for (i = 0; i < names->count; i++) {
-        slapt_list_t *parts = slapt_parse_delimited_list(names->items[i], ':');
+    slapt_vector_t_foreach(char *, sb_name, names) {
+        slapt_vector_t *parts = slapt_parse_delimited_list(sb_name, ':');
         const char *name = parts->items[0];
         int name_len = strlen(name);
 
@@ -520,22 +517,24 @@ static int show_summary(slapt_src_slackbuild_list *sbs, slapt_list_t *names, int
             line_len = name_len + 2;
         }
 
-        slapt_free_list(parts);
+        slapt_vector_t_free(parts);
     }
     printf("\n");
 
-    if (names->count < sbs->count) {
+    if (names->size < sbs->size) {
         line_len = 0;
 
         printf(gettext("The following dependent slackbuilds will be built and installed:\n"));
 
-        for (i = 0; i < sbs->count; i++) {
-            const char *name = sbs->slackbuilds[i]->name;
-            const char *version = sbs->slackbuilds[i]->version;
+        slapt_vector_t_foreach(slapt_src_slackbuild *, sb, sbs) {
+            const char *name = sb->name;
+            const char *version = sb->version;
             char *namever = slapt_malloc(sizeof *namever * (strlen(name) + strlen(version) + 2));
             sprintf(namever, "%s:%s", name, version);
 
-            if (slapt_search_list(names, name) == NULL && slapt_search_list(names, namever) == NULL) {
+            slapt_vector_t *name_matches = slapt_vector_t_search(names, sb_compare_name_to_name, (char *)name);
+            slapt_vector_t *namever_matches = slapt_vector_t_search(names, sb_compare_name_to_name, namever);
+            if (name_matches == NULL && namever_matches == NULL) {
                 int name_len = strlen(name);
 
                 if (line_len == 0) {
@@ -549,13 +548,16 @@ static int show_summary(slapt_src_slackbuild_list *sbs, slapt_list_t *names, int
                     line_len = name_len + 2;
                 }
             }
-
+            if (name_matches)
+                slapt_vector_t_free(name_matches);
+            if (namever_matches)
+                slapt_vector_t_free(namever_matches);
             free(namever);
         }
         printf("\n");
     }
 
-    if ((sbs->count > 0) && (prompt == true)) {
+    if ((sbs->size > 0) && (prompt == true)) {
         if (slapt_ask_yes_no(gettext("Do you want to continue? [y/N] ")) != 1) {
             printf(gettext("Abort.\n"));
             return 0;
@@ -590,14 +592,6 @@ static void clean(slapt_src_config *config)
                 }
             }
         }
+        closedir(builddir);
     }
-    closedir(builddir);
-}
-
-static int sb_compare_by_name(const void *a, const void *b)
-{
-    const slapt_src_slackbuild *const sb_a = *(slapt_src_slackbuild *const *)a;
-    const slapt_src_slackbuild *const sb_b = *(slapt_src_slackbuild *const *)b;
-
-    return strcmp(sb_a->name, sb_b->name);
 }
