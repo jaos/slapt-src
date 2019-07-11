@@ -4,15 +4,13 @@ AC_CONFIG_SRCDIR([src/])
 AC_CONFIG_HEADERS([config.h])
 IT_PROG_INTLTOOL([0.35.0])
 
+AC_PROG_CC_C99
 AC_CANONICAL_HOST
 
 case "$host_cpu" in
 i[[3456]]86) host_cpu=i386 ;;
 arm*) host_cpu=arm ;;
 esac
-
-# Checks for programs.
-AC_PROG_CC_C99
 
 # Checks for libraries.
 
