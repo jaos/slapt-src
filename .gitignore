@@ -1,5 +1,4 @@
 .gitignore
-.tx
 
 src/slapt-src
 src/*.o
