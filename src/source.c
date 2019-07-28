@@ -172,7 +172,7 @@ void slapt_src_slackbuild_free(slapt_src_slackbuild *sb)
 int slapt_src_update_slackbuild_cache(slapt_src_config *config)
 {
     int rval = 0;
-    slapt_rc_config *slapt_config = slapt_init_config();
+    slapt_config_t *slapt_config = slapt_config_t_init();
     slapt_vector_t *slackbuilds = slapt_vector_t_init((slapt_vector_t_free_function)slapt_src_slackbuild_free);
 
     slapt_vector_t_foreach(const char *, url, config->sources) {
@@ -240,7 +240,7 @@ int slapt_src_update_slackbuild_cache(slapt_src_config *config)
     }
 
     slapt_src_write_slackbuilds_to_file(slackbuilds, SLAPT_SRC_DATA_FILE);
-    slapt_free_rc_config(slapt_config);
+    slapt_config_t_free(slapt_config);
     slapt_vector_t_free(slackbuilds);
     return rval;
 }
@@ -476,7 +476,7 @@ static char *add_part_to_url(char *url, char *part)
 int slapt_src_fetch_slackbuild(slapt_src_config *config, slapt_src_slackbuild *sb)
 {
     slapt_vector_t *download_parts = NULL, *md5sum_parts = NULL;
-    slapt_rc_config *slapt_config = slapt_init_config();
+    slapt_config_t *slapt_config = slapt_config_t_init();
     char *sb_location = add_part_to_url(sb->sb_source_url, sb->location);
 
     /* need to mkdir and chdir to sb->location */
@@ -592,7 +592,7 @@ int slapt_src_fetch_slackbuild(slapt_src_config *config, slapt_src_slackbuild *s
     if (md5sum_parts != NULL)
         slapt_vector_t_free(md5sum_parts);
 
-    slapt_free_rc_config(slapt_config);
+    slapt_config_t_free(slapt_config);
     free(sb_location);
 
     /* go back */
@@ -618,7 +618,7 @@ static char *_get_pkg_filename(const char *version, const char *pkgtag)
         exit(EXIT_FAILURE);
     }
 
-    if ((pkg_regex = slapt_init_regex(SLAPT_PKG_PARSE_REGEX)) == NULL) {
+    if ((pkg_regex = slapt_regex_t_init(SLAPT_PKG_PARSE_REGEX)) == NULL) {
         exit(EXIT_FAILURE);
     }
 
@@ -632,7 +632,7 @@ static char *_get_pkg_filename(const char *version, const char *pkgtag)
         if (!S_ISREG(stat_buf.st_mode))
             continue;
 
-        slapt_execute_regex(pkg_regex, file->d_name);
+        slapt_regex_t_execute(pkg_regex, file->d_name);
         if (pkg_regex->reg_return != 0)
             continue;
 
@@ -652,7 +652,7 @@ static char *_get_pkg_filename(const char *version, const char *pkgtag)
     }
 
     closedir(d);
-    slapt_free_regex(pkg_regex);
+    slapt_regex_t_free(pkg_regex);
 
     return filename;
 }
@@ -955,7 +955,7 @@ slapt_vector_t *slapt_src_search_slackbuild_cache(slapt_vector_t *remote_sbs, sl
     slapt_vector_t *sbs = slapt_vector_t_init(NULL);
 
     slapt_vector_t_foreach(char *, sb_name, names) {
-        slapt_regex_t *search_regex = slapt_init_regex(sb_name);
+        slapt_regex_t *search_regex = slapt_regex_t_init(sb_name);
         if (search_regex == NULL)
             continue;
 
@@ -967,14 +967,14 @@ slapt_vector_t *slapt_src_search_slackbuild_cache(slapt_vector_t *remote_sbs, sl
                 continue;
             }
 
-            slapt_execute_regex(search_regex, remote_sb->name);
+            slapt_regex_t_execute(search_regex, remote_sb->name);
             name_r = search_regex->reg_return;
 
-            slapt_execute_regex(search_regex, remote_sb->location);
+            slapt_regex_t_execute(search_regex, remote_sb->location);
             version_r = search_regex->reg_return;
 
             if (remote_sb->short_desc != NULL) {
-                slapt_execute_regex(search_regex, remote_sb->short_desc);
+                slapt_regex_t_execute(search_regex, remote_sb->short_desc);
                 short_desc_r = search_regex->reg_return;
             }
 
@@ -982,7 +982,7 @@ slapt_vector_t *slapt_src_search_slackbuild_cache(slapt_vector_t *remote_sbs, sl
                 slapt_vector_t_add(sbs, remote_sb);
         }
 
-        slapt_free_regex(search_regex);
+        slapt_regex_t_free(search_regex);
     }
 
     return sbs;

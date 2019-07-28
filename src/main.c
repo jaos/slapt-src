@@ -309,7 +309,7 @@ int main(int argc, char *argv[])
             }
         } else if (action == UPGRADE_OPT) {
             /* for each entry in 'installed' see if it's available as a slackbuild */
-            slapt_vector_t_foreach(slapt_pkg_info_t *, pkg, installed) {
+            slapt_vector_t_foreach(slapt_pkg_t *, pkg, installed) {
                 slapt_vector_t *matches = slapt_vector_t_search(remote_sbs, sb_compare_pkg_to_name, pkg->name);
                 if (!matches) {
                     continue;
