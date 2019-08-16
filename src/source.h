@@ -37,6 +37,7 @@ typedef struct _slapt_src_config_ {
     char *pkgtag;
     char *postcmd;
     bool do_dep;
+    bool prompt;
 } slapt_src_config;
 slapt_src_config *slapt_src_config_init(void);
 void slapt_src_config_free(slapt_src_config *config);
@@ -58,11 +59,11 @@ typedef struct _slapt_src_slackbuild_ {
 slapt_src_slackbuild *slapt_src_slackbuild_init(void);
 void slapt_src_slackbuild_free(slapt_src_slackbuild *);
 
-int slapt_src_update_slackbuild_cache(slapt_src_config *);
+bool slapt_src_update_slackbuild_cache(slapt_src_config *);
 slapt_vector_t *slapt_src_get_available_slackbuilds(void);
-int slapt_src_fetch_slackbuild(slapt_src_config *, slapt_src_slackbuild *);
-int slapt_src_build_slackbuild(slapt_src_config *, slapt_src_slackbuild *);
-int slapt_src_install_slackbuild(slapt_src_config *, slapt_src_slackbuild *);
+bool slapt_src_fetch_slackbuild(slapt_src_config *, slapt_src_slackbuild *);
+bool slapt_src_build_slackbuild(slapt_src_config *, slapt_src_slackbuild *);
+bool slapt_src_install_slackbuild(slapt_src_config *, slapt_src_slackbuild *);
 slapt_vector_t *slapt_src_names_to_slackbuilds(slapt_src_config *, slapt_vector_t *, slapt_vector_t *, slapt_vector_t *);
 slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *);
 void slapt_src_write_slackbuilds_to_file(slapt_vector_t *, const char *);

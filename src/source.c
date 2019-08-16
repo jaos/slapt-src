@@ -46,6 +46,7 @@ slapt_src_config *slapt_src_config_init(void)
     config->pkgtag = NULL;
     config->postcmd = NULL;
     config->do_dep = false;
+    config->prompt = true;
     return config;
 }
 
@@ -169,9 +170,9 @@ void slapt_src_slackbuild_free(slapt_src_slackbuild *sb)
     free(sb);
 }
 
-int slapt_src_update_slackbuild_cache(slapt_src_config *config)
+bool slapt_src_update_slackbuild_cache(slapt_src_config *config)
 {
-    int rval = 0;
+    bool rval = true;
     slapt_config_t *slapt_config = slapt_config_t_init();
     slapt_vector_t *slackbuilds = slapt_vector_t_init((slapt_vector_t_free_function)slapt_src_slackbuild_free);
 
@@ -211,12 +212,12 @@ int slapt_src_update_slackbuild_cache(slapt_src_config *config)
                 } else {
                     fprintf(stderr, gettext("Download failed: %s\n"), err);
                     slapt_clear_head_cache(filename);
-                    rval = 1;
+                    rval = false;
                 }
             } else {
                 if (strcmp(files[fc], SLAPT_SRC_SOURCES_LIST_GZ) != 0) {
                     fprintf(stderr, gettext("Download failed: %s\n"), "404");
-                    rval = 1;
+                    rval = false;
                 }
             }
 
@@ -473,11 +474,12 @@ static char *add_part_to_url(char *url, char *part)
     return new;
 }
 
-int slapt_src_fetch_slackbuild(slapt_src_config *config, slapt_src_slackbuild *sb)
+bool slapt_src_fetch_slackbuild(slapt_src_config *config, slapt_src_slackbuild *sb)
 {
     slapt_vector_t *download_parts = NULL, *md5sum_parts = NULL;
     slapt_config_t *slapt_config = slapt_config_t_init();
     char *sb_location = add_part_to_url(sb->sb_source_url, sb->location);
+    bool rv = true;
 
     /* need to mkdir and chdir to sb->location */
     slapt_create_dir_structure(sb->location);
@@ -595,12 +597,32 @@ int slapt_src_fetch_slackbuild(slapt_src_config *config, slapt_src_slackbuild *s
     slapt_config_t_free(slapt_config);
     free(sb_location);
 
+    /* maybe show the README here */
+    if (sb->requires && strstr(sb->requires, "%README%") != NULL) {
+        printf("%%README%%\n");
+        FILE *readme = slapt_open_file("README", "r");
+        if (readme == NULL)
+            exit(EXIT_FAILURE);
+        ssize_t read_size;
+        size_t read_len = 0;
+        char *buffer = NULL;
+        while ((read_size = getline(&buffer, &read_len, readme)) != EOF) {
+            buffer[read_size - 1] = '\0';
+            printf("%s\n", buffer);
+        }
+        if (buffer)
+            free(buffer);
+        if (config->prompt && slapt_ask_yes_no(gettext("Do you want to continue? [y/N] ")) != 1) {
+            rv = false;
+        }
+    }
+
     /* go back */
     if (chdir(config->builddir) != 0) {
         printf(gettext("Failed to chdir to %s\n"), config->builddir);
         exit(EXIT_FAILURE);
     }
-    return 0;
+    return rv;
 }
 
 /* reads directory listing of current directory for a package */
@@ -657,7 +679,7 @@ static char *_get_pkg_filename(const char *version, const char *pkgtag)
     return filename;
 }
 
-int slapt_src_build_slackbuild(slapt_src_config *config, slapt_src_slackbuild *sb)
+bool slapt_src_build_slackbuild(slapt_src_config *config, slapt_src_slackbuild *sb)
 {
     char *cwd = NULL;
     char *command = NULL;
@@ -745,14 +767,14 @@ int slapt_src_build_slackbuild(slapt_src_config *config, slapt_src_slackbuild *s
         exit(EXIT_FAILURE);
     }
 
-    return 0;
+    return true;
 }
 
-int slapt_src_install_slackbuild(slapt_src_config *config, slapt_src_slackbuild *sb)
+bool slapt_src_install_slackbuild(slapt_src_config *config, slapt_src_slackbuild *sb)
 {
     char *filename = NULL;
     char *command = NULL;
-    int command_len = 38, r = 0;
+    int command_len = 44, r = 0;
 
     if (chdir(sb->location) != 0) {
         printf(gettext("Failed to chdir to %s\n"), sb->location);
@@ -762,7 +784,7 @@ int slapt_src_install_slackbuild(slapt_src_config *config, slapt_src_slackbuild 
     if ((filename = _get_pkg_filename(sb->version, config->pkgtag)) != NULL) {
         command_len += strlen(filename);
         command = slapt_malloc(sizeof *command * command_len);
-        r = snprintf(command, command_len, "upgradepkg --reinstall --install-new %s", filename);
+        r = snprintf(command, command_len, "/sbin/upgradepkg --reinstall --install-new %s", filename);
         if (r + 1 != command_len) {
             printf(gettext("Failed to construct command string\n"));
             exit(EXIT_FAILURE);
@@ -786,7 +808,7 @@ int slapt_src_install_slackbuild(slapt_src_config *config, slapt_src_slackbuild 
         printf(gettext("Failed to chdir to %s\n"), config->builddir);
         exit(EXIT_FAILURE);
     }
-    return 0;
+    return true;
 }
 
 slapt_src_slackbuild *slapt_src_get_slackbuild(slapt_vector_t *sbs, const char *name, const char *version)
@@ -822,7 +844,7 @@ slapt_src_slackbuild *slapt_src_get_slackbuild(slapt_vector_t *sbs, const char *
     return NULL;
 }
 
-static int slapt_src_resolve_dependencies(
+static bool slapt_src_resolve_dependencies(
     slapt_vector_t *available,
     slapt_src_slackbuild *sb,
     slapt_vector_t *deps,
@@ -831,7 +853,7 @@ static int slapt_src_resolve_dependencies(
 {
     slapt_vector_t *requires = NULL;
     if (sb->requires == NULL)
-        return 0;
+        return true;
 
     if (strstr(sb->requires, ",") != NULL)
         requires = slapt_parse_delimited_list(sb->requires, ',');
@@ -839,7 +861,7 @@ static int slapt_src_resolve_dependencies(
         requires = slapt_parse_delimited_list(sb->requires, ' ');
 
     if (requires == NULL)
-        return 0;
+        return true;
 
     slapt_vector_t_foreach(const char *, dep_name, requires) {
         slapt_src_slackbuild *sb_dep = NULL;
@@ -859,9 +881,9 @@ static int slapt_src_resolve_dependencies(
                 continue;
             }
 
-            int dep_check = slapt_src_resolve_dependencies(available, sb_dep, deps, installed, errors);
+            bool dep_check = slapt_src_resolve_dependencies(available, sb_dep, deps, installed, errors);
 
-            if (dep_check != 0) {
+            if (!dep_check) {
                 slapt_vector_t_free(requires);
                 return dep_check;
             }
@@ -877,13 +899,13 @@ static int slapt_src_resolve_dependencies(
             if (slapt_get_newest_pkg(installed, dep_name) == NULL) {
                 slapt_vector_t_add(errors, slapt_pkg_err_t_init(strdup(sb->name), strdup((char *)dep_name)));
                 slapt_vector_t_free(requires);
-                return 1;
+                return false;
             }
         }
     }
 
     slapt_vector_t_free(requires);
-    return 0;
+    return true;
 }
 
 slapt_vector_t *slapt_src_names_to_slackbuilds(
@@ -909,9 +931,9 @@ slapt_vector_t *slapt_src_names_to_slackbuilds(
                 slapt_vector_t *deps = slapt_vector_t_init(NULL);
                 slapt_vector_t *errors = slapt_vector_t_init((slapt_vector_t_free_function)slapt_pkg_err_t_free);
                 slapt_vector_t_add(deps, sb); /* mark self as dep to prevent recursion */
-                int dep_check = slapt_src_resolve_dependencies(available, sb, deps, installed, errors);
+                bool dep_check = slapt_src_resolve_dependencies(available, sb, deps, installed, errors);
 
-                if (dep_check != 0) {
+                if (!dep_check) {
                     slapt_vector_t_foreach(slapt_pkg_err_t *, err, errors) {
                         fprintf(stderr, gettext("Missing slackbuild: %s requires %s\n"), err->pkg, err->error);
                     }

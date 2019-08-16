@@ -279,6 +279,7 @@ int main(int argc, char *argv[])
 
     /* honor command line option */
     config->do_dep = do_dep;
+    config->prompt = prompt;
     config->postcmd = postcmd; /* to be freed in slapt_src_config_free */
 
     init_builddir(config);
@@ -353,6 +354,8 @@ int main(int argc, char *argv[])
 
     case FETCH_OPT:
         ;
+        bool old_prompt = config->prompt;
+        config->prompt = false;
         slapt_vector_t_foreach(slapt_src_slackbuild *, fetch_sb, sbs) {
             if (simulate) {
                 printf(gettext("FETCH: %s\n"), fetch_sb->name);
@@ -360,6 +363,7 @@ int main(int argc, char *argv[])
             } else
                 slapt_src_fetch_slackbuild(config, fetch_sb);
         }
+        config->prompt = old_prompt;
         break;
 
     case BUILD_OPT:
@@ -378,7 +382,8 @@ int main(int argc, char *argv[])
                 continue;
             }
 
-            slapt_src_fetch_slackbuild(config, build_sb);
+            if (!slapt_src_fetch_slackbuild(config, build_sb))
+                exit(EXIT_FAILURE);
             slapt_src_build_slackbuild(config, build_sb);
 
             /* XXX we assume if we didn't request the slackbuild, then it is a dependency, and needs to be installed */
@@ -404,7 +409,8 @@ int main(int argc, char *argv[])
                 continue;
             }
 
-            slapt_src_fetch_slackbuild(config, install_sb);
+            if (!slapt_src_fetch_slackbuild(config, install_sb))
+                exit(EXIT_FAILURE);
             slapt_src_build_slackbuild(config, install_sb);
             slapt_src_install_slackbuild(config, install_sb);
         }
