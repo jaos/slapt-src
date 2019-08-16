@@ -728,7 +728,9 @@ bool slapt_src_build_slackbuild(slapt_src_config *config, slapt_src_slackbuild *
         exit(EXIT_FAILURE);
     }
 
+    setenv("VERSION", sb->version, 1);
     r = system(command);
+    unsetenv("VERSION");
     if (r != 0) {
         printf("%s %s\n", command, gettext("Failed\n"));
         exit(EXIT_FAILURE);
