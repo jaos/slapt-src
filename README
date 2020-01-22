@@ -119,9 +119,8 @@ gzip -9 SLACKBUILDS.TXT -c > SLACKBUILDS.TXT.gz
 There are likely a lot of bugs.  Email bug reports to me:
     Jason Woodward <woodwardj at jaos dot org>
 
-or directly to the mailing lists:
-    slapt-get-user at software dot jaos dot org
-    slapt-get-devel at software dot jaos dot org
+Or create issues on Github:
+    https://github.com/jaos/slapt-src/issues
 
 8. Thanks and contributions
 
