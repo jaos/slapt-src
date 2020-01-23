@@ -125,7 +125,7 @@ static void init_builddir(slapt_src_config *config)
 
 int main(int argc, char *argv[])
 {
-    int c = -1, option_index = 0, action = 0, rval = 0;
+    int c = -1, option_index = 0, action = 0;
     slapt_vector_t *names = slapt_vector_t_init(free);
     slapt_src_config *config = NULL;
     slapt_vector_t *sbs = NULL;
@@ -352,7 +352,8 @@ int main(int argc, char *argv[])
     /* now, actually do what was requested */
     switch (action) {
     case UPDATE_OPT:
-        rval = slapt_src_update_slackbuild_cache(config);
+        if (!slapt_src_update_slackbuild_cache(config))
+            exit(EXIT_FAILURE);
         break;
 
     case FETCH_OPT:
@@ -493,7 +494,7 @@ int main(int argc, char *argv[])
 
     slapt_src_config_free(config);
 
-    return rval;
+    return 0;
 }
 
 static int show_summary(slapt_vector_t *sbs, slapt_vector_t *names, int action, bool prompt)
