@@ -196,7 +196,7 @@ bool slapt_src_update_slackbuild_cache(slapt_src_config *config)
             if (head != NULL && local_head != NULL && strcmp(head, local_head) == 0) {
                 printf(gettext("Cached\n"));
                 sbs = slapt_src_get_slackbuilds_from_file(filename);
-            } else if (head != NULL) {
+            } else {
                 if ((f = slapt_open_file(filename, "w+b")) == NULL)
                     exit(EXIT_FAILURE);
 
@@ -207,18 +207,22 @@ bool slapt_src_update_slackbuild_cache(slapt_src_config *config)
                     printf(gettext("Done\n"));
                     sbs = slapt_src_get_slackbuilds_from_file(filename);
 
-                    slapt_write_head_cache(head, filename);
+                    if (head != NULL)
+                        slapt_write_head_cache(head, filename);
+
+                    break;
 
                 } else {
-                    fprintf(stderr, gettext("Download failed: %s\n"), err);
                     slapt_clear_head_cache(filename);
-                    rval = false;
                 }
-            } else {
-                if (strcmp(files[fc], SLAPT_SRC_SOURCES_LIST_GZ) != 0) {
+            }
+            if (strcmp(files[fc], SLAPT_SRC_SOURCES_LIST_GZ) != 0) {
+                if (err) {
+                    fprintf(stderr, gettext("Download failed: %s\n"), err);
+                } else {
                     fprintf(stderr, gettext("Download failed: %s\n"), "404");
-                    rval = false;
                 }
+                rval = false;
             }
 
             free(filename);
