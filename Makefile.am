@@ -14,22 +14,28 @@ clean-pkg:
 
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)/etc/slapt-get
-	install --mode=0644 slapt-srcrc $(DESTDIR)/etc/slapt-get/slapt-srcrc.new
+	install --mode=0644 $(top_srcdir)/slapt-srcrc $(DESTDIR)/etc/slapt-get/slapt-srcrc.new
 	if [ "$(DESTDIR)" != "$(PKGDIR)" ]; then if [ ! -f $(DESTDIR)/etc/slapt-get/slapt-srcrc ]; then mv $(DESTDIR)/etc/slapt-get/slapt-srcrc.new $(DESTDIR)/etc/slapt-get/slapt-srcrc; fi; fi
 	$(mkinstalldirs) $(DESTDIR)$(mandir)/man8
-	install slapt-src.8 $(DESTDIR)$(mandir)/man8/
+	install $(top_srcdir)/slapt-src.8 $(DESTDIR)$(mandir)/man8/
 	gzip -f $(DESTDIR)$(mandir)/man8/slapt-src.8
 	$(mkinstalldirs) $(DESTDIR)$(mandir)/ru/man8
-	install slapt-src.ru.8 $(DESTDIR)$(mandir)/ru/man8/slapt-src.8
+	install $(top_srcdir)/slapt-src.ru.8 $(DESTDIR)$(mandir)/ru/man8/slapt-src.8
 	gzip -f $(DESTDIR)$(mandir)/ru/man8/slapt-src.8
 	strip --strip-unneeded $(DESTDIR)/$(bindir)/@PACKAGE@
 	$(mkinstalldirs) $(DESTDIR)/usr/src/slapt-src
 	-chown -R root:users $(DESTDIR)/usr/src/slapt-src
 	-chmod g+s $(DESTDIR)/usr/src/slapt-src
 	$(mkinstalldirs) $(DESTDIR)/$(datadir)/doc/@PACKAGE@
-	install COPYING ChangeLog README TODO $(DESTDIR)/$(datadir)/doc/@PACKAGE@/
+	install $(top_srcdir)/COPYING $(top_srcdir)/ChangeLog $(top_srcdir)/README $(top_srcdir)/TODO $(DESTDIR)/$(datadir)/doc/@PACKAGE@/
 	-chown $$(stat --format "%u:%g" $(bindir)) $(DESTDIR)/$(bindir)
 	-chown $$(stat --format "%u:%g" $(bindir)) $(DESTDIR)/$(bindir)/@PACKAGE@
+
+uninstall-local:
+	-rm -rf $(DESTDIR)/$(datadir)/doc/@PACKAGE@/
+	-rm -f $(DESTDIR)$(mandir)/ru/man8/slapt-src.8*
+	-rm -f $(DESTDIR)$(mandir)/man8/slapt-src.8*
+	-rm -f $(DESTDIR)/etc/slapt-get/slapt-srcrc*
 
 pkg: all
 	$(MAKE) install DESTDIR=$(PKGDIR)
