@@ -210,6 +210,9 @@ bool slapt_src_update_slackbuild_cache(slapt_src_config *config)
                     if (head != NULL)
                         slapt_write_head_cache(head, filename);
 
+                    free(head);
+                    free(local_head);
+                    free(filename);
                     break;
 
                 } else {
@@ -553,7 +556,7 @@ bool slapt_src_fetch_slackbuild(slapt_src_config *config, slapt_src_slackbuild *
         char *md5sum = md5sum_parts->items[i];
         char *filename = filename_from_url(download_parts->items[i]);
         FILE *f = NULL;
-        char md5sum_to_prove[SLAPT_MD5_STR_LEN];
+        char md5sum_to_prove[SLAPT_MD5_STR_LEN + 1];
         struct stat file_stat;
         size_t file_size = 0;
 

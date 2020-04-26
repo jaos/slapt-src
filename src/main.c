@@ -600,6 +600,7 @@ static void clean(slapt_src_config *config)
                     if (sys_r != 0)
                         exit(EXIT_FAILURE);
                 }
+                free(command);
             }
         }
         closedir(builddir);
