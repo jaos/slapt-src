@@ -1,10 +1,10 @@
-AC_INIT([slapt-src], [0.3.4], [woodwardj@jaos.org])
+AC_INIT([slapt-src],[0.3.4],[woodwardj@jaos.org])
 AM_INIT_AUTOMAKE([-Wall foreign])
 AC_CONFIG_SRCDIR([src/])
 AC_CONFIG_HEADERS([config.h])
 IT_PROG_INTLTOOL([0.35.0])
 
-AC_PROG_CC_C99
+AC_PROG_CC dnl now defaults to C2011
 AC_CANONICAL_HOST
 
 case "$host_cpu" in
@@ -35,11 +35,11 @@ AC_CHECK_LIB(slapt,slapt_vector_t_init, [], [AC_MSG_ERROR(libslapt 0.11.1 or gre
 
 # options
 AC_ARG_WITH([fakeroot], 
-  AC_HELP_STRING([--with-fakeroot], [use fakeroot (default is no)]),
+  AS_HELP_STRING([--with-fakeroot], [use fakeroot (default is no)]),
   [AC_DEFINE(HAS_FAKEROOT, 1, [has fakeroot])],
 )
 AC_ARG_WITH([slkbuild], 
-  AC_HELP_STRING([--with-slkbuild], [use slkbuild (default is no)]),
+  AS_HELP_STRING([--with-slkbuild], [use slkbuild (default is no)]),
   [AC_DEFINE(HAS_SLKBUILD, 1, [has slkbuild])],
 )
 
