@@ -12,7 +12,7 @@ clean-pkg:
 	-@rm -rf pkg
 	-@rm -rf @PACKAGE@-@PACKAGE_VERSION@-@host_cpu@-1.txz
 
-install-data-local:
+install-data-local: install-exec
 	$(mkinstalldirs) $(DESTDIR)/etc/slapt-get
 	$(INSTALL_DATA) $(top_srcdir)/slapt-srcrc $(DESTDIR)/etc/slapt-get/slapt-srcrc.new
 	if [ "$(DESTDIR)" != "$(PKGDIR)" ]; then if [ ! -f $(DESTDIR)/etc/slapt-get/slapt-srcrc ]; then mv $(DESTDIR)/etc/slapt-get/slapt-srcrc.new $(DESTDIR)/etc/slapt-get/slapt-srcrc; fi; fi
