@@ -1,0 +1,2 @@
+option('fakeroot', type: 'feature', description: 'Use fakeroot (default is no)')
+option('slkbuild', type: 'feature', description: 'Use slkbuild (default is no)')
