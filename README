@@ -56,7 +56,7 @@ easy as working with binary packages with slapt-get.
         Meson/ninja supports `DESTDIR=/path meson install -C build`
 
         TIP:
-        slapt-src.Slackbuild will build with meson create a Slackware package.
+        slapt-src.Slackbuild will create a Slackware package.
         Run with sudo or as a privileged user.
 
     * autotools (deprecated)
