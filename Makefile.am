@@ -27,7 +27,7 @@ install-data-local: install-exec
 	-chown -R root:users $(DESTDIR)$(exec_prefix)/src/slapt-src
 	-chmod g+s $(DESTDIR)$(exec_prefix)/src/slapt-src
 	$(mkinstalldirs) $(DESTDIR)/$(datadir)/doc/@PACKAGE@
-	$(INSTALL_DATA) $(top_srcdir)/COPYING $(top_srcdir)/ChangeLog $(top_srcdir)/README $(top_srcdir)/TODO $(DESTDIR)/$(datadir)/doc/@PACKAGE@/
+	$(INSTALL_DATA) $(top_srcdir)/COPYING $(top_srcdir)/ChangeLog $(top_srcdir)/README $(DESTDIR)/$(datadir)/doc/@PACKAGE@/
 	-chown $$(stat --format "%u:%g" $(bindir)) $(DESTDIR)/$(bindir)
 	-chown $$(stat --format "%u:%g" $(bindir)) $(DESTDIR)/$(bindir)/@PACKAGE@
 

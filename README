@@ -20,7 +20,7 @@ Table of Contents:
  2. Features
  3. Requirements
  4. Installation
- 5. slapt-getrc
+ 5. slapt-srcrc
  6. SLACKBUILDS.TXT
  7. Troubleshooting
  8. Thanks and contributions
@@ -45,11 +45,31 @@ easy as working with binary packages with slapt-get.
 
 4. Installation
 
-Currently slapt-src is only available via git.  See
-http://software.jaos.org/git/slapt-src/
+    You can install via meson or autotools (deprecated).
 
-After unpacking, run ./autogen.sh.  After the configure script is built, run
-the usual ./configure && make.
+    * Meson
+
+        meson setup build # or any dir of your choosing
+        meson compile -C build # or `ninja -C build` for older meson releases
+        meson install -C build # or `ninja -C build install`  for older meson releases
+
+        Meson/ninja supports `DESTDIR=/path meson install -C build`
+
+        TIP:
+        slapt-src.Slackbuild will build with meson create a Slackware package.
+        Run with sudo or as a privileged user.
+
+    * autotools (deprecated)
+
+        ./autogen.sh # if building from git
+        ./configure
+        make
+        make install # as privileged user
+
+        The Makefile honors DESTDIR.
+
+        TIP:
+        `make pkg` (as privileged user) will create a Slackware package.
 
 5. slapt-srcrc
 
