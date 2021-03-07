@@ -46,6 +46,13 @@ if libslapt.found()
   endif
 endif
 
+if get_option('fakeroot').enabled()
+  find_program('fakeroot')
+endif
+if get_option('slkbuild').enabled()
+  find_program('slkbuild')
+endif
+
 deps = [libcurl, zlib, openssl, libm, libgpgme, libslapt]
 
 subdir('po')
