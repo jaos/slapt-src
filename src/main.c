@@ -319,7 +319,7 @@ int main(int argc, char *argv[])
                     continue;
                 }
                 slapt_vector_t_foreach(slapt_src_slackbuild *, upgrade_sb, matches) {
-                    if (slapt_cmp_pkg_versions(upgrade_sb->version, pkg->version) == 1) {
+                    if (slapt_pkg_t_cmp_versions(upgrade_sb->version, pkg->version) == 1) {
                         slapt_vector_t_add(names, strdup(upgrade_sb->name));
                     }
                 }

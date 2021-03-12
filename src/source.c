@@ -262,7 +262,7 @@ static int sb_cmp(const void *a, const void *b)
     if (cmp != 0)
         return cmp;
     else
-        return slapt_cmp_pkg_versions(sb1->version, sb2->version);
+        return slapt_pkg_t_cmp_versions(sb1->version, sb2->version);
 }
 
 void slapt_src_write_slackbuilds_to_file(slapt_vector_t *sbs, const char *datafile)
@@ -833,7 +833,7 @@ slapt_src_slackbuild *slapt_src_get_slackbuild(slapt_vector_t *sbs, const char *
             if (version == NULL)
                 return sbs->items[pivot];
 
-            ver_cmp = slapt_cmp_pkg_versions(((slapt_src_slackbuild *)sbs->items[pivot])->version, version);
+            ver_cmp = slapt_pkg_t_cmp_versions(((slapt_src_slackbuild *)sbs->items[pivot])->version, version);
             if (ver_cmp == 0)
                 return sbs->items[pivot];
 
