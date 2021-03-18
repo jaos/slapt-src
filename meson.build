@@ -6,7 +6,7 @@ project('slapt-src', 'c',
     'buildtype=debugoptimized',
     'sysconfdir=/etc',
     'b_lto=true',
-    'warning_level=3',
+    'warning_level=2',
   ],
 )
 package = meson.project_name()

@@ -125,16 +125,6 @@ static void init_builddir(slapt_src_config *config)
 
 int main(int argc, char *argv[])
 {
-    int c = -1, option_index = 0, action = 0;
-    slapt_vector_t *names = slapt_vector_t_init(free);
-    slapt_src_config *config = NULL;
-    slapt_vector_t *sbs = NULL;
-    slapt_vector_t *remote_sbs = NULL;
-    slapt_vector_t *installed = NULL;
-    bool prompt = true, do_dep = true, simulate = false;
-    char *config_file = NULL, *postcmd = NULL;
-    int only_flags = 0;
-
     static struct option long_options[] = {
         {"build", required_argument, 0, BUILD_OPT},
         {"b", required_argument, 0, BUILD_OPT},
@@ -188,6 +178,11 @@ int main(int argc, char *argv[])
         exit(EXIT_SUCCESS);
     }
 
+    int only_flags = 0;
+    bool prompt = true, do_dep = true, simulate = false;
+    char *config_file = NULL, *postcmd = NULL;
+    slapt_vector_t *names = slapt_vector_t_init(free);
+    int c = -1, option_index = 0, action = 0;
     while ((c = getopt_long_only(argc, argv, "", long_options, &option_index)) != -1) {
         switch (c) {
         case HELP_OPT:
@@ -271,6 +266,7 @@ int main(int argc, char *argv[])
         ++optind;
     }
 
+    slapt_src_config *config = NULL;
     if (config_file != NULL)
         config = slapt_src_read_config(config_file);
     else
@@ -290,6 +286,10 @@ int main(int argc, char *argv[])
         perror(gettext("Failed to chdir to build directory"));
         exit(EXIT_FAILURE);
     }
+
+    slapt_vector_t *sbs = NULL;
+    slapt_vector_t *remote_sbs = NULL;
+    slapt_vector_t *installed = NULL;
 
     /* setup, fetch, and other preperation steps */
     switch (action) {
@@ -313,12 +313,12 @@ int main(int argc, char *argv[])
             }
         } else if (action == UPGRADE_OPT) {
             /* for each entry in 'installed' see if it's available as a slackbuild */
-            slapt_vector_t_foreach(slapt_pkg_t *, pkg, installed) {
+            slapt_vector_t_foreach(const slapt_pkg_t *, pkg, installed) {
                 slapt_vector_t *matches = slapt_vector_t_search(remote_sbs, sb_compare_pkg_to_name, pkg->name);
                 if (!matches) {
                     continue;
                 }
-                slapt_vector_t_foreach(slapt_src_slackbuild *, upgrade_sb, matches) {
+                slapt_vector_t_foreach(const slapt_src_slackbuild *, upgrade_sb, matches) {
                     if (slapt_pkg_t_cmp_versions(upgrade_sb->version, pkg->version) == 1) {
                         slapt_vector_t_add(names, strdup(upgrade_sb->name));
                     }
@@ -373,16 +373,15 @@ int main(int argc, char *argv[])
     case BUILD_OPT:
         ;
         slapt_vector_t_foreach(slapt_src_slackbuild *, build_sb, sbs) {
-            int r = 0, nv_len = strlen(build_sb->name) + strlen(build_sb->version) + 2;
-            char *namever = slapt_malloc(sizeof *namever * nv_len);
-            r = snprintf(namever, nv_len, "%s:%s", build_sb->name, build_sb->version);
-
-            if (r + 1 != nv_len)
+            const int nv_len = strlen(build_sb->name) + strlen(build_sb->version) + 2;
+            char namever[nv_len];
+            const int r = snprintf(namever, nv_len, "%s:%s", build_sb->name, build_sb->version);
+            if (r + 1 != nv_len) {
                 exit(EXIT_FAILURE);
+            }
 
             if (simulate) {
                 printf(gettext("BUILD: %s\n"), build_sb->name);
-                free(namever);
                 continue;
             }
 
@@ -401,7 +400,6 @@ int main(int argc, char *argv[])
                 slapt_vector_t_free(name_matches);
             if (namever_matches)
                 slapt_vector_t_free(namever_matches);
-            free(namever);
         }
         break;
 
@@ -444,7 +442,7 @@ int main(int argc, char *argv[])
 
     case SHOW_OPT: {
         ;
-        slapt_vector_t_foreach(char *, show_name, names) {
+        slapt_vector_t_foreach(const char *, show_name, names) {
             slapt_vector_t *parts = slapt_parse_delimited_list(show_name, ':');
             const char *name = parts->items[0];
             const char *ver = NULL;
@@ -511,10 +509,10 @@ static int show_summary(slapt_vector_t *sbs, slapt_vector_t *names, int action, 
                                  : action == BUILD_OPT ? gettext("built")
                                                        : gettext("fetched"));
 
-    slapt_vector_t_foreach(char *, sb_name, names) {
+    slapt_vector_t_foreach(const char *, sb_name, names) {
         slapt_vector_t *parts = slapt_parse_delimited_list(sb_name, ':');
         const char *name = parts->items[0];
-        int name_len = strlen(name);
+        const int name_len = strlen(name);
 
         if (line_len == 0) {
             printf(" %s ", name);
@@ -536,7 +534,7 @@ static int show_summary(slapt_vector_t *sbs, slapt_vector_t *names, int action, 
 
         printf(gettext("The following dependent slackbuilds will be built and installed:\n"));
 
-        slapt_vector_t_foreach(slapt_src_slackbuild *, sb, sbs) {
+        slapt_vector_t_foreach(const slapt_src_slackbuild *, sb, sbs) {
             const char *name = sb->name;
             const char *version = sb->version;
             char *namever = slapt_malloc(sizeof *namever * (strlen(name) + strlen(version) + 2));
@@ -545,7 +543,7 @@ static int show_summary(slapt_vector_t *sbs, slapt_vector_t *names, int action, 
             slapt_vector_t *name_matches = slapt_vector_t_search(names, sb_compare_name_to_name, (char *)name);
             slapt_vector_t *namever_matches = slapt_vector_t_search(names, sb_compare_name_to_name, namever);
             if (name_matches == NULL && namever_matches == NULL) {
-                int name_len = strlen(name);
+                const int name_len = strlen(name);
 
                 if (line_len == 0) {
                     printf(" %s ", name);
@@ -592,15 +590,14 @@ static void clean(slapt_src_config *config)
                 continue;
 
             if (S_ISDIR(stat_buf.st_mode)) {
-                int r = 0, command_len = strlen(file->d_name) + 8;
-                char *command = slapt_malloc(sizeof *command * command_len);
-                r = snprintf(command, command_len, "rm -rf %s", file->d_name);
+                const int command_len = strlen(file->d_name) + 8;
+                char command[command_len];
+                const int r = snprintf(command, command_len, "rm -rf %s", file->d_name);
                 if (r + 1 == command_len) {
                     int sys_r = system(command);
                     if (sys_r != 0)
                         exit(EXIT_FAILURE);
                 }
-                free(command);
             }
         }
         closedir(builddir);
