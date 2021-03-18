@@ -57,6 +57,7 @@ deps = [libcurl, zlib, openssl, libm, libgpgme, libslapt]
 
 subdir('po')
 subdir('src')
+subdir('t')
 
 install_man('slapt-src.8')
 install_data('slapt-src.ru.8', install_dir: join_paths(get_option('mandir'), 'ru', 'man8'), rename: 'slapt-src.8')
