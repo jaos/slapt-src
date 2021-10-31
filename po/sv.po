@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Ingemar Karlsson <ingemar@ingk.se>, 2012,2015,2017
+# Ingemar Karlsson <ingemar@ingk.se>, 2012,2015,2017,2021
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 20:02-0500\n"
-"PO-Revision-Date: 2017-12-31 06:58+0000\n"
+"PO-Revision-Date: 2021-06-23 10:47+0000\n"
 "Last-Translator: Ingemar Karlsson <ingemar@ingk.se>\n"
 "Language-Team: Swedish (http://www.transifex.com/jaos/slapt-get/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -171,7 +171,7 @@ msgid "build-only and fetch-only options are mutually exclusive\n"
 msgstr "Endast byggalternativ och hämtningsalternativ är ömsesidigt uteslutna\n"
 
 msgid "built"
-msgstr "byggd"
+msgstr "bli byggd"
 
 msgid "clean build directory"
 msgstr "rensa byggkatalogen"
