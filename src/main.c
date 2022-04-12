@@ -31,10 +31,6 @@
 #define BUILD_ONLY_FLAG 1
 #define FETCH_ONLY_FLAG 2
 
-/* getopt */
-extern char *optarg;
-extern int optind, opterr, optopt;
-
 static int show_summary(slapt_vector_t *, slapt_vector_t *, int, bool);
 static void clean(slapt_src_config *config);
 
