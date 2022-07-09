@@ -5,14 +5,15 @@
 # Translators:
 # gapan <vlahavas@gmail.com>, 2012
 # George Vlahavas <vlahavas~at~gmail~dot~com>, 2010
+# gapan <vlahavas@gmail.com>, 2022
 # gapan <vlahavas@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 20:02-0500\n"
-"PO-Revision-Date: 2017-12-31 01:07+0000\n"
-"Last-Translator: Jason Woodward <woodwardj@jaos.org>\n"
+"PO-Revision-Date: 2012-09-17 22:00+0000\n"
+"Last-Translator: gapan <vlahavas@gmail.com>, 2022\n"
 "Language-Team: Greek (http://www.transifex.com/jaos/slapt-get/language/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,7 +35,7 @@ msgstr "Ακύρωση.\n"
 
 #, c-format
 msgid "BUILD: %s\n"
-msgstr ""
+msgstr "ΔΗΜΙΟΥΡΓΙΑ: %s\n"
 
 #, c-format
 msgid "Cached\n"
@@ -53,7 +54,7 @@ msgstr "Η λήψη του αρχείου απέτυχε: %s\n"
 
 #, c-format
 msgid "FETCH: %s\n"
-msgstr ""
+msgstr "ΛΗΨΗ: %s\n"
 
 #, c-format
 msgid "Failed\n"
@@ -96,11 +97,11 @@ msgstr "Λήψη της λίστας slackbuild από το %s..."
 
 #, c-format
 msgid "INSTALL: %s\n"
-msgstr ""
+msgstr "ΕΓΚΑΤΑΣΤΑΣΗ: %s\n"
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
-msgstr ""
+msgstr "Δεν επιτρέπονται μεμονωμένα πακέτα όταν γίνει αναβάθμιση όλως των slackbuild\n"
 
 #, c-format
 msgid "MD5SUM mismatch for %s\n"
@@ -166,11 +167,11 @@ msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
 msgstr "Χρήση: %s [επιλογή(ες)] [ενέργεια] [slackbuild(s)]\n"
 
 msgid "applicable only to --upgrade-all"
-msgstr ""
+msgstr "έχει εφαρμογή μόνο στο --upgrade-all"
 
 #, c-format
 msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr ""
+msgstr "οι επιλογές για μόνο δημιουργία και μόνο λήψη είναι αμοιβαία αποκλειόμενες\n"
 
 msgid "built"
 msgstr "δημιουργηθούν"
@@ -212,13 +213,13 @@ msgid "show specified slackbuilds"
 msgstr "εμφάνιση ζητούμενο slackbuild"
 
 msgid "show what will be done"
-msgstr ""
+msgstr "εμφάνιση του τι πρόκειται να συμβεί"
 
 msgid "update local cache of remote slackbuilds"
 msgstr "ενημέρωση τοπικής αποθήκης απομακρυσμένων slackbuilds"
 
 msgid "upgrade all installed slackbuilds"
-msgstr ""
+msgstr "αναβάθμιση όλων των εγκατεστημένων slackbuild"
 
 msgid "use the specified configuration file"
 msgstr "προσδιορίστε εναλλακτική τοποθεσία για το αρχείο ρυθμίσεων"
