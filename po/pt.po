@@ -3,20 +3,21 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2022
 # Sérgio Marques <smarquespt@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 20:02-0500\n"
-"PO-Revision-Date: 2021-02-17 22:28+0000\n"
-"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
+"PO-Revision-Date: 2012-09-17 22:00+0000\n"
+"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>, 2022\n"
 "Language-Team: Portuguese (http://www.transifex.com/jaos/slapt-get/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pt\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #, c-format
 msgid "%s - A SlackBuild utility\n"
@@ -36,22 +37,22 @@ msgstr "COMPILAR: %s\n"
 
 #, c-format
 msgid "Cached\n"
-msgstr "Em cache\n\n"
+msgstr "Em cache\n"
 
 msgid "Do you want to continue? [y/N] "
 msgstr "Continuar? [y/N] "
 
 #, c-format
 msgid "Done\n"
-msgstr "Terminado\n\n"
+msgstr "Terminado\n"
 
 #, c-format
 msgid "Download failed: %s\n"
-msgstr "Falha ao receber: %s\n"
+msgstr "Falha ao transferir: %s\n"
 
 #, c-format
 msgid "FETCH: %s\n"
-msgstr "PROCURAR: %s\n"
+msgstr "OBTER: %s\n"
 
 #, c-format
 msgid "Failed\n"
@@ -70,7 +71,7 @@ msgstr "Falha ao criar linhas de comando\n"
 
 #, c-format
 msgid "Failed to create build directory [%s]\n"
-msgstr "Falha ao criar o diretório[%s]\n"
+msgstr "Falha ao criar o diretório [%s]\n"
 
 #, c-format
 msgid "Failed to open %s for reading\n"
@@ -86,11 +87,11 @@ msgstr "Falha ao ler %s\n"
 
 #, c-format
 msgid "Fetching %s..."
-msgstr "Obter %s..."
+msgstr "A obter %s..."
 
 #, c-format
 msgid "Fetching slackbuild list from %s..."
-msgstr "Obter lista slackbuild de %s..."
+msgstr "A obter lista slackbuild de %s..."
 
 #, c-format
 msgid "INSTALL: %s\n"
@@ -114,7 +115,7 @@ msgstr "Slackbuild em falta: %s requer %s\n"
 
 #, c-format
 msgid "No BUILDDIR specified in the configuration\n"
-msgstr "Sem BUILDDIR definido nas configurações\n"
+msgstr "Nenhum BUILDDIR especificado na configuração\n"
 
 msgid "Options"
 msgstr "Opções"
@@ -133,7 +134,7 @@ msgstr "Ficheiros SlackBuild:\n"
 
 #, c-format
 msgid "SlackBuild Name: %s\n"
-msgstr "Nome SlackBuild: %s\n\n"
+msgstr "Nome SlackBuild: %s\n"
 
 #, c-format
 msgid "SlackBuild Requires: %s\n"
@@ -145,11 +146,11 @@ msgstr "Versão SlackBuild: %s\n"
 
 #, c-format
 msgid "The following dependent slackbuilds will be built and installed:\n"
-msgstr "As seguintes slackbuilds serão compiladas e instaladas:\n"
+msgstr "Os seguintes slackbuilds serão compilados e instalados:\n"
 
 #, c-format
 msgid "The following packages will be %s:\n"
-msgstr "Os pacotes seguintes serão %s:\n\n"
+msgstr "Os seguintes pacotes serão %s:\n"
 
 #, c-format
 msgid "Unable to find all specified slackbuilds.\n"
@@ -161,7 +162,7 @@ msgstr "Incapaz de localizar os pacotes gerados\n"
 
 #, c-format
 msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
-msgstr "Utilização: %s [opção(ões)] [ação(ões)] [slackbuild(s)]\n\n"
+msgstr "Utilização: %s [opção(ões)] [ação(ões)] [slackbuild(s)]\n"
 
 msgid "applicable only to --upgrade-all"
 msgstr "aplicável apenas a --upgrade-all"
@@ -171,7 +172,7 @@ msgid "build-only and fetch-only options are mutually exclusive\n"
 msgstr "As opções apenas para compilação e apenas para busca são mutuamente exclusivas\n"
 
 msgid "built"
-msgstr "criado"
+msgstr "compilado"
 
 msgid "clean build directory"
 msgstr "limpar diretório de compilação"
@@ -183,7 +184,7 @@ msgid "do not prompt"
 msgstr "não perguntar"
 
 msgid "fetch, build, and install the specified slackbuild(s)"
-msgstr "obter, compilar e instalar a(s) slackbuild(s) indicadas"
+msgstr "obter, compilar e instalar o(s) slackbuild(s) indicados"
 
 msgid "fetched"
 msgstr "obtido"
@@ -195,10 +196,10 @@ msgid "list available slackbuilds"
 msgstr "listar slackbuilds disponíveis"
 
 msgid "only fetch and build the specified slackbuild(s)"
-msgstr "obter e compilar a(s) slackbuild(s) indicada(s)"
+msgstr "obter e compilar o(s) slackbuild(s) indicado(s)"
 
 msgid "only fetch the specified slackbuild(s)"
-msgstr "apenas obter a slackbuild(s) indicada"
+msgstr "apenas obter o slackbuild(s) indicado"
 
 msgid "run specified command on generated package"
 msgstr "executar comando no pacote gerado"
@@ -207,7 +208,7 @@ msgid "search available slackbuilds"
 msgstr "procurar slackbuilds disponíveis"
 
 msgid "show specified slackbuilds"
-msgstr "mostrar slackbuilds especificadas"
+msgstr "mostrar slackbuilds especificados"
 
 msgid "show what will be done"
 msgstr "mostrar o que será feito"
@@ -216,7 +217,7 @@ msgid "update local cache of remote slackbuilds"
 msgstr "atualizar cache local de slackbuilds remotas"
 
 msgid "upgrade all installed slackbuilds"
-msgstr "atualize todos os slackbuilds instalados"
+msgstr "atualizar todos os slackbuilds instalados"
 
 msgid "use the specified configuration file"
 msgstr "utilizar ficheiro de configuração especificado"
