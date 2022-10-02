@@ -1,4 +1,4 @@
 # official source
-SOURCE=http://www.slackbuilds.org/slackbuilds/14.2/
+SOURCE=http://www.slackbuilds.org/slackbuilds/15.0/
 BUILDDIR=/usr/src/slapt-src
 PKGEXT=txz
