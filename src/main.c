@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Jason Woodward <woodwardj at jaos dot org>
+ * Copyright (C) 2010-2023 Jason Woodward <woodwardj at jaos dot org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -287,7 +287,7 @@ int main(int argc, char *argv[])
     slapt_vector_t *remote_sbs = NULL;
     slapt_vector_t *installed = NULL;
 
-    /* setup, fetch, and other preperation steps */
+    /* setup, fetch, and other preparation steps */
     switch (action) {
     case LIST_OPT:
     case SEARCH_OPT:
