@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Jason Woodward <woodwardj at jaos dot org>, 2010
 # Manfred Mueller <manfred.mueller@fluxflux.net>, 2018
@@ -9,14 +9,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-30 20:02-0500\n"
+"POT-Creation-Date: 2023-08-26 15:34-0400\n"
 "PO-Revision-Date: 2018-02-28 14:20+0000\n"
 "Last-Translator: Manfred Mueller <manfred.mueller@fluxflux.net>\n"
-"Language-Team: German (http://www.transifex.com/jaos/slapt-get/language/de/)\n"
+"Language-Team: German (http://www.transifex.com/jaos/slapt-get/language/"
+"de/)\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
@@ -85,6 +86,7 @@ msgstr "Öffnen des aktuellen Verzeichnisses gescheitert\n"
 msgid "Failed to read %s\n"
 msgstr "Lesen von %s gescheitert\n"
 
+#. TODO support file resume
 #, c-format
 msgid "Fetching %s..."
 msgstr "Hole %s..."
@@ -99,7 +101,9 @@ msgstr "INSTALLIEREN: %s\n"
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
-msgstr "beim Aktualisieren aller slackbuilds werden individuelle Pakete nicht akzeptiert\n"
+msgstr ""
+"beim Aktualisieren aller slackbuilds werden individuelle Pakete nicht "
+"akzeptiert\n"
 
 #, c-format
 msgid "MD5SUM mismatch for %s\n"
@@ -212,6 +216,9 @@ msgstr "gewählte(s) SlackBuild(s) anzeigen"
 
 msgid "show what will be done"
 msgstr "anzeigen, was getan wird"
+
+msgid "skip if available via slapt-get, applicable only to --upgrade-all"
+msgstr ""
 
 msgid "update local cache of remote slackbuilds"
 msgstr "lokal gespeicherte SlackBuilds aktualisieren"

@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the slapt-src package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: slapt-src\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-30 20:02-0500\n"
+"POT-Creation-Date: 2023-08-26 15:34-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,6 +83,7 @@ msgstr ""
 msgid "Failed to read %s\n"
 msgstr ""
 
+#. TODO support file resume
 #, c-format
 msgid "Fetching %s..."
 msgstr ""
@@ -209,6 +210,9 @@ msgid "show specified slackbuilds"
 msgstr ""
 
 msgid "show what will be done"
+msgstr ""
+
+msgid "skip if available via slapt-get, applicable only to --upgrade-all"
 msgstr ""
 
 msgid "update local cache of remote slackbuilds"

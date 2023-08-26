@@ -1,21 +1,21 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Gambit <gambit73@gmail.com>, 2022
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-30 20:02-0500\n"
+"POT-Creation-Date: 2023-08-26 15:34-0400\n"
 "PO-Revision-Date: 2012-09-17 22:00+0000\n"
 "Last-Translator: Gambit <gambit73@gmail.com>, 2022\n"
 "Language-Team: Dutch (http://www.transifex.com/jaos/slapt-get/language/nl/)\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
@@ -84,6 +84,7 @@ msgstr "Huidige folder openen mislukt\n"
 msgid "Failed to read %s\n"
 msgstr "Lezen van %s mislukt\n"
 
+#. TODO support file resume
 #, c-format
 msgid "Fetching %s..."
 msgstr "%sbinnenhalen..."
@@ -98,7 +99,9 @@ msgstr "INSTALL: %s\n"
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
-msgstr "Afzonderlijke pakketten niet geaccepteerd tijdens het upgraden van alle slackbuilds\n"
+msgstr ""
+"Afzonderlijke pakketten niet geaccepteerd tijdens het upgraden van alle "
+"slackbuilds\n"
 
 #, c-format
 msgid "MD5SUM mismatch for %s\n"
@@ -145,7 +148,9 @@ msgstr "SlackBuild Versie: %s\n"
 
 #, c-format
 msgid "The following dependent slackbuilds will be built and installed:\n"
-msgstr "De volgende afhankelijke slackbuilds zullen gemaakt en geïnstalleerd worden:\n"
+msgstr ""
+"De volgende afhankelijke slackbuilds zullen gemaakt en geïnstalleerd "
+"worden:\n"
 
 #, c-format
 msgid "The following packages will be %s:\n"
@@ -211,6 +216,9 @@ msgstr "toon gespecificeerde slackbuilds"
 
 msgid "show what will be done"
 msgstr "toon wat er zal gebeuren"
+
+msgid "skip if available via slapt-get, applicable only to --upgrade-all"
+msgstr ""
 
 msgid "update local cache of remote slackbuilds"
 msgstr "Ververs de lokale cache van de niet lokale slackbuilds"

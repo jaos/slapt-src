@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Hugo Carvalho <hugokarvalho@hotmail.com>, 2022
 # Sérgio Marques <smarquespt@gmail.com>, 2013
@@ -9,15 +9,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-30 20:02-0500\n"
+"POT-Creation-Date: 2023-08-26 15:34-0400\n"
 "PO-Revision-Date: 2012-09-17 22:00+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>, 2022\n"
-"Language-Team: Portuguese (http://www.transifex.com/jaos/slapt-get/language/pt/)\n"
+"Language-Team: Portuguese (http://www.transifex.com/jaos/slapt-get/language/"
+"pt/)\n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt\n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % "
+"1000000 == 0 ? 1 : 2;\n"
 
 #, c-format
 msgid "%s - A SlackBuild utility\n"
@@ -85,6 +87,7 @@ msgstr "Falha ao abrir o diretório atual\n"
 msgid "Failed to read %s\n"
 msgstr "Falha ao ler %s\n"
 
+#. TODO support file resume
 #, c-format
 msgid "Fetching %s..."
 msgstr "A obter %s..."
@@ -169,7 +172,9 @@ msgstr "aplicável apenas a --upgrade-all"
 
 #, c-format
 msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr "As opções apenas para compilação e apenas para busca são mutuamente exclusivas\n"
+msgstr ""
+"As opções apenas para compilação e apenas para busca são mutuamente "
+"exclusivas\n"
 
 msgid "built"
 msgstr "compilado"
@@ -212,6 +217,9 @@ msgstr "mostrar slackbuilds especificados"
 
 msgid "show what will be done"
 msgstr "mostrar o que será feito"
+
+msgid "skip if available via slapt-get, applicable only to --upgrade-all"
+msgstr ""
 
 msgid "update local cache of remote slackbuilds"
 msgstr "atualizar cache local de slackbuilds remotas"

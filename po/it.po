@@ -1,21 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Antonio Sardei <laplume@libero.it>, 2016,2018
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-30 20:02-0500\n"
+"POT-Creation-Date: 2023-08-26 15:34-0400\n"
 "PO-Revision-Date: 2018-08-16 18:31+0000\n"
 "Last-Translator: Antonio Sardei <laplume@libero.it>\n"
-"Language-Team: Italian (http://www.transifex.com/jaos/slapt-get/language/it/)\n"
+"Language-Team: Italian (http://www.transifex.com/jaos/slapt-get/language/"
+"it/)\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
@@ -74,7 +75,9 @@ msgstr "Errore nella creazione della directory di costruzione pacchetto [%s]\n"
 
 #, c-format
 msgid "Failed to open %s for reading\n"
-msgstr "Errore nell'apertura in lettura di %s\n\n"
+msgstr ""
+"Errore nell'apertura in lettura di %s\n"
+"\n"
 
 #, c-format
 msgid "Failed to open current directory\n"
@@ -84,6 +87,7 @@ msgstr "Errore nell'apertura della directory corrente\n"
 msgid "Failed to read %s\n"
 msgstr "Errore nella lettura di %s\n"
 
+#. TODO support file resume
 #, c-format
 msgid "Fetching %s..."
 msgstr "Recupero di %s..."
@@ -98,7 +102,9 @@ msgstr "INSTALLAZIONE: %s\n"
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
-msgstr "Singoli pacchetti non accettati durante l'aggiornamento di tutti gli slackbuild. \n"
+msgstr ""
+"Singoli pacchetti non accettati durante l'aggiornamento di tutti gli "
+"slackbuild. \n"
 
 #, c-format
 msgid "MD5SUM mismatch for %s\n"
@@ -145,7 +151,9 @@ msgstr "Versione dello SlackBuild: %s\n"
 
 #, c-format
 msgid "The following dependent slackbuilds will be built and installed:\n"
-msgstr "I seguenti slackbuild sono dipendenze e quindi verranno costruiti ed installati:\n"
+msgstr ""
+"I seguenti slackbuild sono dipendenze e quindi verranno costruiti ed "
+"installati:\n"
 
 #, c-format
 msgid "The following packages will be %s:\n"
@@ -211,6 +219,9 @@ msgstr "mostra gli slackbuilds selezionati"
 
 msgid "show what will be done"
 msgstr "mostra ciò che verrà fatto"
+
+msgid "skip if available via slapt-get, applicable only to --upgrade-all"
+msgstr ""
 
 msgid "update local cache of remote slackbuilds"
 msgstr "aggiorna la cache locale degli slackbuilds remoti"
