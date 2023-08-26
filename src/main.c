@@ -77,6 +77,7 @@ void help(void)
     printf("  -p, --postprocess=CMD  %s\n", gettext("run specified command on generated package"));
     printf("  -B, --build-only       %s\n", gettext("applicable only to --upgrade-all"));
     printf("  -F, --fetch-only       %s\n", gettext("applicable only to --upgrade-all"));
+    printf("  -S, --skip-installable %s\n", gettext("skip if available via slapt-get, applicable only to --upgrade-all"));
 }
 
 #define VERSION_OPT 'v'
@@ -97,6 +98,7 @@ void help(void)
 #define SIMULATE_OPT 't'
 #define BUILD_ONLY_OPT 'B'
 #define FETCH_ONLY_OPT 'F'
+#define SKIP_INSTALLABLE_PKGS_OPT 'S'
 
 struct utsname uname_v; /* for .machine */
 
@@ -141,6 +143,8 @@ int main(int argc, char *argv[])
         {"postprocess", required_argument, 0, POSTCMD_OPT},
         {"search", required_argument, 0, SEARCH_OPT},
         {"s", required_argument, 0, SEARCH_OPT},
+        {"skip-installable", no_argument, 0, SKIP_INSTALLABLE_PKGS_OPT},
+        {"S", no_argument, 0, SKIP_INSTALLABLE_PKGS_OPT},
         {"show", required_argument, 0, SHOW_OPT},
         {"w", required_argument, 0, SHOW_OPT},
         {"simulate", no_argument, 0, SIMULATE_OPT},
@@ -175,7 +179,7 @@ int main(int argc, char *argv[])
     }
 
     int only_flags = 0;
-    bool prompt = true, do_dep = true, simulate = false;
+    bool prompt = true, do_dep = true, simulate = false, skip_installable_pkgs = false;
     char *config_file = NULL, *postcmd = NULL;
     slapt_vector_t *names = slapt_vector_t_init(free);
     int c = -1, option_index = 0, action = 0;
@@ -183,10 +187,10 @@ int main(int argc, char *argv[])
         switch (c) {
         case HELP_OPT:
             help();
-            break;
+            exit(EXIT_SUCCESS);
         case VERSION_OPT:
             version();
-            break;
+            exit(EXIT_SUCCESS);
         case UPDATE_OPT:
             action = UPDATE_OPT;
             break;
@@ -240,6 +244,9 @@ int main(int argc, char *argv[])
         case FETCH_ONLY_OPT:
             only_flags |= FETCH_ONLY_FLAG;
             break;
+    case SKIP_INSTALLABLE_PKGS_OPT:
+        skip_installable_pkgs = true;
+            break;
         default:
             help();
             exit(EXIT_FAILURE);
@@ -286,6 +293,7 @@ int main(int argc, char *argv[])
     slapt_vector_t *sbs = NULL;
     slapt_vector_t *remote_sbs = NULL;
     slapt_vector_t *installed = NULL;
+    slapt_vector_t *available = NULL;
 
     /* setup, fetch, and other preparation steps */
     switch (action) {
@@ -300,6 +308,21 @@ int main(int argc, char *argv[])
     case UPGRADE_OPT:
         remote_sbs = slapt_src_get_available_slackbuilds();
         installed = slapt_get_installed_pkgs();
+
+        if (skip_installable_pkgs) {
+            slapt_config_t *slapt_config = slapt_config_t_read(RC_DIR "/slapt-getrc");
+            if ((chdir(slapt_config->working_dir)) == 0) {
+                available = slapt_get_available_pkgs();
+                if ((chdir(config->builddir)) != 0) {
+                    perror(gettext("Failed to chdir to build directory"));
+                    exit(EXIT_FAILURE);
+                }
+            } else {
+                skip_installable_pkgs = false;
+            }
+            slapt_config_t_free(slapt_config);
+        }
+
         /* convert all names to slackbuilds */
         if (names->size > 0) {
             sbs = slapt_src_names_to_slackbuilds(config, remote_sbs, names, installed);
@@ -316,6 +339,12 @@ int main(int argc, char *argv[])
                 }
                 slapt_vector_t_foreach(const slapt_src_slackbuild *, upgrade_sb, matches) {
                     if (slapt_pkg_t_cmp_versions(upgrade_sb->version, pkg->version) == 1) {
+                        // optionally skip packages that come from slapt-get
+                        if (skip_installable_pkgs) {
+                            if (slapt_get_newest_pkg(available, pkg->name)) {
+                                continue;
+                            }
+                        }
                         slapt_vector_t_add(names, strdup(upgrade_sb->name));
                     }
                 }
@@ -483,6 +512,8 @@ int main(int argc, char *argv[])
         slapt_vector_t_free(remote_sbs);
     if (installed != NULL)
         slapt_vector_t_free(installed);
+    if (available != NULL)
+        slapt_vector_t_free(available);
     if (config_file != NULL)
         free(config_file);
 

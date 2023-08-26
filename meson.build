@@ -23,6 +23,7 @@ configuration = configuration_data()
 configuration.set_quoted('PACKAGE', package)
 configuration.set_quoted('GETTEXT_PACKAGE', package)
 configuration.set_quoted('VERSION', version)
+configuration.set_quoted('RC_DIR', join_paths(get_option('sysconfdir'), 'slapt-get'))
 if get_option('fakeroot').enabled()
   configuration.set('HAS_FAKEROOT', 1)
 endif
