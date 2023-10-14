@@ -1,22 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-#
+# This file is distributed under the same license as the slapt-src package.
+# 
 # Translators:
 # Davidmp <medipas@gmail.com>, 2016,2018
+# Davidmp <medipas@gmail.com>, 2016,2018,2023
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-26 15:34-0400\n"
-"PO-Revision-Date: 2018-01-08 16:09+0000\n"
-"Last-Translator: Davidmp <medipas@gmail.com>\n"
-"Language-Team: Catalan (http://www.transifex.com/jaos/slapt-get/language/"
-"ca/)\n"
-"Language: ca\n"
+"PO-Revision-Date: 2012-09-17 22:00+0000\n"
+"Last-Translator: Davidmp <medipas@gmail.com>, 2016,2018,2023\n"
+"Language-Team: Catalan (http://app.transifex.com/jaos/slapt-get/language/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
@@ -100,8 +100,7 @@ msgstr "INSTAL·LA: %s\n"
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
-msgstr ""
-"Paquets individuals no acceptats quan s'actualitzen tots els slackbuilds\n"
+msgstr "Paquets individuals no acceptats quan s'actualitzen tots els slackbuilds\n"
 
 #, c-format
 msgid "MD5SUM mismatch for %s\n"
@@ -171,8 +170,7 @@ msgstr "aplicable només a --upgrade-all"
 
 #, c-format
 msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr ""
-"les opcions de només construir i només recollir són mútuament excloents\n"
+msgstr "les opcions de només construir i només recollir són mútuament excloents\n"
 
 msgid "built"
 msgstr "construïts"
@@ -217,7 +215,7 @@ msgid "show what will be done"
 msgstr "visualitza el que es farà"
 
 msgid "skip if available via slapt-get, applicable only to --upgrade-all"
-msgstr ""
+msgstr "omet si està disponible mitjançant slapt-get, aplicable només a --upgrade-all"
 
 msgid "update local cache of remote slackbuilds"
 msgstr "actualitza la cau local d'slackbuilds remots"

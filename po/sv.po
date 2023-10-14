@@ -1,22 +1,21 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-#
+# This file is distributed under the same license as the slapt-src package.
+# 
 # Translators:
-# Ingemar Karlsson <ingemar@ingk.se>, 2012,2015,2017,2021
+# Ingemar Karlsson <ingemar@ingk.se>, 2012,2015,2017,2021,2023
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-26 15:34-0400\n"
-"PO-Revision-Date: 2021-06-23 10:47+0000\n"
-"Last-Translator: Ingemar Karlsson <ingemar@ingk.se>\n"
-"Language-Team: Swedish (http://www.transifex.com/jaos/slapt-get/language/"
-"sv/)\n"
-"Language: sv\n"
+"PO-Revision-Date: 2012-09-17 22:00+0000\n"
+"Last-Translator: Ingemar Karlsson <ingemar@ingk.se>, 2012,2015,2017,2021,2023\n"
+"Language-Team: Swedish (http://app.transifex.com/jaos/slapt-get/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
@@ -100,8 +99,7 @@ msgstr "INSTALLERA: %s\n"
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
-msgstr ""
-"Individuella paket accepteras inte vid uppgradering av alla slackbuilds\n"
+msgstr "Individuella paket accepteras inte vid uppgradering av alla slackbuilds\n"
 
 #, c-format
 msgid "MD5SUM mismatch for %s\n"
@@ -171,8 +169,7 @@ msgstr "gäller endast för --upgrade-all"
 
 #, c-format
 msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr ""
-"Endast byggalternativ och hämtningsalternativ är ömsesidigt uteslutna\n"
+msgstr "Endast byggalternativ och hämtningsalternativ är ömsesidigt uteslutna\n"
 
 msgid "built"
 msgstr "bli byggd"
@@ -217,7 +214,7 @@ msgid "show what will be done"
 msgstr "visa vad som ska göras"
 
 msgid "skip if available via slapt-get, applicable only to --upgrade-all"
-msgstr ""
+msgstr "hoppa över om tillgänglig via slapt-get, endast tillämpligt för --upgrade-all"
 
 msgid "update local cache of remote slackbuilds"
 msgstr "uppdatera lokal cache av remote slackbuilds"
