@@ -541,7 +541,7 @@ bool slapt_src_fetch_slackbuild(const slapt_src_config *config, const slapt_src_
             md5sum_parts = slapt_vector_t_init(free); /* no md5sum files */
     }
 
-    if (download_parts->size != md5sum_parts->size) {
+    if (download_parts == NULL || download_parts->size != md5sum_parts->size) {
         printf(gettext("Mismatch between download files and md5sums\n"));
         exit(EXIT_FAILURE);
     }
@@ -589,8 +589,7 @@ bool slapt_src_fetch_slackbuild(const slapt_src_config *config, const slapt_src_
         free(filename);
     }
 
-    if (download_parts != NULL)
-        slapt_vector_t_free(download_parts);
+    slapt_vector_t_free(download_parts);
     if (md5sum_parts != NULL)
         slapt_vector_t_free(md5sum_parts);
 
@@ -743,13 +742,13 @@ bool slapt_src_build_slackbuild(const slapt_src_config *config, const slapt_src_
         if ((filename = _get_pkg_filename(sb->version, config->pkgtag)) != NULL) {
             command_len = strlen(config->postcmd) + strlen(filename) + 2;
             command = slapt_malloc(sizeof *command * command_len);
-            const int snprintf_r = snprintf(command, command_len, "%s %s", config->postcmd, filename);
-            if (snprintf_r + 1 != command_len) {
+            int post_snprintf_r = snprintf(command, command_len, "%s %s", config->postcmd, filename);
+            if (post_snprintf_r + 1 != command_len) {
                 printf(gettext("Failed to construct command string\n"));
                 exit(EXIT_FAILURE);
             }
-            const int r = system(command);
-            if (r != 0) {
+            const int post_r = system(command);
+            if (post_r != 0) {
                 printf("%s %s\n", command, gettext("Failed\n"));
                 exit(EXIT_FAILURE);
             }
@@ -816,13 +815,12 @@ slapt_src_slackbuild *slapt_src_get_slackbuild(const slapt_vector_t *sbs, const 
     while (max >= min) {
         int pivot = (min + max) / 2;
         int name_cmp = strcmp(((slapt_src_slackbuild *)sbs->items[pivot])->name, name);
-        int ver_cmp = 0;
 
         if (name_cmp == 0) {
             if (version == NULL)
                 return sbs->items[pivot];
 
-            ver_cmp = slapt_pkg_t_cmp_versions(((slapt_src_slackbuild *)sbs->items[pivot])->version, version);
+            int ver_cmp = slapt_pkg_t_cmp_versions(((slapt_src_slackbuild *)sbs->items[pivot])->version, version);
             if (ver_cmp == 0)
                 return sbs->items[pivot];
 

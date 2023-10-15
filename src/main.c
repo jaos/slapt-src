@@ -475,7 +475,7 @@ int main(int argc, char *argv[])
             if (parts->size > 1)
                 ver = parts->items[1];
 
-            slapt_src_slackbuild *sb = slapt_src_get_slackbuild(remote_sbs, name, ver);
+            const slapt_src_slackbuild *sb = slapt_src_get_slackbuild(remote_sbs, name, ver);
 
             if (sb != NULL) {
                 printf(gettext("SlackBuild Name: %s\n"), sb->name);
@@ -541,10 +541,7 @@ static int show_summary(slapt_vector_t *sbs, slapt_vector_t *names, int action, 
         const char *name = parts->items[0];
         const int name_len = strlen(name);
 
-        if (line_len == 0) {
-            printf(" %s ", name);
-            line_len += name_len + 1;
-        } else if (line_len < 80 - name_len) {
+        if (line_len < 80 - name_len) {
             printf("%s ", name);
             line_len += name_len + 1;
         } else {
@@ -563,19 +560,16 @@ static int show_summary(slapt_vector_t *sbs, slapt_vector_t *names, int action, 
 
         slapt_vector_t_foreach(const slapt_src_slackbuild *, sb, sbs) {
             const char *name = sb->name;
-            const char *version = sb->version;
-            char *namever = slapt_malloc(sizeof *namever * (strlen(name) + strlen(version) + 2));
-            sprintf(namever, "%s:%s", name, version);
+            const char *ver = sb->version;
+            char *namever = slapt_malloc(sizeof *namever * (strlen(name) + strlen(ver) + 2));
+            sprintf(namever, "%s:%s", name, ver);
 
             slapt_vector_t *name_matches = slapt_vector_t_search(names, sb_compare_name_to_name, (char *)name);
             slapt_vector_t *namever_matches = slapt_vector_t_search(names, sb_compare_name_to_name, namever);
             if (name_matches == NULL && namever_matches == NULL) {
                 const int name_len = strlen(name);
 
-                if (line_len == 0) {
-                    printf(" %s ", name);
-                    line_len += name_len + 2;
-                } else if (line_len < 80 - name_len) {
+                if (line_len < 80 - name_len) {
                     printf("%s ", name);
                     line_len += name_len + 1;
                 } else {
