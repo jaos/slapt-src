@@ -449,7 +449,7 @@ slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *datafile)
     return sbs;
 }
 
-slapt_vector_t *slapt_src_get_available_slackbuilds()
+slapt_vector_t *slapt_src_get_available_slackbuilds(void)
 {
     return slapt_src_get_slackbuilds_from_file(SLAPT_SRC_DATA_FILE);
 }

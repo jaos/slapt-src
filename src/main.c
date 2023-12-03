@@ -357,6 +357,9 @@ int main(int argc, char *argv[])
         if (!simulate)
             action = show_summary(sbs, names, action, prompt);
         break;
+    default:
+        help();
+        exit(EXIT_FAILURE);
     }
 
     /*
@@ -502,6 +505,9 @@ int main(int argc, char *argv[])
     case CLEAN_OPT:
         clean(config);
         break;
+    default:
+        help();
+        exit(EXIT_FAILURE);
     }
 
     if (names != NULL)
