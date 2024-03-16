@@ -598,7 +598,7 @@ static int show_summary(slapt_vector_t *sbs, slapt_vector_t *names, int action, 
     if ((sbs->size > 0) && (prompt == true)) {
         if (slapt_ask_yes_no(gettext("Do you want to continue? [y/N] ")) != 1) {
             printf(gettext("Abort.\n"));
-            return 0;
+            exit(EXIT_SUCCESS);
         }
     }
 
