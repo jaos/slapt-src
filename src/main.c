@@ -297,6 +297,9 @@ int main(int argc, char *argv[])
 
     /* setup, fetch, and other preparation steps */
     switch (action) {
+    case CLEAN_OPT:
+    case UPDATE_OPT:
+        break; /* nothing to do here */
     case LIST_OPT:
     case SEARCH_OPT:
     case SHOW_OPT:
