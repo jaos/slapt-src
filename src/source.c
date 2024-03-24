@@ -374,22 +374,34 @@ slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *datafile)
             if (strstr(buffer, ": \n") != NULL)
                 continue;
 
+            #pragma GCC diagnostic push
+            #pragma GCC diagnostic ignored "-Wformat"
             if ((sscanf(buffer, "SLACKBUILD NAME: %ms", &token)) == 1) {
+            #pragma GCC diagnostic pop
                 sb->name = strdup(token);
                 free(token);
             }
 
+            #pragma GCC diagnostic push
+            #pragma GCC diagnostic ignored "-Wformat"
             if ((sscanf(buffer, "SLACKBUILD SOURCEURL: %ms", &token)) == 1) {
+            #pragma GCC diagnostic pop
                 sb->sb_source_url = strdup(token);
                 free(token);
             }
 
+            #pragma GCC diagnostic push
+            #pragma GCC diagnostic ignored "-Wformat"
             if ((sscanf(buffer, "SLACKBUILD LOCATION: %ms", &token)) == 1) {
+            #pragma GCC diagnostic pop
                 sb->location = strdup(token);
                 free(token);
             }
 
+            #pragma GCC diagnostic push
+            #pragma GCC diagnostic ignored "-Wformat"
             if ((sscanf(buffer, "SLACKBUILD FILES: %m[^\n]", &token)) == 1) {
+            #pragma GCC diagnostic pop
                 slapt_vector_t *files = slapt_parse_delimited_list(token, ' ');
                 slapt_vector_t_foreach(const char *, file, files) {
                     slapt_vector_t_add(sb->files, strdup(file));
@@ -398,37 +410,58 @@ slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *datafile)
                 free(token);
             }
 
+            #pragma GCC diagnostic push
+            #pragma GCC diagnostic ignored "-Wformat"
             if ((sscanf(buffer, "SLACKBUILD VERSION: %m[^\n]", &token)) == 1) {
+            #pragma GCC diagnostic pop
                 sb->version = strdup(token);
                 free(token);
             }
 
+            #pragma GCC diagnostic push
+            #pragma GCC diagnostic ignored "-Wformat"
             if ((sscanf(buffer, "SLACKBUILD DOWNLOAD: %m[^\n]", &token)) == 1) {
+            #pragma GCC diagnostic pop
                 sb->download = strdup(token);
                 free(token);
             }
 
+            #pragma GCC diagnostic push
+            #pragma GCC diagnostic ignored "-Wformat"
             if ((sscanf(buffer, "SLACKBUILD DOWNLOAD_x86_64: %m[^\n]", &token)) == 1) {
+            #pragma GCC diagnostic pop
                 sb->download_x86_64 = strdup(token);
                 free(token);
             }
 
+            #pragma GCC diagnostic push
+            #pragma GCC diagnostic ignored "-Wformat"
             if ((sscanf(buffer, "SLACKBUILD MD5SUM: %m[^\n]", &token)) == 1) {
+            #pragma GCC diagnostic pop
                 sb->md5sum = strdup(token);
                 free(token);
             }
 
+            #pragma GCC diagnostic push
+            #pragma GCC diagnostic ignored "-Wformat"
             if ((sscanf(buffer, "SLACKBUILD MD5SUM_x86_64: %m[^\n]", &token)) == 1) {
+            #pragma GCC diagnostic pop
                 sb->md5sum_x86_64 = strdup(token);
                 free(token);
             }
 
+            #pragma GCC diagnostic push
+            #pragma GCC diagnostic ignored "-Wformat"
             if ((sscanf(buffer, "SLACKBUILD REQUIRES: %m[^\n]", &token)) == 1) {
+            #pragma GCC diagnostic pop
                 sb->requires = strdup(token);
                 free(token);
             }
 
+            #pragma GCC diagnostic push
+            #pragma GCC diagnostic ignored "-Wformat"
             if ((sscanf(buffer, "SLACKBUILD SHORT DESCRIPTION: %m[^\n]", &token)) == 1) {
+            #pragma GCC diagnostic pop
                 sb->short_desc = strdup(token);
                 free(token);
             }
@@ -554,7 +587,7 @@ bool slapt_src_fetch_slackbuild(const slapt_src_config *config, const slapt_src_
         size_t file_size = 0;
         if (stat(filename, &file_stat) == 0) {
             /* if already exists, find out how much we already have */
-            file_size = file_stat.st_size;
+            file_size = (size_t)file_stat.st_size;
         }
 
         FILE *f = slapt_open_file(filename, "a+b");
@@ -705,7 +738,8 @@ bool slapt_src_build_slackbuild(const slapt_src_config *config, const slapt_src_
     }
 
     char *command = NULL;
-    int command_len = SLAPTSRC_CMD_LEN, snprintf_r = 0;
+    size_t command_len = SLAPTSRC_CMD_LEN;
+    int snprintf_r = 0;
 #if defined(HAS_SLKBUILD)
     slapt_vector_t *slkbuild_matches = slapt_vector_t_search(sb->files, sb_compare_name_to_name, "SLKBUILD");
     if (slkbuild_matches) {
@@ -721,8 +755,8 @@ bool slapt_src_build_slackbuild(const slapt_src_config *config, const slapt_src_
 #if defined(HAS_SLKBUILD)
     }
 #endif
-    if (snprintf_r + 1 != command_len) {
-        printf("%s (%d,%d,%s)\n", gettext("Failed to construct command string\n"), snprintf_r, command_len, command);
+    if (snprintf_r <= 0 || (size_t)snprintf_r + 1 != command_len) {
+        printf("%s (%d,%zu,%s)\n", gettext("Failed to construct command string\n"), snprintf_r, command_len, command);
         exit(EXIT_FAILURE);
     }
 
@@ -743,7 +777,7 @@ bool slapt_src_build_slackbuild(const slapt_src_config *config, const slapt_src_
             command_len = strlen(config->postcmd) + strlen(filename) + 2;
             command = slapt_malloc(sizeof *command * command_len);
             int post_snprintf_r = snprintf(command, command_len, "%s %s", config->postcmd, filename);
-            if (post_snprintf_r + 1 != command_len) {
+            if (post_snprintf_r <= 0 || (size_t)post_snprintf_r + 1 != command_len) {
                 printf(gettext("Failed to construct command string\n"));
                 exit(EXIT_FAILURE);
             }
@@ -776,13 +810,13 @@ bool slapt_src_install_slackbuild(const slapt_src_config *config, const slapt_sr
         exit(EXIT_FAILURE);
     }
 
-    int command_len = 44;
+    size_t command_len = 44;
     char *filename = _get_pkg_filename(sb->version, config->pkgtag);
     if (filename != NULL) {
         command_len += strlen(filename);
         char *command = slapt_malloc(sizeof *command * command_len);
         const int snprintf_r = snprintf(command, command_len, "/sbin/upgradepkg --reinstall --install-new %s", filename);
-        if (snprintf_r + 1 != command_len) {
+        if (snprintf_r <= 0 || (size_t)snprintf_r + 1 != command_len) {
             printf(gettext("Failed to construct command string\n"));
             exit(EXIT_FAILURE);
         }
@@ -810,7 +844,7 @@ bool slapt_src_install_slackbuild(const slapt_src_config *config, const slapt_sr
 
 slapt_src_slackbuild *slapt_src_get_slackbuild(const slapt_vector_t *sbs, const char *name, const char *version)
 {
-    int min = 0, max = sbs->size - 1;
+    int min = 0, max = (int)sbs->size - 1;
 
     while (max >= min) {
         int pivot = (min + max) / 2;

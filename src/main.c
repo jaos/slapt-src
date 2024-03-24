@@ -244,8 +244,8 @@ int main(int argc, char *argv[])
         case FETCH_ONLY_OPT:
             only_flags |= FETCH_ONLY_FLAG;
             break;
-    case SKIP_INSTALLABLE_PKGS_OPT:
-        skip_installable_pkgs = true;
+        case SKIP_INSTALLABLE_PKGS_OPT:
+            skip_installable_pkgs = true;
             break;
         default:
             help();
@@ -404,10 +404,10 @@ int main(int argc, char *argv[])
     case BUILD_OPT:
         ;
         slapt_vector_t_foreach(slapt_src_slackbuild *, build_sb, sbs) {
-            const int nv_len = strlen(build_sb->name) + strlen(build_sb->version) + 2;
+            const size_t nv_len = strlen(build_sb->name) + strlen(build_sb->version) + 2;
             char namever[nv_len];
             const int r = snprintf(namever, nv_len, "%s:%s", build_sb->name, build_sb->version);
-            if (r + 1 != nv_len) {
+            if (r <= 0 || (size_t)r + 1 != nv_len) {
                 exit(EXIT_FAILURE);
             }
 
@@ -533,9 +533,9 @@ int main(int argc, char *argv[])
 
 static int show_summary(slapt_vector_t *sbs, slapt_vector_t *names, int action, bool prompt)
 {
-    int line_len = 0;
+    size_t line_len = 0;
 
-    if (sbs->size == 0) {
+    if (!sbs || sbs->size == 0) {
         printf(gettext("Done\n"));
         return action;
     }
@@ -548,7 +548,7 @@ static int show_summary(slapt_vector_t *sbs, slapt_vector_t *names, int action, 
     slapt_vector_t_foreach(const char *, sb_name, names) {
         slapt_vector_t *parts = slapt_parse_delimited_list(sb_name, ':');
         const char *name = parts->items[0];
-        const int name_len = strlen(name);
+        const size_t name_len = strlen(name);
 
         if (line_len < 80 - name_len) {
             printf("%s ", name);
@@ -576,7 +576,7 @@ static int show_summary(slapt_vector_t *sbs, slapt_vector_t *names, int action, 
             slapt_vector_t *name_matches = slapt_vector_t_search(names, sb_compare_name_to_name, (char *)name);
             slapt_vector_t *namever_matches = slapt_vector_t_search(names, sb_compare_name_to_name, namever);
             if (name_matches == NULL && namever_matches == NULL) {
-                const int name_len = strlen(name);
+                const size_t name_len = strlen(name);
 
                 if (line_len < 80 - name_len) {
                     printf("%s ", name);
@@ -620,10 +620,10 @@ static void clean(slapt_src_config *config)
                 continue;
 
             if (S_ISDIR(stat_buf.st_mode)) {
-                const int command_len = strlen(file->d_name) + 8;
+                const size_t command_len = strlen(file->d_name) + 8;
                 char command[command_len];
                 const int r = snprintf(command, command_len, "rm -rf %s", file->d_name);
-                if (r + 1 == command_len) {
+                if (r <= 0 || (size_t)r + 1 == command_len) {
                     int sys_r = system(command);
                     if (sys_r != 0)
                         exit(EXIT_FAILURE);
