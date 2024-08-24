@@ -844,7 +844,10 @@ bool slapt_src_install_slackbuild(const slapt_src_config *config, const slapt_sr
 
 slapt_src_slackbuild *slapt_src_get_slackbuild(const slapt_vector_t *sbs, const char *name, const char *version)
 {
-    int min = 0, max = (int)sbs->size - 1;
+    if (sbs->size < 1) {
+        return NULL;
+    }
+    int min = 0, max = (int)(sbs->size - 1);
 
     while (max >= min) {
         int pivot = (min + max) / 2;
