@@ -17,6 +17,7 @@
  */
 
 #define _GNU_SOURCE
+#include <sys/wait.h>
 #include "source.h"
 #include "config.h"
 
@@ -36,6 +37,34 @@ extern struct utsname uname_v;
 
 static char *filename_from_url(char *url);
 static char *add_part_to_url(const char *url, const char *part);
+
+/* execute a command via fork/exec, bypassing the shell */
+static int slapt_src_exec(const char *prog, char *const argv[])
+{
+    pid_t pid = fork();
+
+    if (pid < 0) {
+        fprintf(stderr, "fork failed: %s\n", strerror(errno));
+        return -1;
+    }
+
+    if (pid == 0) {
+        execvp(prog, argv);
+        fprintf(stderr, "Failed to exec %s: %s\n", prog, strerror(errno));
+        _exit(EXIT_FAILURE);
+    }
+
+    int status = 0;
+    if (waitpid(pid, &status, 0) == -1) {
+        fprintf(stderr, "waitpid failed: %s\n", strerror(errno));
+        return -1;
+    }
+
+    if (WIFEXITED(status)) {
+        return WEXITSTATUS(status);
+    }
+    return -1;
+}
 
 slapt_src_config *slapt_src_config_init(void)
 {
@@ -774,24 +803,23 @@ bool slapt_src_build_slackbuild(const slapt_src_config *config, const slapt_src_
     if (config->postcmd != NULL) {
         char *filename = NULL;
         if ((filename = _get_pkg_filename(sb->version, config->pkgtag)) != NULL) {
-            command_len = strlen(config->postcmd) + strlen(filename) + 2;
-            command = slapt_malloc(sizeof *command * command_len);
-            int post_snprintf_r = snprintf(command, command_len, "%s %s", config->postcmd, filename);
-            if (post_snprintf_r <= 0 || (size_t)post_snprintf_r + 1 != command_len) {
-                printf(gettext("Failed to construct command string\n"));
-                exit(EXIT_FAILURE);
-            }
-            const int post_r = system(command);
+            char *postcmd_copy = strdup(config->postcmd);
+            char *prog = postcmd_copy;
+            char *arg = filename;
+            char *const argv[] = { prog, arg, NULL };
+            const int post_r = slapt_src_exec(prog, argv);
             if (post_r != 0) {
-                printf("%s %s\n", command, gettext("Failed\n"));
+                printf("%s %s %s\n", prog, arg, gettext("Failed\n"));
+                free(postcmd_copy);
+                free(filename);
                 exit(EXIT_FAILURE);
             }
-            free(command);
+            free(postcmd_copy);
+            free(filename);
         } else {
             printf(gettext("Unable to find generated package\n"));
             exit(EXIT_FAILURE);
         }
-        free(filename);
     }
 
     /* go back */
@@ -810,25 +838,16 @@ bool slapt_src_install_slackbuild(const slapt_src_config *config, const slapt_sr
         exit(EXIT_FAILURE);
     }
 
-    size_t command_len = 44;
     char *filename = _get_pkg_filename(sb->version, config->pkgtag);
     if (filename != NULL) {
-        command_len += strlen(filename);
-        char *command = slapt_malloc(sizeof *command * command_len);
-        const int snprintf_r = snprintf(command, command_len, "/sbin/upgradepkg --reinstall --install-new %s", filename);
-        if (snprintf_r <= 0 || (size_t)snprintf_r + 1 != command_len) {
-            printf(gettext("Failed to construct command string\n"));
-            exit(EXIT_FAILURE);
-        }
-
-        const int r = system(command);
+        char *const argv[] = { (char *)"/sbin/upgradepkg", (char *)"--reinstall", (char *)"--install-new", filename, NULL };
+        const int r = slapt_src_exec("/sbin/upgradepkg", argv);
         if (r != 0) {
-            printf("%s %s\n", command, gettext("Failed\n"));
+            printf("/sbin/upgradepkg --reinstall --install-new %s %s\n", filename, gettext("Failed\n"));
             exit(EXIT_FAILURE);
         }
 
         free(filename);
-        free(command);
     } else {
         printf(gettext("Unable to find generated package\n"));
         exit(EXIT_FAILURE);
