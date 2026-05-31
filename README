@@ -45,8 +45,6 @@ easy as working with binary packages with slapt-get.
 
 4. Installation
 
-    You can install via meson or autotools (deprecated).
-
     * Meson
 
         meson setup build # or any dir of your choosing
@@ -58,18 +56,6 @@ easy as working with binary packages with slapt-get.
         TIP:
         slapt-src.Slackbuild will create a Slackware package.
         Run with sudo or as a privileged user.
-
-    * autotools (deprecated)
-
-        ./autogen.sh # if building from git
-        ./configure
-        make
-        make install # as privileged user
-
-        The Makefile honors DESTDIR.
-
-        TIP:
-        `make pkg` (as privileged user) will create a Slackware package.
 
 5. slapt-srcrc
 
