@@ -315,7 +315,7 @@ int main(int argc, char *argv[])
         if (skip_installable_pkgs) {
             slapt_config_t *slapt_config = slapt_config_t_read(RC_DIR "/slapt-getrc");
             if ((chdir(slapt_config->working_dir)) == 0) {
-                available = slapt_get_available_pkgs();
+                available = slapt_get_available_pkgs(slapt_config);
                 if ((chdir(config->builddir)) != 0) {
                     perror(gettext("Failed to chdir to build directory"));
                     exit(EXIT_FAILURE);

@@ -182,7 +182,7 @@ bool slapt_src_update_slackbuild_cache(const slapt_src_config *config)
         for (int fc = 0; files[fc] != NULL; fc++) {
             const char *err = NULL;
 
-            char *filename = slapt_gen_filename_from_url(url, files[fc]);
+            char *filename = slapt_gen_filename_from_url(slapt_config, url, files[fc]);
             char *local_head = slapt_read_head_cache(filename);
             char *head = slapt_head_mirror_data(url, files[fc]);
 
