@@ -1049,7 +1049,7 @@ slapt_vector_t *slapt_src_search_slackbuild_cache(const slapt_vector_t *remote_s
             const int name_r = search_regex->reg_return;
 
             slapt_regex_t_execute(search_regex, remote_sb->location);
-            const int version_r = search_regex->reg_return;
+            const int location_r = search_regex->reg_return;
 
             int short_desc_r = -1;
             if (remote_sb->short_desc != NULL) {
@@ -1057,7 +1057,7 @@ slapt_vector_t *slapt_src_search_slackbuild_cache(const slapt_vector_t *remote_s
                 short_desc_r = search_regex->reg_return;
             }
 
-            if (name_r == 0 || version_r == 0 || short_desc_r == 0)
+            if (name_r == 0 || location_r == 0 || short_desc_r == 0)
                 slapt_vector_t_add(sbs, remote_sb);
         }
 
