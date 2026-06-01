@@ -206,6 +206,7 @@ bool slapt_src_update_slackbuild_cache(const slapt_src_config *config)
 {
     bool rval = true;
     slapt_config_t *slapt_config = slapt_config_t_init();
+    strcpy(slapt_config->working_dir, config->builddir);
     slapt_vector_t *slackbuilds = slapt_vector_t_init((slapt_vector_t_free_function)slapt_src_slackbuild_free);
 
     slapt_vector_t_foreach(const char *, url, config->sources) {
@@ -555,6 +556,7 @@ bool slapt_src_fetch_slackbuild(const slapt_src_config *config, const slapt_src_
 
     /* download slackbuild files */
     slapt_config_t *slapt_config = slapt_config_t_init();
+    strcpy(slapt_config->working_dir, config->builddir);
     char *sb_location = add_part_to_url(sb->sb_source_url, sb->location);
     slapt_vector_t_foreach(const char *, sb_file, sb->files) {
         char *s = NULL, *url = add_part_to_url(sb_location, sb_file);
