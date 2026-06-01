@@ -303,13 +303,13 @@ int main(int argc, char *argv[])
     case LIST_OPT:
     case SEARCH_OPT:
     case SHOW_OPT:
-        remote_sbs = slapt_src_get_available_slackbuilds();
+        remote_sbs = slapt_src_get_available_slackbuilds(config->builddir);
         break;
     case FETCH_OPT:
     case BUILD_OPT:
     case INSTALL_OPT:
     case UPGRADE_OPT:
-        remote_sbs = slapt_src_get_available_slackbuilds();
+        remote_sbs = slapt_src_get_available_slackbuilds(config->builddir);
         installed = slapt_get_installed_pkgs();
 
         if (skip_installable_pkgs) {

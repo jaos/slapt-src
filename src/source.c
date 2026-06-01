@@ -510,9 +510,12 @@ slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *datafile)
     return sbs;
 }
 
-slapt_vector_t *slapt_src_get_available_slackbuilds(void)
+slapt_vector_t *slapt_src_get_available_slackbuilds(const char *builddir)
 {
-    return slapt_src_get_slackbuilds_from_file(SLAPT_SRC_DATA_FILE);
+    char *datafile = slapt_gen_abs_path(builddir, SLAPT_SRC_DATA_FILE);
+    slapt_vector_t *sbs = slapt_src_get_slackbuilds_from_file(datafile);
+    free(datafile);
+    return sbs;
 }
 
 static char *filename_from_url(char *url)

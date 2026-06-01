@@ -60,7 +60,7 @@ slapt_src_slackbuild *slapt_src_slackbuild_init(void);
 void slapt_src_slackbuild_free(slapt_src_slackbuild *);
 
 bool slapt_src_update_slackbuild_cache(const slapt_src_config *);
-slapt_vector_t *slapt_src_get_available_slackbuilds(void);
+slapt_vector_t *slapt_src_get_available_slackbuilds(const char *builddir);
 bool slapt_src_fetch_slackbuild(const slapt_src_config *, const slapt_src_slackbuild *);
 bool slapt_src_build_slackbuild(const slapt_src_config *, const slapt_src_slackbuild *);
 bool slapt_src_install_slackbuild(const slapt_src_config *, const slapt_src_slackbuild *);
