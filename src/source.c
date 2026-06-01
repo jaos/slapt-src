@@ -55,13 +55,21 @@ static int slapt_src_exec(const char *prog, char *const argv[])
     }
 
     int status = 0;
-    if (waitpid(pid, &status, 0) == -1) {
+    int wait_r = 0;
+    do {
+        wait_r = waitpid(pid, &status, 0);
+    } while (wait_r == -1 && errno == EINTR);
+
+    if (wait_r == -1) {
         fprintf(stderr, "waitpid failed: %s\n", strerror(errno));
         return -1;
     }
 
     if (WIFEXITED(status)) {
         return WEXITSTATUS(status);
+    } else if (WIFSIGNALED(status)) {
+        fprintf(stderr, "killed by signal %d\n", WTERMSIG(status));
+        return 128 + WTERMSIG(status);
     }
     return -1;
 }
