@@ -570,8 +570,9 @@ static int show_summary(slapt_vector_t *sbs, slapt_vector_t *names, int action, 
         slapt_vector_t_foreach(const slapt_src_slackbuild *, sb, sbs) {
             const char *name = sb->name;
             const char *ver = sb->version;
-            char *namever = slapt_malloc(sizeof *namever * (strlen(name) + strlen(ver) + 2));
-            sprintf(namever, "%s:%s", name, ver);
+            const size_t namever_len = strlen(name) + strlen(ver) + 2;
+            char *namever = slapt_malloc(sizeof *namever * namever_len);
+            snprintf(namever, namever_len, "%s:%s", name, ver);
 
             slapt_vector_t *name_matches = slapt_vector_t_search(names, sb_compare_name_to_name, (char *)name);
             slapt_vector_t *namever_matches = slapt_vector_t_search(names, sb_compare_name_to_name, namever);
