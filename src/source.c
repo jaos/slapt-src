@@ -268,7 +268,10 @@ bool slapt_src_update_slackbuild_cache(const slapt_src_config *config)
         }
     }
 
-    slapt_src_write_slackbuilds_to_file(slackbuilds, SLAPT_SRC_DATA_FILE);
+    char *datafile = slapt_gen_abs_path(config->builddir, SLAPT_SRC_DATA_FILE);
+    slapt_src_write_slackbuilds_to_file(slackbuilds, datafile);
+    free(datafile);
+
     slapt_config_t_free(slapt_config);
     slapt_vector_t_free(slackbuilds);
     return rval;
