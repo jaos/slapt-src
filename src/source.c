@@ -105,15 +105,14 @@ slapt_src_config *slapt_src_read_config(const char *filename)
     size_t gb_length = 0;
     ssize_t g_size;
     while ((g_size = getline(&buffer, &gb_length, rc)) != EOF) {
-        char *token_ptr = NULL;
         buffer[g_size - 1] = '\0';
 
         if (strchr(buffer, '#') != NULL)
             continue;
 
-        if ((token_ptr = strstr(buffer, SLAPT_SRC_SOURCE_TOKEN)) != NULL) {
-            if (strlen(token_ptr) > strlen(SLAPT_SRC_SOURCE_TOKEN)) {
-                char *source = strdup(token_ptr + strlen(SLAPT_SRC_SOURCE_TOKEN));
+        if (strncmp(buffer, SLAPT_SRC_SOURCE_TOKEN, strlen(SLAPT_SRC_SOURCE_TOKEN)) == 0) {
+            if (strlen(buffer) > strlen(SLAPT_SRC_SOURCE_TOKEN)) {
+                char *source = strdup(buffer + strlen(SLAPT_SRC_SOURCE_TOKEN));
                 if (source[strlen(source) - 1] != '/') {
                     char *fixed = add_part_to_url(source, "/");
                     free(source);
@@ -122,18 +121,17 @@ slapt_src_config *slapt_src_read_config(const char *filename)
                 slapt_vector_t_add(config->sources, strdup(source));
                 free(source);
             }
+        } else if (strncmp(buffer, SLAPT_SRC_BUILDDIR_TOKEN, strlen(SLAPT_SRC_BUILDDIR_TOKEN)) == 0) {
+            if (strlen(buffer) > strlen(SLAPT_SRC_BUILDDIR_TOKEN))
+                config->builddir = strdup(buffer + strlen(SLAPT_SRC_BUILDDIR_TOKEN));
 
-        } else if ((token_ptr = strstr(buffer, SLAPT_SRC_BUILDDIR_TOKEN)) != NULL) {
-            if (strlen(token_ptr) > strlen(SLAPT_SRC_BUILDDIR_TOKEN))
-                config->builddir = strdup(token_ptr + strlen(SLAPT_SRC_BUILDDIR_TOKEN));
+        } else if (strncmp(buffer, SLAPT_SRC_PKGEXT_TOKEN, strlen(SLAPT_SRC_PKGEXT_TOKEN)) == 0) {
+            if (strlen(buffer) > strlen(SLAPT_SRC_PKGEXT_TOKEN))
+                config->pkgext = strdup(buffer + strlen(SLAPT_SRC_PKGEXT_TOKEN));
 
-        } else if ((token_ptr = strstr(buffer, SLAPT_SRC_PKGEXT_TOKEN)) != NULL) {
-            if (strlen(token_ptr) > strlen(SLAPT_SRC_PKGEXT_TOKEN))
-                config->pkgext = strdup(token_ptr + strlen(SLAPT_SRC_PKGEXT_TOKEN));
-
-        } else if ((token_ptr = strstr(buffer, SLAPT_SRC_PKGTAG_TOKEN)) != NULL) {
-            if (strlen(token_ptr) > strlen(SLAPT_SRC_PKGTAG_TOKEN))
-                config->pkgtag = strdup(token_ptr + strlen(SLAPT_SRC_PKGTAG_TOKEN));
+        } else if (strncmp(buffer, SLAPT_SRC_PKGTAG_TOKEN, strlen(SLAPT_SRC_PKGTAG_TOKEN)) == 0) {
+            if (strlen(buffer) > strlen(SLAPT_SRC_PKGTAG_TOKEN))
+                config->pkgtag = strdup(buffer + strlen(SLAPT_SRC_PKGTAG_TOKEN));
         }
     }
 
