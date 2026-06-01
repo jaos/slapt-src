@@ -787,6 +787,11 @@ bool slapt_src_build_slackbuild(const slapt_src_config *config, const slapt_src_
     setenv("VERSION", sb->version, 1);
     const int r = system(command);
     unsetenv("VERSION");
+    unsetenv("TMP");
+    unsetenv("OUTPUT");
+    unsetenv("PKGTYPE");
+    unsetenv("TAG");
+    unsetenv("ARCH");
     if (r != 0) {
         printf("%s %s\n", command, gettext("Failed\n"));
         exit(EXIT_FAILURE);
