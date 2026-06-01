@@ -216,8 +216,6 @@ bool slapt_src_update_slackbuild_cache(const slapt_src_config *config)
         printf(gettext("Fetching slackbuild list from %s..."), url);
 
         for (int fc = 0; files[fc] != NULL; fc++) {
-            const char *err = NULL;
-
             char *filename = slapt_gen_filename_from_url(slapt_config, url, files[fc]);
             char *local_head = slapt_read_head_cache(filename);
             char *head = slapt_head_mirror_data(url, files[fc]);
@@ -232,7 +230,7 @@ bool slapt_src_update_slackbuild_cache(const slapt_src_config *config)
                     exit(EXIT_FAILURE);
                 }
 
-                err = slapt_get_mirror_data_from_source(f, slapt_config, url, files[fc]);
+                const char *err = slapt_get_mirror_data_from_source(f, slapt_config, url, files[fc]);
                 fclose(f);
 
                 if (!err) {
@@ -241,23 +239,12 @@ bool slapt_src_update_slackbuild_cache(const slapt_src_config *config)
 
                     if (head != NULL)
                         slapt_write_head_cache(head, filename);
-
-                    free(head);
-                    free(local_head);
-                    free(filename);
-                    break;
-
                 } else {
+                    if (fc != 0) { // non GZ attempt
+                        fprintf(stderr, gettext("Download failed: %s\n"), err);
+                    }
                     slapt_clear_head_cache(filename);
                 }
-            }
-            if (strcmp(files[fc], SLAPT_SRC_SOURCES_LIST_GZ) != 0) {
-                if (err) {
-                    fprintf(stderr, gettext("Download failed: %s\n"), err);
-                } else {
-                    fprintf(stderr, gettext("Download failed: %s\n"), "404");
-                }
-                rval = false;
             }
 
             free(filename);
@@ -276,6 +263,8 @@ bool slapt_src_update_slackbuild_cache(const slapt_src_config *config)
             }
             sbs->free_function = NULL; /* don't free the slackbuilds here */
             slapt_vector_t_free(sbs);
+        } else {
+            rval = false;
         }
     }
 
