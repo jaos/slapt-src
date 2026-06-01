@@ -37,6 +37,7 @@ extern struct utsname uname_v;
 
 static char *filename_from_url(char *url);
 static char *add_part_to_url(const char *url, const char *part);
+static bool sb_name_valid(const char *name);
 
 /* execute a command via fork/exec, bypassing the shell */
 static int slapt_src_exec(const char *prog, char *const argv[])
@@ -408,6 +409,11 @@ slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *datafile)
             #pragma GCC diagnostic pop
                 sb->name = strdup(token);
                 free(token);
+                if (!sb_name_valid(sb->name)) {
+                    slapt_src_slackbuild_free(sb);
+                    sb = NULL;
+                    parse_state = SLAPT_SRC_NOT_PARSING;
+                }
             }
 
             #pragma GCC diagnostic push
@@ -516,6 +522,20 @@ slapt_vector_t *slapt_src_get_available_slackbuilds(const char *builddir)
     slapt_vector_t *sbs = slapt_src_get_slackbuilds_from_file(datafile);
     free(datafile);
     return sbs;
+}
+
+static bool sb_name_valid(const char *name)
+{
+    if (name == NULL || name[0] == '\0' || name[0] == '.')
+        return false;
+
+    if (strchr(name, '/') != NULL || strchr(name, '\\') != NULL)
+        return false;
+
+    if (strstr(name, "..") != NULL)
+        return false;
+
+    return true;
 }
 
 static char *filename_from_url(char *url)
