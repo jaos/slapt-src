@@ -528,12 +528,9 @@ static char *filename_from_url(char *url)
 
 static char *add_part_to_url(const char *url, const char *part)
 {
-    char *new = malloc(sizeof *new *(strlen(url) + strlen(part) + 1));
-    if (new != NULL) {
-        new = strcpy(new, url);
-        new = strcat(new, part);
-    }
-
+    char *new = slapt_malloc(sizeof *new *(strlen(url) + strlen(part) + 1));
+    strcpy(new, url);
+    strcat(new, part);
     return new;
 }
 
