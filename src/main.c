@@ -607,6 +607,9 @@ static int show_summary(slapt_vector_t *sbs, slapt_vector_t *names, int action, 
 
 static void clean(slapt_src_config *config)
 {
+    static const char *clean_rm = "rm -rf ";
+    static const size_t clean_rm_sz = 7;
+
     struct dirent *file = NULL;
     DIR *builddir = opendir(config->builddir);
     if (builddir != NULL) {
@@ -620,10 +623,10 @@ static void clean(slapt_src_config *config)
                 continue;
 
             if (S_ISDIR(stat_buf.st_mode)) {
-                const size_t command_len = strlen(file->d_name) + 8;
+                const size_t command_len = strlen(file->d_name) + clean_rm_sz + 1;
                 char command[command_len];
-                const int r = snprintf(command, command_len, "rm -rf %s", file->d_name);
-                if (r <= 0 || (size_t)r + 1 == command_len) {
+                const int r = snprintf(command, command_len, "%s%s", clean_rm, file->d_name);
+                if (r > 0 && (size_t)r == command_len - 1) {
                     int sys_r = system(command);
                     if (sys_r != 0)
                         exit(EXIT_FAILURE);
