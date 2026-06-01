@@ -2,11 +2,11 @@
 set -eoxu
 
 TEST_TMPDIR=$(mktemp -d)
-trap "rm -rf ${TEST_TMPDIR};" err exit
+trap 'rm -rf ${TEST_TMPDIR};' err exit
 
 slaptsrc="${1}"
 config=${TEST_TMPDIR}/config
-cat > ${config} << EOF
+cat > "${config}" << EOF
 SOURCE=http://www.slackbuilds.org/slackbuilds/14.2/
 BUILDDIR=${TEST_TMPDIR}/slapt-src
 PKGEXT=txz
@@ -25,4 +25,4 @@ ${slaptsrc} --config "${config}" --install z -t
 ${slaptsrc} --config "${config}" --fetch z -y
 ${slaptsrc} --config "${config}" --clean
 
-find ${TEST_TMPDIR}
+find "${TEST_TMPDIR}"
