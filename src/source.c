@@ -17,21 +17,10 @@
  */
 
 #define _GNU_SOURCE
+#include <ctype.h>
 #include <sys/wait.h>
 #include "source.h"
 #include "config.h"
-
-#ifdef HAS_FAKEROOT
-#define SLAPTSRC_CMD_LEN 27
-#define SLAPTSRC_CMD "fakeroot -- sh"
-#define SLAPTSRC_SLKBUILD_CMD_LEN 24
-#define SLAPTSRC_SLKBUILD_CMD "fakeroot -- slkbuild -X"
-#else
-#define SLAPTSRC_CMD_LEN 15
-#define SLAPTSRC_CMD "sh"
-#define SLAPTSRC_SLKBUILD_CMD_LEN 12
-#define SLAPTSRC_SLKBUILD_CMD "slkbuild -X"
-#endif
 
 extern struct utsname uname_v;
 
@@ -786,31 +775,48 @@ bool slapt_src_build_slackbuild(const slapt_src_config *config, const slapt_src_
         setenv("ARCH", uname_v.machine, 1);
     }
 
-    char *command = NULL;
-    size_t command_len = SLAPTSRC_CMD_LEN;
-    int snprintf_r = 0;
-#if defined(HAS_SLKBUILD)
-    slapt_vector_t *slkbuild_matches = slapt_vector_t_search(sb->files, sb_compare_name_to_name, "SLKBUILD");
-    if (slkbuild_matches) {
-        command_len = SLAPTSRC_SLKBUILD_CMD_LEN;
-        command = slapt_malloc(sizeof *command * command_len);
-        snprintf_r = snprintf(command, command_len, "%s", SLAPTSRC_SLKBUILD_CMD);
-        slapt_vector_t_free(slkbuild_matches);
-    } else {
-#endif
-        command_len += strlen(sb->name);
-        command = slapt_malloc(sizeof *command * command_len);
-        snprintf_r = snprintf(command, command_len, "%s %s.SlackBuild", SLAPTSRC_CMD, sb->name);
-#if defined(HAS_SLKBUILD)
-    }
-#endif
-    if (snprintf_r <= 0 || (size_t)snprintf_r + 1 != command_len) {
-        printf("%s (%d,%zu,%s)\n", gettext("Failed to construct command string\n"), snprintf_r, command_len, command);
+    /* run the script via fork/exec, never through a shell, so the
+     * package name cannot be interpreted as shell syntax */
+    char *script = NULL;
+    const size_t script_len = strlen(sb->name) + strlen(".SlackBuild") + 1;
+    script = slapt_malloc(sizeof *script * script_len);
+    const int script_r = snprintf(script, script_len, "%s.SlackBuild", sb->name);
+    if (script_r <= 0 || (size_t)script_r + 1 != script_len) {
+        fprintf(stderr, gettext("Failed to construct script name\n"));
+        free(script);
         exit(EXIT_FAILURE);
     }
 
+#if defined(HAS_SLKBUILD)
+    slapt_vector_t *slkbuild_matches = slapt_vector_t_search(sb->files, sb_compare_name_to_name, "SLKBUILD");
+    const bool use_slkbuild = (slkbuild_matches != NULL);
+    if (slkbuild_matches)
+        slapt_vector_t_free(slkbuild_matches);
+#else
+    const bool use_slkbuild = false;
+#endif
+
+    /* argv for the script runner: [fakeroot --] sh <script> or [fakeroot --] slkbuild -X */
+    char *build_argv[5];
+    int build_argc = 0;
+    if (use_slkbuild) {
+#ifdef HAS_FAKEROOT
+        build_argv[build_argc++] = (char *)"fakeroot";
+#endif
+        build_argv[build_argc++] = (char *)"slkbuild";
+        build_argv[build_argc++] = (char *)"-X";
+    } else {
+#ifdef HAS_FAKEROOT
+        build_argv[build_argc++] = (char *)"fakeroot";
+        build_argv[build_argc++] = (char *)"--";
+#endif
+        build_argv[build_argc++] = (char *)"sh";
+        build_argv[build_argc++] = script;
+    }
+    build_argv[build_argc] = NULL;
+
     setenv("VERSION", sb->version, 1);
-    const int r = system(command);
+    const int r = slapt_src_exec(build_argv[0], build_argv);
     unsetenv("VERSION");
     unsetenv("TMP");
     unsetenv("OUTPUT");
@@ -818,12 +824,11 @@ bool slapt_src_build_slackbuild(const slapt_src_config *config, const slapt_src_
     unsetenv("TAG");
     unsetenv("ARCH");
     if (r != 0) {
-        printf("%s %s\n", command, gettext("Failed\n"));
+        printf("%s %s\n", script, gettext("Failed\n"));
         exit(EXIT_FAILURE);
     }
 
-    free(command);
-    command = NULL;
+    free(script);
 
     if (config->postcmd != NULL) {
         char *filename = NULL;
@@ -834,7 +839,7 @@ bool slapt_src_build_slackbuild(const slapt_src_config *config, const slapt_src_
             char *const argv[] = { prog, arg, NULL };
             const int post_r = slapt_src_exec(prog, argv);
             if (post_r != 0) {
-                printf("%s %s %s\n", prog, arg, gettext("Failed\n"));
+                fprintf(stderr, "%s %s %s\n", prog, arg, gettext("Failed\n"));
                 free(postcmd_copy);
                 free(filename);
                 exit(EXIT_FAILURE);
@@ -842,14 +847,14 @@ bool slapt_src_build_slackbuild(const slapt_src_config *config, const slapt_src_
             free(postcmd_copy);
             free(filename);
         } else {
-            printf(gettext("Unable to find generated package\n"));
+            fprintf(stderr, gettext("Unable to find generated package\n"));
             exit(EXIT_FAILURE);
         }
     }
 
     /* go back */
     if (chdir(config->builddir) != 0) {
-        printf(gettext("Failed to chdir to %s\n"), config->builddir);
+        fprintf(stderr, gettext("Failed to chdir to %s\n"), config->builddir);
         exit(EXIT_FAILURE);
     }
 
@@ -859,7 +864,7 @@ bool slapt_src_build_slackbuild(const slapt_src_config *config, const slapt_src_
 bool slapt_src_install_slackbuild(const slapt_src_config *config, const slapt_src_slackbuild *sb)
 {
     if (chdir(sb->location) != 0) {
-        printf(gettext("Failed to chdir to %s\n"), sb->location);
+        fprintf(stderr, gettext("Failed to chdir to %s\n"), sb->location);
         exit(EXIT_FAILURE);
     }
 
@@ -868,19 +873,19 @@ bool slapt_src_install_slackbuild(const slapt_src_config *config, const slapt_sr
         char *const argv[] = { (char *)"/sbin/upgradepkg", (char *)"--reinstall", (char *)"--install-new", filename, NULL };
         const int r = slapt_src_exec("/sbin/upgradepkg", argv);
         if (r != 0) {
-            printf("/sbin/upgradepkg --reinstall --install-new %s %s\n", filename, gettext("Failed\n"));
+            fprintf(stderr, "/sbin/upgradepkg --reinstall --install-new %s %s\n", filename, gettext("Failed\n"));
             exit(EXIT_FAILURE);
         }
 
         free(filename);
     } else {
-        printf(gettext("Unable to find generated package\n"));
+        fprintf(stderr, gettext("Unable to find generated package\n"));
         exit(EXIT_FAILURE);
     }
 
     /* go back */
     if (chdir(config->builddir) != 0) {
-        printf(gettext("Failed to chdir to %s\n"), config->builddir);
+        fprintf(stderr, gettext("Failed to chdir to %s\n"), config->builddir);
         exit(EXIT_FAILURE);
     }
     return true;
