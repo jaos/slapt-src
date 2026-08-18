@@ -35,7 +35,7 @@
 static int show_summary(slapt_vector_t *, slapt_vector_t *, int, bool);
 static void clean(slapt_src_config *config);
 
-void version(void)
+static void version(void)
 {
     printf(gettext("%s version %s\n"), PACKAGE, VERSION);
     printf("Jason Woodward <woodwardj at jaos dot org>\n");
@@ -55,7 +55,7 @@ void version(void)
     printf("Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n");
 }
 
-void help(void)
+static void help(void)
 {
     printf(gettext("%s - A SlackBuild utility\n"), PACKAGE);
     printf(gettext("Usage: %s [option(s)] [action] [slackbuild(s)]\n"), PACKAGE);
@@ -555,7 +555,7 @@ static int show_summary(slapt_vector_t *sbs, slapt_vector_t *names, int action, 
         const char *name = parts->items[0];
         const size_t name_len = strlen(name);
 
-        if (line_len < 80 - name_len) {
+        if (name_len < 80 && line_len < 80 - name_len) {
             printf("%s ", name);
             line_len += name_len + 1;
         } else {
@@ -584,7 +584,7 @@ static int show_summary(slapt_vector_t *sbs, slapt_vector_t *names, int action, 
             if (name_matches == NULL && namever_matches == NULL) {
                 const size_t name_len = strlen(name);
 
-                if (line_len < 80 - name_len) {
+                if (name_len < 80 && line_len < 80 - name_len) {
                     printf("%s ", name);
                     line_len += name_len + 1;
                 } else {
