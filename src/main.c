@@ -17,6 +17,7 @@
  */
 
 #define _GNU_SOURCE
+#include <ftw.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -606,11 +607,26 @@ static int show_summary(slapt_vector_t *sbs, slapt_vector_t *names, int action, 
     return action;
 }
 
+static int _nftw_fn(const char *path, const struct stat *stat_buf, int typeflag, struct FTW *ftw_info)
+{
+    (void)stat_buf;
+    (void)ftw_info;
+
+    switch (typeflag) {
+    case FTW_DP:
+        return (rmdir(path) == 0) ? 0 : -1; /* children already removed */
+    case FTW_D:
+        return 0; /* removed post-order as FTW_DP */
+    case FTW_F:
+    case FTW_SL:
+        return (unlink(path) == 0) ? 0 : -1;
+    default:
+        return -1; /* FTW_DNR, FTW_NS, ... */
+    }
+}
+
 static void clean(slapt_src_config *config)
 {
-    static const char *clean_rm = "rm -rf ";
-    static const size_t clean_rm_sz = 7;
-
     struct dirent *file = NULL;
     DIR *builddir = opendir(config->builddir);
     if (builddir != NULL) {
@@ -624,13 +640,9 @@ static void clean(slapt_src_config *config)
                 continue;
 
             if (S_ISDIR(stat_buf.st_mode)) {
-                const size_t command_len = strlen(file->d_name) + clean_rm_sz + 1;
-                char command[command_len];
-                const int r = snprintf(command, command_len, "%s%s", clean_rm, file->d_name);
-                if (r > 0 && (size_t)r == command_len - 1) {
-                    int sys_r = system(command);
-                    if (sys_r != 0)
-                        exit(EXIT_FAILURE);
+                if (nftw(file->d_name, _nftw_fn, 32, FTW_PHYS | FTW_DEPTH) != 0) {
+                    perror(file->d_name);
+                    exit(EXIT_FAILURE);
                 }
             }
         }
