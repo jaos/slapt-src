@@ -31,6 +31,8 @@ slapt-src \- slackbuild utility
 .B slapt-src
 is a utility to make querying, retrieving, and building slackbuilds
 as easy as working with binary packages with \fBslapt-get\fR.
+The slackbuild list is fetched from the configured sources with
+\fB\-\-update\fR and must be fetched before any other action.
 
 .SH OPTIONS
 .TP
@@ -73,6 +75,7 @@ version if multiple versions are available.  For example, given \fIfoo-1.0\fR an
 .TP
 \fB\-\-build\fR, \fB\-b\fR \fIname\fR...
 Only fetch and build the specified slackbuilds.
+Dependencies that are not explicitly requested are built and installed.
 .TP
 \fB\-\-fetch\fR, \fB\-f\fR \fIname\fR...
 Only fetch the specified slackbuilds.
@@ -99,6 +102,12 @@ PKGEXT=txz
 PKGTAG=me
 .fi
 .in
+
+.SH ENVIRONMENT
+.TP
+.B SLAPT_SRC_RC_DIR
+Directory in which slapt-src looks for \fIslapt-getrc\fP when \fB\-S\fR is
+used; overrides the directory compiled in at build time.
 
 .SH AUTHOR
 Jason Woodward <woodwardj@jaos.org>
