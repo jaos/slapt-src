@@ -279,15 +279,7 @@ int main(int argc, char *argv[])
         ++optind;
     }
 
-    slapt_src_config *config = NULL;
-    if (config_file != NULL)
-        config = slapt_src_read_config(config_file);
-    else
-        config = slapt_src_read_config(SLAPT_SRC_RC);
-    if (config == NULL) {
-        fprintf(stderr, gettext("Failed to read %s\n"), SLAPT_SRC_RC);
-        exit(EXIT_FAILURE);
-    }
+    slapt_src_config *config = slapt_src_read_config(config_file != NULL ? config_file : SLAPT_SRC_RC);
 
     /* honor command line option */
     config->do_dep = do_dep;

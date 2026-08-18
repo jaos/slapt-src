@@ -93,11 +93,28 @@ void slapt_src_config_free(slapt_src_config *config)
     free(config);
 }
 
+static const char *skip_spaces(const char *s)
+{
+    while (*s != '\0' && isspace((unsigned char)*s))
+        s++;
+    return s;
+}
+
+static void strip_rspace(char *s)
+{
+    size_t l = strlen(s);
+    while (l > 0 && isspace((unsigned char)s[l - 1])) {
+        s[--l] = '\0';
+    }
+}
+
 slapt_src_config *slapt_src_read_config(const char *filename)
 {
     FILE *rc = slapt_open_file(filename, "r");
-    if (rc == NULL)
+    if (rc == NULL) {
+        fprintf(stderr, gettext("Failed to read %s\n"), filename);
         exit(EXIT_FAILURE);
+    }
 
     slapt_src_config *config = slapt_src_config_init();
 
@@ -105,14 +122,19 @@ slapt_src_config *slapt_src_read_config(const char *filename)
     size_t gb_length = 0;
     ssize_t g_size;
     while ((g_size = getline(&buffer, &gb_length, rc)) != EOF) {
-        buffer[g_size - 1] = '\0';
-
-        if (strchr(buffer, '#') != NULL)
+        if ((strchr(buffer, '#') != NULL))
             continue;
 
-        if (strncmp(buffer, SLAPT_SRC_SOURCE_TOKEN, strlen(SLAPT_SRC_SOURCE_TOKEN)) == 0) {
-            if (strlen(buffer) > strlen(SLAPT_SRC_SOURCE_TOKEN)) {
-                char *source = strdup(buffer + strlen(SLAPT_SRC_SOURCE_TOKEN));
+        buffer[strcspn(buffer, "\r\n")] = '\0';
+        const char *nospace_buffer = skip_spaces(buffer);
+
+        if (strncmp(nospace_buffer, SLAPT_SRC_SOURCE_TOKEN, strlen(SLAPT_SRC_SOURCE_TOKEN)) == 0) {
+            const char *value = skip_spaces(nospace_buffer + strlen(SLAPT_SRC_SOURCE_TOKEN));
+            if (*value != '\0') {
+                char *source = strdup(value);
+                if (source == NULL)
+                    exit(EXIT_FAILURE);
+                strip_rspace(source);
                 if (source[strlen(source) - 1] != '/') {
                     char *fixed = add_part_to_url(source, "/");
                     free(source);
@@ -121,17 +143,29 @@ slapt_src_config *slapt_src_read_config(const char *filename)
                 slapt_vector_t_add(config->sources, strdup(source));
                 free(source);
             }
-        } else if (strncmp(buffer, SLAPT_SRC_BUILDDIR_TOKEN, strlen(SLAPT_SRC_BUILDDIR_TOKEN)) == 0) {
-            if (strlen(buffer) > strlen(SLAPT_SRC_BUILDDIR_TOKEN))
-                config->builddir = strdup(buffer + strlen(SLAPT_SRC_BUILDDIR_TOKEN));
+        } else if (strncmp(nospace_buffer, SLAPT_SRC_BUILDDIR_TOKEN, strlen(SLAPT_SRC_BUILDDIR_TOKEN)) == 0) {
+            const char *value = skip_spaces(nospace_buffer + strlen(SLAPT_SRC_BUILDDIR_TOKEN));
+            if (*value != '\0') {
+                free(config->builddir);
+                config->builddir = strdup(value);
+                strip_rspace(config->builddir);
+            }
 
-        } else if (strncmp(buffer, SLAPT_SRC_PKGEXT_TOKEN, strlen(SLAPT_SRC_PKGEXT_TOKEN)) == 0) {
-            if (strlen(buffer) > strlen(SLAPT_SRC_PKGEXT_TOKEN))
-                config->pkgext = strdup(buffer + strlen(SLAPT_SRC_PKGEXT_TOKEN));
+        } else if (strncmp(nospace_buffer, SLAPT_SRC_PKGEXT_TOKEN, strlen(SLAPT_SRC_PKGEXT_TOKEN)) == 0) {
+            const char *value = skip_spaces(nospace_buffer + strlen(SLAPT_SRC_PKGEXT_TOKEN));
+            if (*value != '\0') {
+                free(config->pkgext);
+                config->pkgext = strdup(value);
+                strip_rspace(config->pkgext);
+            }
 
-        } else if (strncmp(buffer, SLAPT_SRC_PKGTAG_TOKEN, strlen(SLAPT_SRC_PKGTAG_TOKEN)) == 0) {
-            if (strlen(buffer) > strlen(SLAPT_SRC_PKGTAG_TOKEN))
-                config->pkgtag = strdup(buffer + strlen(SLAPT_SRC_PKGTAG_TOKEN));
+        } else if (strncmp(nospace_buffer, SLAPT_SRC_PKGTAG_TOKEN, strlen(SLAPT_SRC_PKGTAG_TOKEN)) == 0) {
+            const char *value = skip_spaces(nospace_buffer + strlen(SLAPT_SRC_PKGTAG_TOKEN));
+            if (*value != '\0') {
+                free(config->pkgtag);
+                config->pkgtag = strdup(value);
+                strip_rspace(config->pkgtag);
+            }
         }
     }
 
@@ -790,7 +824,7 @@ bool slapt_src_fetch_slackbuild(const slapt_src_config *config, const slapt_src_
         printf("%%README%%\n");
         FILE *readme = slapt_open_file("README", "r");
         if (readme == NULL) {
-            fprintf(stderr, gettext("Failed to open the README for %s (required by %%README%%)\n"), sb->name);
+            fprintf(stderr, gettext("Failed to open the README for %s\n"), sb->name);
             exit(EXIT_FAILURE);
         }
 
@@ -851,17 +885,18 @@ static char *_get_pkg_filename(const char *pkgtag)
         }
 
         /* version from .info file may not match resulting pkg version so we only look at the tag */
-        char *ver_arch_tag = slapt_regex_t_extract_match(pkg_regex, file->d_name, 2);
-        if (ver_arch_tag != NULL) {
-            if (pkgtag != NULL) {
+        if (pkgtag != NULL) {
+            char *ver_arch_tag = slapt_regex_t_extract_match(pkg_regex, file->d_name, 2);
+            if (ver_arch_tag != NULL) {
                 const char *tag_sep = strrchr(ver_arch_tag, '-');
                 if (tag_sep == NULL || strcmp(tag_sep + 1, pkgtag) != 0) {
                     free(ver_arch_tag);
                     continue; /* wrong tag */
                 }
+                free(ver_arch_tag);
             }
-            free(ver_arch_tag);
         }
+
         filename = strdup(file->d_name);
         break;
     }
