@@ -314,17 +314,21 @@ int main(int argc, char *argv[])
         installed = slapt_get_installed_pkgs();
 
         if (skip_installable_pkgs) {
-            slapt_config_t *slapt_config = slapt_config_t_read(RC_DIR "/slapt-getrc");
-            if ((chdir(slapt_config->working_dir)) == 0) {
-                available = slapt_get_available_pkgs(slapt_config);
-                if ((chdir(config->builddir)) != 0) {
-                    perror(gettext("Failed to chdir to build directory"));
-                    exit(EXIT_FAILURE);
-                }
-            } else {
+            /* SLAPT_SRC_RC_DIR overrides the compiled-in RC_DIR so the
+               no-rc path is testable regardless of the host's /etc */
+            const char *rc_dir = getenv("SLAPT_SRC_RC_DIR");
+            if (rc_dir == NULL || rc_dir[0] == '\0')
+                rc_dir = RC_DIR;
+            char *rc_path = slapt_gen_abs_path(rc_dir, "slapt-getrc");
+            slapt_config_t *slapt_config = slapt_config_t_read(rc_path);
+            free(rc_path);
+            if (slapt_config == NULL) {
+                /* no slapt-get configuration available; ignore -S */
                 skip_installable_pkgs = false;
+            } else {
+                available = slapt_get_available_pkgs(slapt_config);
+                slapt_config_t_free(slapt_config);
             }
-            slapt_config_t_free(slapt_config);
         }
 
         /* convert all names to slackbuilds */
