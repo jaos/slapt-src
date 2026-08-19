@@ -122,6 +122,15 @@ static void init_builddir(slapt_src_config *config)
     }
 }
 
+static void set_action(int *action, int new_action)
+{
+    if (*action != 0 && *action != new_action) {
+        fprintf(stderr, gettext("Specify only one action\n"));
+        exit(EXIT_FAILURE);
+    }
+    *action = new_action;
+}
+
 int main(int argc, char *argv[])
 {
     static struct option long_options[] = {
@@ -193,35 +202,35 @@ int main(int argc, char *argv[])
             version();
             exit(EXIT_SUCCESS);
         case UPDATE_OPT:
-            action = UPDATE_OPT;
+            set_action(&action, UPDATE_OPT);
             break;
         case UPGRADE_OPT:
-            action = UPGRADE_OPT;
+            set_action(&action, UPGRADE_OPT);
             break;
         case LIST_OPT:
-            action = LIST_OPT;
+            set_action(&action, LIST_OPT);
             break;
         case CLEAN_OPT:
-            action = CLEAN_OPT;
+            set_action(&action, CLEAN_OPT);
             break;
         case FETCH_OPT:
-            action = FETCH_OPT;
+            set_action(&action, FETCH_OPT);
             slapt_vector_t_add(names, strdup(optarg));
             break;
         case SEARCH_OPT:
-            action = SEARCH_OPT;
+            set_action(&action, SEARCH_OPT);
             slapt_vector_t_add(names, strdup(optarg));
             break;
         case SHOW_OPT:
-            action = SHOW_OPT;
+            set_action(&action, SHOW_OPT);
             slapt_vector_t_add(names, strdup(optarg));
             break;
         case BUILD_OPT:
-            action = BUILD_OPT;
+            set_action(&action, BUILD_OPT);
             slapt_vector_t_add(names, strdup(optarg));
             break;
         case INSTALL_OPT:
-            action = INSTALL_OPT;
+            set_action(&action, INSTALL_OPT);
             slapt_vector_t_add(names, strdup(optarg));
             break;
         case YES_OPT:
