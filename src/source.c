@@ -24,9 +24,11 @@
 
 extern struct utsname uname_v;
 
-static char *filename_from_url(char *url);
+static char *filename_from_url(const char *url);
 static char *add_part_to_url(const char *url, const char *part);
+static bool sb_chars_allowed(const char *name);
 static bool sb_name_valid(const char *name);
+static bool sb_path_valid(const char *path);
 
 /* execute a command via fork/exec, bypassing the shell */
 static int slapt_src_exec(const char *prog, char *const argv[])
@@ -196,7 +198,12 @@ bool slapt_src_update_slackbuild_cache(const slapt_src_config *config)
 {
     bool rval = true;
     slapt_config_t *slapt_config = slapt_config_t_init();
-    strcpy(slapt_config->working_dir, config->builddir);
+    if (strlen(config->builddir) >= sizeof slapt_config->working_dir) {
+        fprintf(stderr, gettext("BUILDDIR too long\n"));
+        exit(EXIT_FAILURE);
+    }
+    slapt_strlcpy(slapt_config->working_dir, config->builddir, sizeof slapt_config->working_dir);
+
     slapt_vector_t *slackbuilds = slapt_vector_t_init((slapt_vector_t_free_function)slapt_src_slackbuild_free);
 
     slapt_vector_t_foreach(const char *, url, config->sources) {
@@ -259,6 +266,15 @@ bool slapt_src_update_slackbuild_cache(const slapt_src_config *config)
     }
 
     char *datafile = slapt_gen_abs_path(config->builddir, SLAPT_SRC_DATA_FILE);
+
+    if (slackbuilds->size == 0 || rval == false) {
+        struct stat data_stat;
+        if (stat(datafile, &data_stat) == 0 && data_stat.st_size > 0) {
+            fprintf(stderr, gettext("Refusing to overwrite cache with incomplete list\n"));
+            exit(EXIT_FAILURE);
+        }
+    }
+
     slapt_src_write_slackbuilds_to_file(slackbuilds, datafile);
     free(datafile);
 
@@ -282,6 +298,10 @@ static int sb_cmp(const void *a, const void *b)
 void slapt_src_write_slackbuilds_to_file(slapt_vector_t *sbs, const char *datafile)
 {
     FILE *f = slapt_open_file(datafile, "w+b");
+    if (f == NULL) {
+        fprintf(stderr, gettext("Failed to open %s for writing\n"), datafile);
+        exit(EXIT_FAILURE);
+    }
 
     slapt_vector_t_sort(sbs, sb_cmp);
 
@@ -293,6 +313,8 @@ void slapt_src_write_slackbuilds_to_file(slapt_vector_t *sbs, const char *datafi
         /* fixup locations so they are easier to work with later */
         {
             char *location = strdup(sb->location);
+            if (location == NULL)
+                exit(EXIT_FAILURE);
 
             if (location[strlen(location) - 1] != '/') {
                 char *fixed = add_part_to_url(location, "/");
@@ -331,6 +353,13 @@ void slapt_src_write_slackbuilds_to_file(slapt_vector_t *sbs, const char *datafi
     fclose(f);
 }
 
+static void slapt_src_gz_read_fail(const char *datafile)
+{
+    fprintf(stderr, gettext("Failed to read %s: empty or corrupt gzip\n"), datafile);
+    fprintf(stderr, gettext("Run --update to fetch the slackbuild list first\n"));
+    exit(EXIT_FAILURE);
+}
+
 slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *datafile)
 {
     slapt_vector_t *sbs = slapt_vector_t_init((slapt_vector_t_free_function)slapt_src_slackbuild_free);
@@ -340,27 +369,47 @@ slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *datafile)
 
     /* support reading from gzip'd files */
     FILE *f = NULL;
-    if (strstr(datafile, ".gz") != NULL) {
+    const size_t datafile_len = strlen(datafile);
+    if (datafile_len > 3 && strcmp(datafile + datafile_len - 3, ".gz") == 0) {
         gzFile data = NULL;
         char gzbuffer[SLAPT_MAX_ZLIB_BUFFER];
 
         if ((f = tmpfile()) == NULL)
             exit(EXIT_FAILURE);
 
-        if ((data = gzopen(datafile, "rb")) == NULL)
+        if ((data = gzopen(datafile, "rb")) == NULL) {
+            fprintf(stderr, gettext("Failed to open %s for reading\n"), datafile);
             exit(EXIT_FAILURE);
+        }
 
+        FILE *magic_file = fopen(datafile, "rb");
+        if (magic_file == NULL ||
+            fgetc(magic_file) != 0x1f || fgetc(magic_file) != 0x8b) {
+            if (magic_file != NULL)
+                fclose(magic_file);
+            slapt_src_gz_read_fail(datafile);
+        }
+        fclose(magic_file);
+
+        bool got_data = false;
         while (gzgets(data, gzbuffer, SLAPT_MAX_ZLIB_BUFFER) != Z_NULL) {
+            got_data = true;
             fprintf(f, "%s", gzbuffer);
         }
+        const char *gz_err = gzerror(data, NULL);
         gzclose(data);
         rewind(f);
+
+        if (!got_data || (gz_err != Z_NULL && gz_err[0] != '\0')) {
+            slapt_src_gz_read_fail(datafile);
+        }
 
     } else {
         f = fopen(datafile, "r");
         if (f == NULL) {
-            printf(gettext("Failed to open %s for reading\n"), datafile);
-            return sbs;
+            fprintf(stderr, gettext("Failed to open %s for reading\n"), datafile);
+            fprintf(stderr, gettext("Run --update to fetch the slackbuild list first\n"));
+            exit(EXIT_FAILURE);
         }
     }
 
@@ -370,19 +419,25 @@ slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *datafile)
     ssize_t g_size;
     while ((g_size = getline(&buffer, &gb_length, f)) != EOF) {
         char *token = NULL;
+        const int name_line = strstr(buffer, "SLACKBUILD NAME:") != NULL;
 
-        if (strstr(buffer, "SLACKBUILD NAME:") != NULL) {
-            parse_state = SLAPT_SRC_PARSING;
-            sb = slapt_src_slackbuild_init();
-        }
-
-        if ((strcmp(buffer, "\n") == 0) && (parse_state == SLAPT_SRC_PARSING)) {
-            slapt_vector_t_add(sbs, sb);
-            /* do not free, in use in sbs list
-            slapt_src_slackbuild_free (sb);
-            */
+        /* a entry ends at a blank line or at the next NAME line; keep the last entry only if it is complete. */
+        if (parse_state == SLAPT_SRC_PARSING &&
+            (name_line || strcmp(buffer, "\n") == 0)) {
+            if (sb->name == NULL || sb->name[0] == '\0' ||
+                sb->location == NULL ||
+                sb->version == NULL || sb->version[0] == '\0') {
+                slapt_src_slackbuild_free(sb);
+            } else {
+                slapt_vector_t_add(sbs, sb);
+            }
             sb = NULL;
             parse_state = SLAPT_SRC_NOT_PARSING;
+        }
+
+        if (name_line) {
+            sb = slapt_src_slackbuild_init();
+            parse_state = SLAPT_SRC_PARSING;
         }
 
         switch (parse_state) {
@@ -419,23 +474,36 @@ slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *datafile)
             #pragma GCC diagnostic pop
                 sb->location = strdup(token);
                 free(token);
+                if (!sb_path_valid(sb->location)) {
+                    slapt_src_slackbuild_free(sb);
+                    sb = NULL;
+                    parse_state = SLAPT_SRC_NOT_PARSING;
+                }
             }
 
             #pragma GCC diagnostic push
             #pragma GCC diagnostic ignored "-Wformat"
-            if ((sscanf(buffer, "SLACKBUILD FILES: %m[^\n]", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD FILES: %m[^\r\n]", &token)) == 1) {
             #pragma GCC diagnostic pop
                 slapt_vector_t *files = slapt_parse_delimited_list(token, ' ');
+                bool files_valid = true;
                 slapt_vector_t_foreach(const char *, file, files) {
+                    if (!sb_path_valid(file))
+                        files_valid = false;
                     slapt_vector_t_add(sb->files, strdup(file));
                 }
                 slapt_vector_t_free(files);
                 free(token);
+                if (!files_valid) {
+                    slapt_src_slackbuild_free(sb);
+                    sb = NULL;
+                    parse_state = SLAPT_SRC_NOT_PARSING;
+                }
             }
 
             #pragma GCC diagnostic push
             #pragma GCC diagnostic ignored "-Wformat"
-            if ((sscanf(buffer, "SLACKBUILD VERSION: %m[^\n]", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD VERSION: %m[^\r\n]", &token)) == 1) {
             #pragma GCC diagnostic pop
                 sb->version = strdup(token);
                 free(token);
@@ -443,7 +511,7 @@ slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *datafile)
 
             #pragma GCC diagnostic push
             #pragma GCC diagnostic ignored "-Wformat"
-            if ((sscanf(buffer, "SLACKBUILD DOWNLOAD: %m[^\n]", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD DOWNLOAD: %m[^\r\n]", &token)) == 1) {
             #pragma GCC diagnostic pop
                 sb->download = strdup(token);
                 free(token);
@@ -451,7 +519,7 @@ slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *datafile)
 
             #pragma GCC diagnostic push
             #pragma GCC diagnostic ignored "-Wformat"
-            if ((sscanf(buffer, "SLACKBUILD DOWNLOAD_x86_64: %m[^\n]", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD DOWNLOAD_x86_64: %m[^\r\n]", &token)) == 1) {
             #pragma GCC diagnostic pop
                 sb->download_x86_64 = strdup(token);
                 free(token);
@@ -459,7 +527,7 @@ slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *datafile)
 
             #pragma GCC diagnostic push
             #pragma GCC diagnostic ignored "-Wformat"
-            if ((sscanf(buffer, "SLACKBUILD MD5SUM: %m[^\n]", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD MD5SUM: %m[^\r\n]", &token)) == 1) {
             #pragma GCC diagnostic pop
                 sb->md5sum = strdup(token);
                 free(token);
@@ -467,7 +535,7 @@ slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *datafile)
 
             #pragma GCC diagnostic push
             #pragma GCC diagnostic ignored "-Wformat"
-            if ((sscanf(buffer, "SLACKBUILD MD5SUM_x86_64: %m[^\n]", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD MD5SUM_x86_64: %m[^\r\n]", &token)) == 1) {
             #pragma GCC diagnostic pop
                 sb->md5sum_x86_64 = strdup(token);
                 free(token);
@@ -475,7 +543,7 @@ slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *datafile)
 
             #pragma GCC diagnostic push
             #pragma GCC diagnostic ignored "-Wformat"
-            if ((sscanf(buffer, "SLACKBUILD REQUIRES: %m[^\n]", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD REQUIRES: %m[^\r\n]", &token)) == 1) {
             #pragma GCC diagnostic pop
                 sb->requires = strdup(token);
                 free(token);
@@ -483,7 +551,7 @@ slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *datafile)
 
             #pragma GCC diagnostic push
             #pragma GCC diagnostic ignored "-Wformat"
-            if ((sscanf(buffer, "SLACKBUILD SHORT DESCRIPTION: %m[^\n]", &token)) == 1) {
+            if ((sscanf(buffer, "SLACKBUILD SHORT DESCRIPTION: %m[^\r\n]", &token)) == 1) {
             #pragma GCC diagnostic pop
                 sb->short_desc = strdup(token);
                 free(token);
@@ -496,11 +564,25 @@ slapt_vector_t *slapt_src_get_slackbuilds_from_file(const char *datafile)
         }
     }
 
+    /* again, keep the last entry only if it is complete. */
+    if (parse_state == SLAPT_SRC_PARSING) {
+        if (sb->name == NULL || sb->name[0] == '\0' ||
+            sb->location == NULL ||
+            sb->version == NULL || sb->version[0] == '\0') {
+            slapt_src_slackbuild_free(sb);
+        } else {
+            slapt_vector_t_add(sbs, sb);
+        }
+        sb = NULL;
+        parse_state = SLAPT_SRC_NOT_PARSING;
+    }
+
     if (buffer != NULL)
         free(buffer);
 
     fclose(f);
 
+    slapt_vector_t_sort(sbs, sb_cmp);
     sbs->sorted = true;
     return sbs;
 }
@@ -513,21 +595,47 @@ slapt_vector_t *slapt_src_get_available_slackbuilds(const char *builddir)
     return sbs;
 }
 
-static bool sb_name_valid(const char *name)
+static bool sb_chars_allowed(const char *name)
 {
-    if (name == NULL || name[0] == '\0' || name[0] == '.')
+    if (name == NULL || name[0] == '\0')
         return false;
 
-    if (strchr(name, '/') != NULL || strchr(name, '\\') != NULL)
-        return false;
-
-    if (strstr(name, "..") != NULL)
-        return false;
+    for (const char *p = name; *p; p++) {
+        if (!isalnum((unsigned char)*p) && strchr("._+-", (unsigned char)*p) == NULL)
+            return false;
+    }
 
     return true;
 }
 
-static char *filename_from_url(char *url)
+static bool sb_name_valid(const char *name)
+{
+    if (name == NULL || name[0] == '.' || strstr(name, "..") != NULL)
+        return false;
+
+    return sb_chars_allowed(name);
+}
+
+static bool sb_path_valid(const char *path)
+{
+    if (path == NULL || path[0] == '\0' || path[0] == '/')
+        return false;
+
+    char *copy = strdup(path);
+    char *saveptr = NULL;
+    for (const char *comp = strtok_r(copy, "/", &saveptr);
+         comp != NULL; comp = strtok_r(NULL, "/", &saveptr)) {
+        if (strcmp(comp, "..") == 0 || !sb_chars_allowed(comp)) {
+            free(copy);
+            return false;
+        }
+    }
+
+    free(copy);
+    return true;
+}
+
+static char *filename_from_url(const char *url)
 {
     char *filename = NULL;
     slapt_vector_t *parts = slapt_parse_delimited_list(url, '/');
@@ -554,17 +662,23 @@ bool slapt_src_fetch_slackbuild(const slapt_src_config *config, const slapt_src_
     /* need to mkdir and chdir to sb->location */
     slapt_create_dir_structure(sb->location);
     if (chdir(sb->location) != 0) {
-        printf(gettext("Failed to chdir to %s\n"), sb->location);
+        fprintf(stderr, gettext("Failed to chdir to %s\n"), sb->location);
         exit(EXIT_FAILURE);
     }
 
     /* download slackbuild files */
     slapt_config_t *slapt_config = slapt_config_t_init();
-    strcpy(slapt_config->working_dir, config->builddir);
+    if (strlen(config->builddir) >= sizeof slapt_config->working_dir) {
+        fprintf(stderr, gettext("BUILDDIR too long\n"));
+        exit(EXIT_FAILURE);
+    }
+    slapt_strlcpy(slapt_config->working_dir, config->builddir, sizeof slapt_config->working_dir);
+
     char *sb_location = add_part_to_url(sb->sb_source_url, sb->location);
     slapt_vector_t_foreach(const char *, sb_file, sb->files) {
-        char *s = NULL, *url = add_part_to_url(sb_location, sb_file);
+        const char *s = NULL;
         FILE *f = NULL;
+        char *url = add_part_to_url(sb_location, sb_file);
 
         /* some files contain paths, create as necessary */
         if ((s = rindex(sb_file, '/')) != NULL) {
@@ -587,7 +701,7 @@ bool slapt_src_fetch_slackbuild(const slapt_src_config *config, const slapt_src_
         if (curl_rv == 0) {
             printf(gettext("Done\n"));
         } else {
-            printf(gettext("Failed\n"));
+            fprintf(stderr, gettext("Failed\n"));
             exit(EXIT_FAILURE);
         }
 
@@ -613,7 +727,7 @@ bool slapt_src_fetch_slackbuild(const slapt_src_config *config, const slapt_src_
     }
 
     if (download_parts == NULL || download_parts->size != md5sum_parts->size) {
-        printf(gettext("Mismatch between download files and md5sums\n"));
+        fprintf(stderr, gettext("Mismatch between download files and md5sums\n"));
         exit(EXIT_FAILURE);
     }
 
@@ -621,6 +735,10 @@ bool slapt_src_fetch_slackbuild(const slapt_src_config *config, const slapt_src_
         const char *md5sum = md5sum_parts->items[i];
 
         char *filename = filename_from_url(download_parts->items[i]);
+        if (filename == NULL) {
+            fprintf(stderr, gettext("Invalid download URL: %s\n"), (const char *)download_parts->items[i]);
+            exit(EXIT_FAILURE);
+        }
         struct stat file_stat;
         size_t file_size = 0;
         if (stat(filename, &file_stat) == 0) {
@@ -644,14 +762,14 @@ bool slapt_src_fetch_slackbuild(const slapt_src_config *config, const slapt_src_
             if (curl_rv == 0) {
                 printf(gettext("Done\n"));
             } else {
-                printf(gettext("Failed\n"));
+                fprintf(stderr, gettext("Failed\n"));
                 exit(EXIT_FAILURE);
             }
 
             /* verify checksum of downloaded file */
             slapt_gen_md5_sum_of_file(f, md5sum_to_prove);
             if (strcmp(md5sum_to_prove, md5sum) != 0) {
-                printf(gettext("MD5SUM mismatch for %s\n"), filename);
+                fprintf(stderr, gettext("MD5SUM mismatch for %s\n"), filename);
                 exit(EXIT_FAILURE);
             }
         }
@@ -672,6 +790,7 @@ bool slapt_src_fetch_slackbuild(const slapt_src_config *config, const slapt_src_
         printf("%%README%%\n");
         FILE *readme = slapt_open_file("README", "r");
         if (readme == NULL) {
+            fprintf(stderr, gettext("Failed to open the README for %s (required by %%README%%)\n"), sb->name);
             exit(EXIT_FAILURE);
         }
 
@@ -679,7 +798,7 @@ bool slapt_src_fetch_slackbuild(const slapt_src_config *config, const slapt_src_
         size_t read_len = 0;
         char *buffer = NULL;
         while ((read_size = getline(&buffer, &read_len, readme)) != EOF) {
-            buffer[read_size - 1] = '\0';
+            buffer[strcspn(buffer, "\r\n")] = '\0';
             printf("%s\n", buffer);
         }
         fclose(readme);
@@ -693,18 +812,18 @@ bool slapt_src_fetch_slackbuild(const slapt_src_config *config, const slapt_src_
 
     /* go back */
     if (chdir(config->builddir) != 0) {
-        printf(gettext("Failed to chdir to %s\n"), config->builddir);
+        fprintf(stderr, gettext("Failed to chdir to %s\n"), config->builddir);
         exit(EXIT_FAILURE);
     }
     return rv;
 }
 
 /* reads directory listing of current directory for a package */
-static char *_get_pkg_filename(const char *version, const char *pkgtag)
+static char *_get_pkg_filename(const char *pkgtag)
 {
     DIR *d = opendir(".");
     if (d == NULL) {
-        printf(gettext("Failed to open current directory\n"));
+        fprintf(stderr, gettext("Failed to open current directory\n"));
         exit(EXIT_FAILURE);
     }
 
@@ -730,17 +849,18 @@ static char *_get_pkg_filename(const char *version, const char *pkgtag)
         if (pkg_regex->reg_return != 0) {
             continue;
         }
-        /* version from .info file may not match resulting pkg version
-         * libva: VERSION="0.31.1-1+sds4" and VERSION=0.31.1_1+sds4
-        if (strstr (file->d_name, version) == NULL)
-            continue;
-        */
-        (void)version;
 
-        if (pkgtag != NULL) {
-             if (strstr(file->d_name, pkgtag) == NULL) {
-                continue;
-             }
+        /* version from .info file may not match resulting pkg version so we only look at the tag */
+        char *ver_arch_tag = slapt_regex_t_extract_match(pkg_regex, file->d_name, 2);
+        if (ver_arch_tag != NULL) {
+            if (pkgtag != NULL) {
+                const char *tag_sep = strrchr(ver_arch_tag, '-');
+                if (tag_sep == NULL || strcmp(tag_sep + 1, pkgtag) != 0) {
+                    free(ver_arch_tag);
+                    continue; /* wrong tag */
+                }
+            }
+            free(ver_arch_tag);
         }
         filename = strdup(file->d_name);
         break;
@@ -755,7 +875,7 @@ static char *_get_pkg_filename(const char *version, const char *pkgtag)
 bool slapt_src_build_slackbuild(const slapt_src_config *config, const slapt_src_slackbuild *sb)
 {
     if (chdir(sb->location) != 0) {
-        printf(gettext("Failed to chdir to %s\n"), sb->location);
+        fprintf(stderr, gettext("Failed to chdir to %s\n"), sb->location);
         exit(EXIT_FAILURE);
     }
 
@@ -815,6 +935,7 @@ bool slapt_src_build_slackbuild(const slapt_src_config *config, const slapt_src_
     }
     build_argv[build_argc] = NULL;
 
+    /* sb_flush() drops version-less entries, so sb->version is set */
     setenv("VERSION", sb->version, 1);
     const int r = slapt_src_exec(build_argv[0], build_argv);
     unsetenv("VERSION");
@@ -824,7 +945,17 @@ bool slapt_src_build_slackbuild(const slapt_src_config *config, const slapt_src_
     unsetenv("TAG");
     unsetenv("ARCH");
     if (r != 0) {
-        printf("%s %s\n", script, gettext("Failed\n"));
+        /* report the full command so the runner (sh/fakeroot/slkbuild)
+           is visible on failure, not just the script name */
+        char cmd[512] = {0};
+        size_t off = 0;
+        for (int a = 0; a < build_argc; a++) {
+            const int w = snprintf(cmd + off, sizeof(cmd) - off, "%s%s", a > 0 ? " " : "", build_argv[a]);
+            if (w < 0 || (size_t)w >= sizeof(cmd) - off)
+                break;
+            off += (size_t)w;
+        }
+        fprintf(stderr, "%.*s %s\n", (int)off, cmd, gettext("Failed\n"));
         exit(EXIT_FAILURE);
     }
 
@@ -832,7 +963,7 @@ bool slapt_src_build_slackbuild(const slapt_src_config *config, const slapt_src_
 
     if (config->postcmd != NULL) {
         char *filename = NULL;
-        if ((filename = _get_pkg_filename(sb->version, config->pkgtag)) != NULL) {
+        if ((filename = _get_pkg_filename(config->pkgtag)) != NULL) {
             char *postcmd_copy = strdup(config->postcmd);
             char *prog = postcmd_copy;
             char *arg = filename;
@@ -868,7 +999,7 @@ bool slapt_src_install_slackbuild(const slapt_src_config *config, const slapt_sr
         exit(EXIT_FAILURE);
     }
 
-    char *filename = _get_pkg_filename(sb->version, config->pkgtag);
+    char *filename = _get_pkg_filename(config->pkgtag);
     if (filename != NULL) {
         char *const argv[] = { (char *)"/sbin/upgradepkg", (char *)"--reinstall", (char *)"--install-new", filename, NULL };
         const int r = slapt_src_exec("/sbin/upgradepkg", argv);
@@ -931,7 +1062,8 @@ static bool slapt_src_resolve_dependencies(
     const slapt_src_slackbuild *sb,
     slapt_vector_t *deps,
     const slapt_vector_t *installed,
-    slapt_vector_t *errors)
+    slapt_vector_t *errors,
+    slapt_vector_t *visiting)
 {
     slapt_vector_t *requires = NULL;
     if (sb->requires == NULL) {
@@ -967,7 +1099,20 @@ static bool slapt_src_resolve_dependencies(
                 continue;
             }
 
-            bool dep_check = slapt_src_resolve_dependencies(available, sb_dep, deps, installed, errors);
+            slapt_vector_t *in_progress =
+                slapt_vector_t_search(visiting, sb_compare_pkg_to_name, (char *)dep_name);
+            if (in_progress != NULL) {
+                slapt_vector_t_free(in_progress);
+                fprintf(stderr, gettext("Circular dependency: %s requires %s\n"), sb->name, dep_name);
+                slapt_vector_t_free(requires);
+                return false;
+            }
+
+            /* avoid reprocessing */
+            slapt_vector_t_add(visiting, sb_dep);
+            bool dep_check = slapt_src_resolve_dependencies(available, sb_dep, deps, installed, errors, visiting);
+            if (dep_check)
+                slapt_vector_t_remove(visiting, sb_dep);
 
             if (!dep_check) {
                 slapt_vector_t_free(requires);
@@ -1001,6 +1146,7 @@ slapt_vector_t *slapt_src_names_to_slackbuilds(
     const slapt_vector_t *installed)
 {
     slapt_vector_t *sbs = slapt_vector_t_init(NULL);//(slapt_vector_t_free_function)slapt_src_slackbuild_free);
+    slapt_vector_t *unknown = slapt_vector_t_init(free);
 
     for (uint32_t i = 0; i < names->size; i++) {
         slapt_src_slackbuild *sb = NULL;
@@ -1017,8 +1163,8 @@ slapt_vector_t *slapt_src_names_to_slackbuilds(
             if (config->do_dep == true) {
                 slapt_vector_t *deps = slapt_vector_t_init(NULL);
                 slapt_vector_t *errors = slapt_vector_t_init((slapt_vector_t_free_function)slapt_pkg_err_t_free);
-                slapt_vector_t_add(deps, sb); /* mark self as dep to prevent recursion */
-                bool dep_check = slapt_src_resolve_dependencies(available, sb, deps, installed, errors);
+                slapt_vector_t *visiting = slapt_vector_t_init(NULL);
+                bool dep_check = slapt_src_resolve_dependencies(available, sb, deps, installed, errors, visiting);
 
                 if (!dep_check) {
                     slapt_vector_t_foreach(slapt_pkg_err_t *, err, errors) {
@@ -1026,16 +1172,13 @@ slapt_vector_t *slapt_src_names_to_slackbuilds(
                     }
                     slapt_vector_t_free(deps);
                     slapt_vector_t_free(errors);
+                    slapt_vector_t_free(visiting);
                     continue;
                 }
 
                 slapt_vector_t_free(errors);
 
                 slapt_vector_t_foreach(slapt_src_slackbuild *, dep, deps) {
-                    if (strcmp(sb->name, dep->name) == 0) {
-                        continue;
-                    }
-
                     slapt_vector_t *dep_matches = slapt_vector_t_search(sbs, sb_compare_pkg_to_name, dep->name);
                     if (!dep_matches) {
                         slapt_vector_t_add(sbs, dep);
@@ -1045,6 +1188,7 @@ slapt_vector_t *slapt_src_names_to_slackbuilds(
                 }
 
                 slapt_vector_t_free(deps);
+                slapt_vector_t_free(visiting);
             }
 
             slapt_vector_t *matches = slapt_vector_t_search(sbs, sb_compare_pkg_to_name, sb->name);
@@ -1053,9 +1197,21 @@ slapt_vector_t *slapt_src_names_to_slackbuilds(
             } else {
                 slapt_vector_t_free(matches);
             }
+        } else {
+            slapt_vector_t_add(unknown, strdup(names->items[i]));
         }
     }
 
+    if (unknown->size > 0) {
+        slapt_vector_t_foreach(const char *, unknown_name, unknown) {
+            fprintf(stderr, gettext("Unknown slackbuild: %s\n"), unknown_name);
+        }
+        slapt_vector_t_free(unknown);
+        slapt_vector_t_free(sbs);
+        return NULL;
+    }
+
+    slapt_vector_t_free(unknown);
     return sbs;
 }
 
