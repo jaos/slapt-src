@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-31 17:58-0400\n"
+"POT-Creation-Date: 2026-10-05 18:34-0400\n"
 "PO-Revision-Date: 2012-09-17 22:00+0000\n"
 "Last-Translator: Davidmp <medipas@gmail.com>, 2016,2018,2023\n"
 "Language-Team: Catalan (http://app.transifex.com/jaos/slapt-get/language/"
@@ -21,83 +21,76 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
-msgid "%s - A SlackBuild utility\n"
-msgstr "%s - Una utilitat d'SlackBuild\n"
-
-#, c-format
 msgid "%s version %s\n"
 msgstr "%s versió %s\n"
 
 #, c-format
-msgid "Abort.\n"
-msgstr "Avorta.\n"
+msgid "%s - A SlackBuild utility\n"
+msgstr "%s - Una utilitat d'SlackBuild\n"
 
 #, c-format
-msgid "BUILD: %s\n"
-msgstr "CONSTRUCCIÓ: %s\n"
+msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
+msgstr "Ús: %s [opcions] [acció] [slackbuild(s)]\n"
 
-#, c-format
-msgid "Cached\n"
-msgstr "A la cau\n"
+msgid "update local cache of remote slackbuilds"
+msgstr "actualitza la cau local d'slackbuilds remots"
 
-msgid "Do you want to continue? [y/N] "
-msgstr "Voleu continuar? [s/N]"
+msgid "upgrade all installed slackbuilds"
+msgstr "actualitza tots els slackbuilds instal·lats"
 
-#, c-format
-msgid "Done\n"
-msgstr "Fet.\n"
+msgid "list available slackbuilds"
+msgstr "llista els slackbuilds disponibles"
 
-#, c-format
-msgid "Download failed: %s\n"
-msgstr "Ha fallat la baixada: %s\n"
+msgid "clean build directory"
+msgstr "neteja el directori de construcció"
 
-#, c-format
-msgid "FETCH: %s\n"
-msgstr "RECULL: %s\n"
+msgid "search available slackbuilds"
+msgstr "cerca els slackbuilds disponibles"
 
-#, c-format
-msgid "Failed\n"
-msgstr "Ha fallat.\n"
+msgid "show specified slackbuilds"
+msgstr "visualitza els slackbuilds especificats"
 
-#, c-format
-msgid "Failed to chdir to %s\n"
-msgstr "Ha fallat fer chdir a %s\n"
+msgid "fetch, build, and install the specified slackbuild(s)"
+msgstr "recull, construeix i instal·la els slackbuilds especificats"
 
-msgid "Failed to chdir to build directory"
-msgstr "Ha fallat fer chdir al directori de construcció."
+msgid "only fetch and build the specified slackbuild(s)"
+msgstr "només recull i construeix els slackbuilds especificats"
 
-#, c-format
-msgid "Failed to construct command string\n"
-msgstr "Ha fallat construir la cadena d'ordres\n"
+msgid "only fetch the specified slackbuild(s)"
+msgstr "només recull els slackbuilds especificats"
+
+msgid "Options"
+msgstr "Opcions"
+
+msgid "do not prompt"
+msgstr "no preguntis"
+
+msgid "show what will be done"
+msgstr "visualitza el que es farà"
+
+msgid "use the specified configuration file"
+msgstr "usa el fitxer de configuració especificat"
+
+msgid "do not look for dependencies"
+msgstr "no busquis dependències"
+
+msgid "run specified command on generated package"
+msgstr "executa l'ordre especificada al paquet generat"
+
+msgid "applicable only to --upgrade-all"
+msgstr "aplicable només a --upgrade-all"
+
+msgid "skip if available via slapt-get, applicable only to --upgrade-all"
+msgstr ""
+"omet si està disponible mitjançant slapt-get, aplicable només a --upgrade-all"
 
 #, c-format
 msgid "Failed to create build directory [%s]\n"
 msgstr "Ha fallat crear el directori de construcció [%s]\n"
 
 #, c-format
-msgid "Failed to open %s for reading\n"
-msgstr "Ha fallat obrir %s per a la lectura.\n"
-
-#, c-format
-msgid "Failed to open current directory\n"
-msgstr "Ha fallat obrir el directori actual.\n"
-
-#, c-format
-msgid "Failed to read %s\n"
-msgstr "Ha fallat llegir %s\n"
-
-#. TODO support file resume
-#, c-format
-msgid "Fetching %s..."
-msgstr "Recollint %s..."
-
-#, c-format
-msgid "Fetching slackbuild list from %s..."
-msgstr "Recollint la llista d'slackbuild des de %s..."
-
-#, c-format
-msgid "INSTALL: %s\n"
-msgstr "INSTAL·LA: %s\n"
+msgid "Specify only one action\n"
+msgstr ""
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
@@ -105,23 +98,36 @@ msgstr ""
 "Paquets individuals no acceptats quan s'actualitzen tots els slackbuilds\n"
 
 #, c-format
-msgid "MD5SUM mismatch for %s\n"
-msgstr "No coincidència d'MD5SUM per a %s\n"
+msgid "build-only and fetch-only options are mutually exclusive\n"
+msgstr ""
+"les opcions de només construir i només recollir són mútuament excloents\n"
+
+msgid "Failed to chdir to build directory"
+msgstr "Ha fallat fer chdir al directori de construcció."
 
 #, c-format
-msgid "Mismatch between download files and md5sums\n"
-msgstr "No hi ha coincidència entre els fitxers baixats i les sumes md5.\n"
+msgid "Unable to find all specified slackbuilds.\n"
+msgstr "No es poden trobar tots els slackbuilds especificats.\n"
 
 #, c-format
-msgid "Missing slackbuild: %s requires %s\n"
-msgstr "Falta un slackbuild: %s requereix %s\n"
+msgid "FETCH: %s\n"
+msgstr "RECULL: %s\n"
 
 #, c-format
-msgid "No BUILDDIR specified in the configuration\n"
-msgstr "No hi ha BUILDDIR especificat a la configuració.\n"
+msgid "BUILD: %s\n"
+msgstr "CONSTRUCCIÓ: %s\n"
 
-msgid "Options"
-msgstr "Opcions"
+#, c-format
+msgid "INSTALL: %s\n"
+msgstr "INSTAL·LA: %s\n"
+
+#, c-format
+msgid "SlackBuild Name: %s\n"
+msgstr "Nom de l'SlackBuild: %s\n"
+
+#, c-format
+msgid "SlackBuild Version: %s\n"
+msgstr "Versió de l'SlackBuild: %s\n"
 
 #, c-format
 msgid "SlackBuild Category: %s\n"
@@ -136,96 +142,129 @@ msgid "SlackBuild Files:\n"
 msgstr "Fitxers de l'SlackBuild:\n"
 
 #, c-format
-msgid "SlackBuild Name: %s\n"
-msgstr "Nom de l'SlackBuild: %s\n"
-
-#, c-format
 msgid "SlackBuild Requires: %s\n"
 msgstr "L'SlackBuild requereix...: %s\n"
 
 #, c-format
-msgid "SlackBuild Version: %s\n"
-msgstr "Versió de l'SlackBuild: %s\n"
-
-#, c-format
-msgid "The following dependent slackbuilds will be built and installed:\n"
-msgstr "Els slackbuilds dependents següents es construiran i s'instal·laran:\n"
+msgid "Done\n"
+msgstr "Fet.\n"
 
 #, c-format
 msgid "The following packages will be %s:\n"
 msgstr "Els paquets següents seran %s:\n"
 
+msgid "installed"
+msgstr "instal·lats"
+
+msgid "built"
+msgstr "construïts"
+
+msgid "fetched"
+msgstr "recollits"
+
 #, c-format
-msgid "Unable to find all specified slackbuilds.\n"
-msgstr "No es poden trobar tots els slackbuilds especificats.\n"
+msgid "The following dependent slackbuilds will be built and installed:\n"
+msgstr "Els slackbuilds dependents següents es construiran i s'instal·laran:\n"
+
+msgid "Do you want to continue? [y/N] "
+msgstr "Voleu continuar? [s/N]"
+
+#, c-format
+msgid "Abort.\n"
+msgstr "Avorta.\n"
+
+#, c-format
+msgid "Failed to read %s\n"
+msgstr "Ha fallat llegir %s\n"
+
+#, c-format
+msgid "No BUILDDIR specified in the configuration\n"
+msgstr "No hi ha BUILDDIR especificat a la configuració.\n"
+
+#, c-format
+msgid "BUILDDIR too long\n"
+msgstr ""
+
+#, c-format
+msgid "Fetching slackbuild list from %s..."
+msgstr "Recollint la llista d'slackbuild des de %s..."
+
+#, c-format
+msgid "Cached\n"
+msgstr "A la cau\n"
+
+#, c-format
+msgid "Download failed: %s\n"
+msgstr "Ha fallat la baixada: %s\n"
+
+#, c-format
+msgid "Refusing to overwrite cache with incomplete list\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to open %s for writing\n"
+msgstr "Ha fallat obrir %s per a la lectura.\n"
+
+#, fuzzy, c-format
+msgid "Failed to read %s: empty or corrupt gzip\n"
+msgstr "Ha fallat llegir %s\n"
+
+#, c-format
+msgid "Run --update to fetch the slackbuild list first\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to open %s for reading\n"
+msgstr "Ha fallat obrir %s per a la lectura.\n"
+
+#, c-format
+msgid "Failed to chdir to %s\n"
+msgstr "Ha fallat fer chdir a %s\n"
+
+#, c-format
+msgid "Fetching %s..."
+msgstr "Recollint %s..."
+
+#, c-format
+msgid "Failed\n"
+msgstr "Ha fallat.\n"
+
+#, c-format
+msgid "Mismatch between download files and md5sums\n"
+msgstr "No hi ha coincidència entre els fitxers baixats i les sumes md5.\n"
+
+#, c-format
+msgid "Invalid download URL: %s\n"
+msgstr ""
+
+#, c-format
+msgid "MD5SUM mismatch for %s\n"
+msgstr "No coincidència d'MD5SUM per a %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to open the README for %s\n"
+msgstr "Ha fallat obrir %s per a la lectura.\n"
+
+#, c-format
+msgid "Failed to open current directory\n"
+msgstr "Ha fallat obrir el directori actual.\n"
+
+#, fuzzy, c-format
+msgid "Failed to construct script name\n"
+msgstr "Ha fallat construir la cadena d'ordres\n"
 
 #, c-format
 msgid "Unable to find generated package\n"
 msgstr "No es pot trobar el paquet generat\n"
 
-#, c-format
-msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
-msgstr "Ús: %s [opcions] [acció] [slackbuild(s)]\n"
-
-msgid "applicable only to --upgrade-all"
-msgstr "aplicable només a --upgrade-all"
+#, fuzzy, c-format
+msgid "Circular dependency: %s requires %s\n"
+msgstr "Falta un slackbuild: %s requereix %s\n"
 
 #, c-format
-msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr ""
-"les opcions de només construir i només recollir són mútuament excloents\n"
+msgid "Missing slackbuild: %s requires %s\n"
+msgstr "Falta un slackbuild: %s requereix %s\n"
 
-msgid "built"
-msgstr "construïts"
-
-msgid "clean build directory"
-msgstr "neteja el directori de construcció"
-
-msgid "do not look for dependencies"
-msgstr "no busquis dependències"
-
-msgid "do not prompt"
-msgstr "no preguntis"
-
-msgid "fetch, build, and install the specified slackbuild(s)"
-msgstr "recull, construeix i instal·la els slackbuilds especificats"
-
-msgid "fetched"
-msgstr "recollits"
-
-msgid "installed"
-msgstr "instal·lats"
-
-msgid "list available slackbuilds"
-msgstr "llista els slackbuilds disponibles"
-
-msgid "only fetch and build the specified slackbuild(s)"
-msgstr "només recull i construeix els slackbuilds especificats"
-
-msgid "only fetch the specified slackbuild(s)"
-msgstr "només recull els slackbuilds especificats"
-
-msgid "run specified command on generated package"
-msgstr "executa l'ordre especificada al paquet generat"
-
-msgid "search available slackbuilds"
-msgstr "cerca els slackbuilds disponibles"
-
-msgid "show specified slackbuilds"
-msgstr "visualitza els slackbuilds especificats"
-
-msgid "show what will be done"
-msgstr "visualitza el que es farà"
-
-msgid "skip if available via slapt-get, applicable only to --upgrade-all"
-msgstr ""
-"omet si està disponible mitjançant slapt-get, aplicable només a --upgrade-all"
-
-msgid "update local cache of remote slackbuilds"
-msgstr "actualitza la cau local d'slackbuilds remots"
-
-msgid "upgrade all installed slackbuilds"
-msgstr "actualitza tots els slackbuilds instal·lats"
-
-msgid "use the specified configuration file"
-msgstr "usa el fitxer de configuració especificat"
+#, fuzzy, c-format
+msgid "Unknown slackbuild: %s\n"
+msgstr "Nom de l'SlackBuild: %s\n"

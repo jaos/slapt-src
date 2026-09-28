@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-31 17:58-0400\n"
+"POT-Creation-Date: 2026-10-05 18:34-0400\n"
 "PO-Revision-Date: 2012-09-17 22:00+0000\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>, 2015,2017\n"
 "Language-Team: Czech (http://app.transifex.com/jaos/slapt-get/language/cs/)\n"
@@ -22,85 +22,77 @@ msgstr ""
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 #, c-format
+msgid "%s version %s\n"
+msgstr "%s verze %s\n"
+
+#, c-format
 msgid "%s - A SlackBuild utility\n"
 msgstr ""
 "%s - Nástroj SlackBuild\n"
 "\n"
 
 #, c-format
-msgid "%s version %s\n"
-msgstr "%s verze %s\n"
+msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
+msgstr "Použití: %s [volby] [akce] [slackbuild(y)]\n"
 
-#, c-format
-msgid "Abort.\n"
-msgstr "Zrušit.\n"
+msgid "update local cache of remote slackbuilds"
+msgstr "aktualizovat místní mezipaměť vzdálených SlackBuildů"
 
-#, c-format
-msgid "BUILD: %s\n"
-msgstr "SESTAVENÍ: %s\n"
+msgid "upgrade all installed slackbuilds"
+msgstr "upgradovat všechny nainstalované SlackBuildy"
 
-#, c-format
-msgid "Cached\n"
-msgstr "Ve vyrovnávací paměti\n"
+msgid "list available slackbuilds"
+msgstr "seznam dostupných SlackBuildů"
 
-msgid "Do you want to continue? [y/N] "
-msgstr "Chcete pokračovat? [y/N] "
+msgid "clean build directory"
+msgstr "vyprázdnit sestavovací adresář"
 
-#, c-format
-msgid "Done\n"
-msgstr "Hotovo\n"
+msgid "search available slackbuilds"
+msgstr "vyhledat dostupné SlackBuildy"
 
-#, c-format
-msgid "Download failed: %s\n"
-msgstr "Stažení se nezdařilo: %s\n"
+msgid "show specified slackbuilds"
+msgstr "zobrazit uvedené SlackBuildy"
 
-#, c-format
-msgid "FETCH: %s\n"
-msgstr "NAČTENÍ: %s\n"
+msgid "fetch, build, and install the specified slackbuild(s)"
+msgstr "načte, sestaví a nainstaluje specifikované slackbuildy"
 
-#, c-format
-msgid "Failed\n"
-msgstr "Nepodařilo se\n"
+msgid "only fetch and build the specified slackbuild(s)"
+msgstr "pouze stáhnout a sestavit specifikované slackbuildy"
 
-#, c-format
-msgid "Failed to chdir to %s\n"
-msgstr "Nepodařilo se změnit adresář na: %s\n"
+msgid "only fetch the specified slackbuild(s)"
+msgstr "pouze stáhnout specifikované slackbuildy"
 
-msgid "Failed to chdir to build directory"
-msgstr "Nepodařilo se změnit adresář na sestavovací adresář"
+msgid "Options"
+msgstr "Možnosti"
 
-#, c-format
-msgid "Failed to construct command string\n"
-msgstr "Nepodařilo se sestavit řetězec příkazů\n"
+msgid "do not prompt"
+msgstr "neptat se"
+
+msgid "show what will be done"
+msgstr "zobrazit akce, které se provedou"
+
+msgid "use the specified configuration file"
+msgstr "použít určený konfigurační soubor"
+
+msgid "do not look for dependencies"
+msgstr "nehledat závislosti"
+
+msgid "run specified command on generated package"
+msgstr "spustit na vygenerovaném balíčku specifikovaný příkaz"
+
+msgid "applicable only to --upgrade-all"
+msgstr "použitelné pouze pro volbu --upgrade-all"
+
+msgid "skip if available via slapt-get, applicable only to --upgrade-all"
+msgstr ""
 
 #, c-format
 msgid "Failed to create build directory [%s]\n"
 msgstr "Nepodařilo se vytvořit sestavovací adresář [%s]\n"
 
 #, c-format
-msgid "Failed to open %s for reading\n"
-msgstr "Nepodařilo se otevřít %s pro čtení\n"
-
-#, c-format
-msgid "Failed to open current directory\n"
-msgstr "Nepodařilo se otevřít aktuální adresář\n"
-
-#, c-format
-msgid "Failed to read %s\n"
-msgstr "Nepodařilo se přečíst %s\n"
-
-#. TODO support file resume
-#, c-format
-msgid "Fetching %s..."
-msgstr "Načítání %s..."
-
-#, c-format
-msgid "Fetching slackbuild list from %s..."
-msgstr "Načítání seznamu SlackBuildů z %s..."
-
-#, c-format
-msgid "INSTALL: %s\n"
-msgstr "INSTALACE: %s\n"
+msgid "Specify only one action\n"
+msgstr ""
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
@@ -108,23 +100,35 @@ msgstr ""
 "Při upgradování všech SlackBuildů nejsou jednotlivé balíčky akceptovány\n"
 
 #, c-format
-msgid "MD5SUM mismatch for %s\n"
-msgstr "MD5SUM pro %s se neshoduje\n"
+msgid "build-only and fetch-only options are mutually exclusive\n"
+msgstr "volby build-only a fetch-only se vzájemně vylučují\n"
+
+msgid "Failed to chdir to build directory"
+msgstr "Nepodařilo se změnit adresář na sestavovací adresář"
 
 #, c-format
-msgid "Mismatch between download files and md5sums\n"
-msgstr "Mezi staženými soubory a MD5SUM není shoda\n"
+msgid "Unable to find all specified slackbuilds.\n"
+msgstr "Nelze najít všechny specifikované slackbuildy.\n"
 
 #, c-format
-msgid "Missing slackbuild: %s requires %s\n"
-msgstr "Chybějících SlackBuild: %s vyžaduje %s\n"
+msgid "FETCH: %s\n"
+msgstr "NAČTENÍ: %s\n"
 
 #, c-format
-msgid "No BUILDDIR specified in the configuration\n"
-msgstr "V konfiguraci není specifikován adresář BUILDDIR\n"
+msgid "BUILD: %s\n"
+msgstr "SESTAVENÍ: %s\n"
 
-msgid "Options"
-msgstr "Možnosti"
+#, c-format
+msgid "INSTALL: %s\n"
+msgstr "INSTALACE: %s\n"
+
+#, c-format
+msgid "SlackBuild Name: %s\n"
+msgstr "Název SlackBuild: %s\n"
+
+#, c-format
+msgid "SlackBuild Version: %s\n"
+msgstr "Verze SlackBuild: %s\n"
 
 #, c-format
 msgid "SlackBuild Category: %s\n"
@@ -139,94 +143,129 @@ msgid "SlackBuild Files:\n"
 msgstr "Soubory SlackBuild:\n"
 
 #, c-format
-msgid "SlackBuild Name: %s\n"
-msgstr "Název SlackBuild: %s\n"
-
-#, c-format
 msgid "SlackBuild Requires: %s\n"
 msgstr "SlackBuild vyžaduje: %s\n"
 
 #, c-format
-msgid "SlackBuild Version: %s\n"
-msgstr "Verze SlackBuild: %s\n"
-
-#, c-format
-msgid "The following dependent slackbuilds will be built and installed:\n"
-msgstr "Budou sestaveny a nainstalovány tyto závislé slackbuildy:\n"
+msgid "Done\n"
+msgstr "Hotovo\n"
 
 #, c-format
 msgid "The following packages will be %s:\n"
 msgstr "Tyto balíčky budou %s:\n"
 
+msgid "installed"
+msgstr "instalováno"
+
+msgid "built"
+msgstr "sestaveno"
+
+msgid "fetched"
+msgstr "načteno"
+
 #, c-format
-msgid "Unable to find all specified slackbuilds.\n"
-msgstr "Nelze najít všechny specifikované slackbuildy.\n"
+msgid "The following dependent slackbuilds will be built and installed:\n"
+msgstr "Budou sestaveny a nainstalovány tyto závislé slackbuildy:\n"
+
+msgid "Do you want to continue? [y/N] "
+msgstr "Chcete pokračovat? [y/N] "
+
+#, c-format
+msgid "Abort.\n"
+msgstr "Zrušit.\n"
+
+#, c-format
+msgid "Failed to read %s\n"
+msgstr "Nepodařilo se přečíst %s\n"
+
+#, c-format
+msgid "No BUILDDIR specified in the configuration\n"
+msgstr "V konfiguraci není specifikován adresář BUILDDIR\n"
+
+#, c-format
+msgid "BUILDDIR too long\n"
+msgstr ""
+
+#, c-format
+msgid "Fetching slackbuild list from %s..."
+msgstr "Načítání seznamu SlackBuildů z %s..."
+
+#, c-format
+msgid "Cached\n"
+msgstr "Ve vyrovnávací paměti\n"
+
+#, c-format
+msgid "Download failed: %s\n"
+msgstr "Stažení se nezdařilo: %s\n"
+
+#, c-format
+msgid "Refusing to overwrite cache with incomplete list\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to open %s for writing\n"
+msgstr "Nepodařilo se otevřít %s pro čtení\n"
+
+#, fuzzy, c-format
+msgid "Failed to read %s: empty or corrupt gzip\n"
+msgstr "Nepodařilo se přečíst %s\n"
+
+#, c-format
+msgid "Run --update to fetch the slackbuild list first\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to open %s for reading\n"
+msgstr "Nepodařilo se otevřít %s pro čtení\n"
+
+#, c-format
+msgid "Failed to chdir to %s\n"
+msgstr "Nepodařilo se změnit adresář na: %s\n"
+
+#, c-format
+msgid "Fetching %s..."
+msgstr "Načítání %s..."
+
+#, c-format
+msgid "Failed\n"
+msgstr "Nepodařilo se\n"
+
+#, c-format
+msgid "Mismatch between download files and md5sums\n"
+msgstr "Mezi staženými soubory a MD5SUM není shoda\n"
+
+#, c-format
+msgid "Invalid download URL: %s\n"
+msgstr ""
+
+#, c-format
+msgid "MD5SUM mismatch for %s\n"
+msgstr "MD5SUM pro %s se neshoduje\n"
+
+#, fuzzy, c-format
+msgid "Failed to open the README for %s\n"
+msgstr "Nepodařilo se otevřít %s pro čtení\n"
+
+#, c-format
+msgid "Failed to open current directory\n"
+msgstr "Nepodařilo se otevřít aktuální adresář\n"
+
+#, fuzzy, c-format
+msgid "Failed to construct script name\n"
+msgstr "Nepodařilo se sestavit řetězec příkazů\n"
 
 #, c-format
 msgid "Unable to find generated package\n"
 msgstr "Nelze najít vygenerované balíčky\n"
 
-#, c-format
-msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
-msgstr "Použití: %s [volby] [akce] [slackbuild(y)]\n"
-
-msgid "applicable only to --upgrade-all"
-msgstr "použitelné pouze pro volbu --upgrade-all"
+#, fuzzy, c-format
+msgid "Circular dependency: %s requires %s\n"
+msgstr "Chybějících SlackBuild: %s vyžaduje %s\n"
 
 #, c-format
-msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr "volby build-only a fetch-only se vzájemně vylučují\n"
+msgid "Missing slackbuild: %s requires %s\n"
+msgstr "Chybějících SlackBuild: %s vyžaduje %s\n"
 
-msgid "built"
-msgstr "sestaveno"
-
-msgid "clean build directory"
-msgstr "vyprázdnit sestavovací adresář"
-
-msgid "do not look for dependencies"
-msgstr "nehledat závislosti"
-
-msgid "do not prompt"
-msgstr "neptat se"
-
-msgid "fetch, build, and install the specified slackbuild(s)"
-msgstr "načte, sestaví a nainstaluje specifikované slackbuildy"
-
-msgid "fetched"
-msgstr "načteno"
-
-msgid "installed"
-msgstr "instalováno"
-
-msgid "list available slackbuilds"
-msgstr "seznam dostupných SlackBuildů"
-
-msgid "only fetch and build the specified slackbuild(s)"
-msgstr "pouze stáhnout a sestavit specifikované slackbuildy"
-
-msgid "only fetch the specified slackbuild(s)"
-msgstr "pouze stáhnout specifikované slackbuildy"
-
-msgid "run specified command on generated package"
-msgstr "spustit na vygenerovaném balíčku specifikovaný příkaz"
-
-msgid "search available slackbuilds"
-msgstr "vyhledat dostupné SlackBuildy"
-
-msgid "show specified slackbuilds"
-msgstr "zobrazit uvedené SlackBuildy"
-
-msgid "show what will be done"
-msgstr "zobrazit akce, které se provedou"
-
-msgid "skip if available via slapt-get, applicable only to --upgrade-all"
-msgstr ""
-
-msgid "update local cache of remote slackbuilds"
-msgstr "aktualizovat místní mezipaměť vzdálených SlackBuildů"
-
-msgid "upgrade all installed slackbuilds"
-msgstr "upgradovat všechny nainstalované SlackBuildy"
-
-msgid "use the specified configuration file"
-msgstr "použít určený konfigurační soubor"
+#, fuzzy, c-format
+msgid "Unknown slackbuild: %s\n"
+msgstr "Název SlackBuild: %s\n"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-31 17:58-0400\n"
+"POT-Creation-Date: 2026-10-05 18:34-0400\n"
 "PO-Revision-Date: 2012-09-17 22:00+0000\n"
 "Last-Translator: Gambit <gambit73@gmail.com>, 2022\n"
 "Language-Team: Dutch (http://app.transifex.com/jaos/slapt-get/language/nl/)\n"
@@ -19,83 +19,75 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
-msgid "%s - A SlackBuild utility\n"
-msgstr "%s - Een SlackBuild hulpprogramma\n"
-
-#, c-format
 msgid "%s version %s\n"
 msgstr "%s versie %s\n"
 
 #, c-format
-msgid "Abort.\n"
-msgstr "Afbreken.\n"
+msgid "%s - A SlackBuild utility\n"
+msgstr "%s - Een SlackBuild hulpprogramma\n"
 
 #, c-format
-msgid "BUILD: %s\n"
-msgstr "BUILD: %s\n"
+msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
+msgstr "Gebruik: %s [option(s)] [action] [slackbuild(s)]\n"
 
-#, c-format
-msgid "Cached\n"
-msgstr "Gecached\n"
+msgid "update local cache of remote slackbuilds"
+msgstr "Ververs de lokale cache van de niet lokale slackbuilds"
 
-msgid "Do you want to continue? [y/N] "
-msgstr "Wilt u doorgaan? [y/N]"
+msgid "upgrade all installed slackbuilds"
+msgstr "upgrade alle geïnstalleerde slackbuilds"
 
-#, c-format
-msgid "Done\n"
-msgstr "Klaar\n"
+msgid "list available slackbuilds"
+msgstr "toon beschikbare slackbuilds"
 
-#, c-format
-msgid "Download failed: %s\n"
-msgstr "Download mislukt: %s\n"
+msgid "clean build directory"
+msgstr "verse build folder"
 
-#, c-format
-msgid "FETCH: %s\n"
-msgstr "FETCH: %s\n"
+msgid "search available slackbuilds"
+msgstr "zoek beschikbare slackbuilds"
 
-#, c-format
-msgid "Failed\n"
-msgstr "Mislukt\n"
+msgid "show specified slackbuilds"
+msgstr "toon gespecificeerde slackbuilds"
 
-#, c-format
-msgid "Failed to chdir to %s\n"
-msgstr "chdir naar %s mislukt\n"
+msgid "fetch, build, and install the specified slackbuild(s)"
+msgstr "verkrijg, maak, en installeer de gespecificeerde slackbuild(s)"
 
-msgid "Failed to chdir to build directory"
-msgstr "chdir naar de build folder mislukt"
+msgid "only fetch and build the specified slackbuild(s)"
+msgstr "verkrijg en maak alleen de gespecificeerde slackbuild(s)"
 
-#, c-format
-msgid "Failed to construct command string\n"
-msgstr "Command string constructie mislukt\n"
+msgid "only fetch the specified slackbuild(s)"
+msgstr "verkrijg alleen de gespecificeerde slackbuild(s)"
+
+msgid "Options"
+msgstr "Opties"
+
+msgid "do not prompt"
+msgstr "stel geen vragen"
+
+msgid "show what will be done"
+msgstr "toon wat er zal gebeuren"
+
+msgid "use the specified configuration file"
+msgstr "gebruik het gespecificeerde configuratiebestand"
+
+msgid "do not look for dependencies"
+msgstr "zoek niet naar afhankelijkheden"
+
+msgid "run specified command on generated package"
+msgstr "voer gespecificeerd commando uit op aangemaakt pakket"
+
+msgid "applicable only to --upgrade-all"
+msgstr "uitsluitend bij --upgrade-all te gebruiken"
+
+msgid "skip if available via slapt-get, applicable only to --upgrade-all"
+msgstr ""
 
 #, c-format
 msgid "Failed to create build directory [%s]\n"
 msgstr "Aanmaak Build folder mislukt [%s]\n"
 
 #, c-format
-msgid "Failed to open %s for reading\n"
-msgstr "Openen van %s om te lezen mislukt\n"
-
-#, c-format
-msgid "Failed to open current directory\n"
-msgstr "Huidige folder openen mislukt\n"
-
-#, c-format
-msgid "Failed to read %s\n"
-msgstr "Lezen van %s mislukt\n"
-
-#. TODO support file resume
-#, c-format
-msgid "Fetching %s..."
-msgstr "%sbinnenhalen..."
-
-#, c-format
-msgid "Fetching slackbuild list from %s..."
-msgstr "Slackbuild lijst van %sverkrijgen..."
-
-#, c-format
-msgid "INSTALL: %s\n"
-msgstr "INSTALL: %s\n"
+msgid "Specify only one action\n"
+msgstr ""
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
@@ -104,23 +96,35 @@ msgstr ""
 "slackbuilds\n"
 
 #, c-format
-msgid "MD5SUM mismatch for %s\n"
-msgstr "MD5SUM discrepantie voor %s\n"
+msgid "build-only and fetch-only options are mutually exclusive\n"
+msgstr "build-only en fetch-only opties zijn niet samen te gebruiken\n"
+
+msgid "Failed to chdir to build directory"
+msgstr "chdir naar de build folder mislukt"
 
 #, c-format
-msgid "Mismatch between download files and md5sums\n"
-msgstr "Discrepantie tussen downloadbestanden en md5sums\n"
+msgid "Unable to find all specified slackbuilds.\n"
+msgstr "Niet gelukt om alle gespecificeerde slackbuilds te vinden.\n"
 
 #, c-format
-msgid "Missing slackbuild: %s requires %s\n"
-msgstr "Missende slackbuild: %s heeft %snodig\n"
+msgid "FETCH: %s\n"
+msgstr "FETCH: %s\n"
 
 #, c-format
-msgid "No BUILDDIR specified in the configuration\n"
-msgstr "Geen BUILDDIR gespecificeerd in de configuratie\n"
+msgid "BUILD: %s\n"
+msgstr "BUILD: %s\n"
 
-msgid "Options"
-msgstr "Opties"
+#, c-format
+msgid "INSTALL: %s\n"
+msgstr "INSTALL: %s\n"
+
+#, c-format
+msgid "SlackBuild Name: %s\n"
+msgstr "SlackBuild Naam: %s\n"
+
+#, c-format
+msgid "SlackBuild Version: %s\n"
+msgstr "SlackBuild Versie: %s\n"
 
 #, c-format
 msgid "SlackBuild Category: %s\n"
@@ -135,16 +139,25 @@ msgid "SlackBuild Files:\n"
 msgstr "SlackBuild Bestanden:\n"
 
 #, c-format
-msgid "SlackBuild Name: %s\n"
-msgstr "SlackBuild Naam: %s\n"
-
-#, c-format
 msgid "SlackBuild Requires: %s\n"
 msgstr "SlackBuild Vereist: %s\n"
 
 #, c-format
-msgid "SlackBuild Version: %s\n"
-msgstr "SlackBuild Versie: %s\n"
+msgid "Done\n"
+msgstr "Klaar\n"
+
+#, c-format
+msgid "The following packages will be %s:\n"
+msgstr "De volgende pakketten zullen zijn %s:\n"
+
+msgid "installed"
+msgstr "geinstalleerd"
+
+msgid "built"
+msgstr "gemaakt"
+
+msgid "fetched"
+msgstr "verkregen"
 
 #, c-format
 msgid "The following dependent slackbuilds will be built and installed:\n"
@@ -152,79 +165,105 @@ msgstr ""
 "De volgende afhankelijke slackbuilds zullen gemaakt en geïnstalleerd "
 "worden:\n"
 
-#, c-format
-msgid "The following packages will be %s:\n"
-msgstr "De volgende pakketten zullen zijn %s:\n"
+msgid "Do you want to continue? [y/N] "
+msgstr "Wilt u doorgaan? [y/N]"
 
 #, c-format
-msgid "Unable to find all specified slackbuilds.\n"
-msgstr "Niet gelukt om alle gespecificeerde slackbuilds te vinden.\n"
+msgid "Abort.\n"
+msgstr "Afbreken.\n"
+
+#, c-format
+msgid "Failed to read %s\n"
+msgstr "Lezen van %s mislukt\n"
+
+#, c-format
+msgid "No BUILDDIR specified in the configuration\n"
+msgstr "Geen BUILDDIR gespecificeerd in de configuratie\n"
+
+#, c-format
+msgid "BUILDDIR too long\n"
+msgstr ""
+
+#, c-format
+msgid "Fetching slackbuild list from %s..."
+msgstr "Slackbuild lijst van %sverkrijgen..."
+
+#, c-format
+msgid "Cached\n"
+msgstr "Gecached\n"
+
+#, c-format
+msgid "Download failed: %s\n"
+msgstr "Download mislukt: %s\n"
+
+#, c-format
+msgid "Refusing to overwrite cache with incomplete list\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to open %s for writing\n"
+msgstr "Openen van %s om te lezen mislukt\n"
+
+#, fuzzy, c-format
+msgid "Failed to read %s: empty or corrupt gzip\n"
+msgstr "Lezen van %s mislukt\n"
+
+#, c-format
+msgid "Run --update to fetch the slackbuild list first\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to open %s for reading\n"
+msgstr "Openen van %s om te lezen mislukt\n"
+
+#, c-format
+msgid "Failed to chdir to %s\n"
+msgstr "chdir naar %s mislukt\n"
+
+#, c-format
+msgid "Fetching %s..."
+msgstr "%sbinnenhalen..."
+
+#, c-format
+msgid "Failed\n"
+msgstr "Mislukt\n"
+
+#, c-format
+msgid "Mismatch between download files and md5sums\n"
+msgstr "Discrepantie tussen downloadbestanden en md5sums\n"
+
+#, c-format
+msgid "Invalid download URL: %s\n"
+msgstr ""
+
+#, c-format
+msgid "MD5SUM mismatch for %s\n"
+msgstr "MD5SUM discrepantie voor %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to open the README for %s\n"
+msgstr "Openen van %s om te lezen mislukt\n"
+
+#, c-format
+msgid "Failed to open current directory\n"
+msgstr "Huidige folder openen mislukt\n"
+
+#, fuzzy, c-format
+msgid "Failed to construct script name\n"
+msgstr "Command string constructie mislukt\n"
 
 #, c-format
 msgid "Unable to find generated package\n"
 msgstr "Niet gelukt om het aangemaakte pakket te vinden\n"
 
-#, c-format
-msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
-msgstr "Gebruik: %s [option(s)] [action] [slackbuild(s)]\n"
-
-msgid "applicable only to --upgrade-all"
-msgstr "uitsluitend bij --upgrade-all te gebruiken"
+#, fuzzy, c-format
+msgid "Circular dependency: %s requires %s\n"
+msgstr "Missende slackbuild: %s heeft %snodig\n"
 
 #, c-format
-msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr "build-only en fetch-only opties zijn niet samen te gebruiken\n"
+msgid "Missing slackbuild: %s requires %s\n"
+msgstr "Missende slackbuild: %s heeft %snodig\n"
 
-msgid "built"
-msgstr "gemaakt"
-
-msgid "clean build directory"
-msgstr "verse build folder"
-
-msgid "do not look for dependencies"
-msgstr "zoek niet naar afhankelijkheden"
-
-msgid "do not prompt"
-msgstr "stel geen vragen"
-
-msgid "fetch, build, and install the specified slackbuild(s)"
-msgstr "verkrijg, maak, en installeer de gespecificeerde slackbuild(s)"
-
-msgid "fetched"
-msgstr "verkregen"
-
-msgid "installed"
-msgstr "geinstalleerd"
-
-msgid "list available slackbuilds"
-msgstr "toon beschikbare slackbuilds"
-
-msgid "only fetch and build the specified slackbuild(s)"
-msgstr "verkrijg en maak alleen de gespecificeerde slackbuild(s)"
-
-msgid "only fetch the specified slackbuild(s)"
-msgstr "verkrijg alleen de gespecificeerde slackbuild(s)"
-
-msgid "run specified command on generated package"
-msgstr "voer gespecificeerd commando uit op aangemaakt pakket"
-
-msgid "search available slackbuilds"
-msgstr "zoek beschikbare slackbuilds"
-
-msgid "show specified slackbuilds"
-msgstr "toon gespecificeerde slackbuilds"
-
-msgid "show what will be done"
-msgstr "toon wat er zal gebeuren"
-
-msgid "skip if available via slapt-get, applicable only to --upgrade-all"
-msgstr ""
-
-msgid "update local cache of remote slackbuilds"
-msgstr "Ververs de lokale cache van de niet lokale slackbuilds"
-
-msgid "upgrade all installed slackbuilds"
-msgstr "upgrade alle geïnstalleerde slackbuilds"
-
-msgid "use the specified configuration file"
-msgstr "gebruik het gespecificeerde configuratiebestand"
+#, fuzzy, c-format
+msgid "Unknown slackbuild: %s\n"
+msgstr "SlackBuild Naam: %s\n"

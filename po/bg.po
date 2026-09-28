@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-31 17:58-0400\n"
+"POT-Creation-Date: 2026-10-05 18:34-0400\n"
 "PO-Revision-Date: 2012-09-17 22:00+0000\n"
 "Last-Translator: Georgi Georgiev <georgiev_1994@abv.bg>, 2016,2018\n"
 "Language-Team: Bulgarian (http://app.transifex.com/jaos/slapt-get/language/"
@@ -20,83 +20,75 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
-msgid "%s - A SlackBuild utility\n"
-msgstr "%s - SlackBuild средство\n"
-
-#, c-format
 msgid "%s version %s\n"
 msgstr "%s версия %s\n"
 
 #, c-format
-msgid "Abort.\n"
-msgstr "Прекъсване.\n"
+msgid "%s - A SlackBuild utility\n"
+msgstr "%s - SlackBuild средство\n"
 
 #, c-format
-msgid "BUILD: %s\n"
-msgstr "ИЗГРАДИ: %s\n"
+msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
+msgstr "Употреба: %s [опция(и)] [действие] [slackbuild(-ове)]\n"
 
-#, c-format
-msgid "Cached\n"
-msgstr "Кеширан\n"
+msgid "update local cache of remote slackbuilds"
+msgstr "обнови локалната кеш памет на отделни slackbuild-ове"
 
-msgid "Do you want to continue? [y/N] "
-msgstr "Желаете ли да продължите? [y(да)/N(НЕ)] "
+msgid "upgrade all installed slackbuilds"
+msgstr "обнови всички инсталирани slackbuild-ове"
 
-#, c-format
-msgid "Done\n"
-msgstr "Готово\n"
+msgid "list available slackbuilds"
+msgstr "покажи наличните slackbuild-ове"
 
-#, c-format
-msgid "Download failed: %s\n"
-msgstr "Изтеглянето се провали: %s\n"
+msgid "clean build directory"
+msgstr "изчисти директорията за изграждане"
 
-#, c-format
-msgid "FETCH: %s\n"
-msgstr "ИЗВЛИЧАНЕ: %s\n"
+msgid "search available slackbuilds"
+msgstr "търси наличните slackbuild-ове"
 
-#, c-format
-msgid "Failed\n"
-msgstr "Неуспех\n"
+msgid "show specified slackbuilds"
+msgstr "покажи посочените slackbuild-ове"
 
-#, c-format
-msgid "Failed to chdir to %s\n"
-msgstr "Неуспех на chdir в %s\n"
+msgid "fetch, build, and install the specified slackbuild(s)"
+msgstr "извлечи, изгради и инсталирай посочения slackbuild(-ове)"
 
-msgid "Failed to chdir to build directory"
-msgstr "Неуспех на chdir в директорията за изграждане"
+msgid "only fetch and build the specified slackbuild(s)"
+msgstr "само извлечи и изгради посочените slackbuild(-ове)"
 
-#, c-format
-msgid "Failed to construct command string\n"
-msgstr "Неуспех при конструирането на команден низ\n"
+msgid "only fetch the specified slackbuild(s)"
+msgstr "само извлечи посочените slackbuild(-ове)"
+
+msgid "Options"
+msgstr "Опции"
+
+msgid "do not prompt"
+msgstr "не питай"
+
+msgid "show what will be done"
+msgstr "покажи какво ще се направи"
+
+msgid "use the specified configuration file"
+msgstr "използвай посоченият конфигурационен файл"
+
+msgid "do not look for dependencies"
+msgstr "не търси зависимости"
+
+msgid "run specified command on generated package"
+msgstr "изпълни посочената команда на вече генериран пакет"
+
+msgid "applicable only to --upgrade-all"
+msgstr "приложимо само при --upgrade-all"
+
+msgid "skip if available via slapt-get, applicable only to --upgrade-all"
+msgstr ""
 
 #, c-format
 msgid "Failed to create build directory [%s]\n"
 msgstr "Неуспех при създаване на директория за изграждане [%s]\n"
 
 #, c-format
-msgid "Failed to open %s for reading\n"
-msgstr "Неуспех при отваряне на %s за четене\n"
-
-#, c-format
-msgid "Failed to open current directory\n"
-msgstr "Неуспех при отваряне на сегашната директория\n"
-
-#, c-format
-msgid "Failed to read %s\n"
-msgstr "Неуспех при четене %s\n"
-
-#. TODO support file resume
-#, c-format
-msgid "Fetching %s..."
-msgstr "Извличане %s..."
-
-#, c-format
-msgid "Fetching slackbuild list from %s..."
-msgstr "Извличане на slackbuild лист от %s..."
-
-#, c-format
-msgid "INSTALL: %s\n"
-msgstr "ИНСТАЛИРАЙ: %s\n"
+msgid "Specify only one action\n"
+msgstr ""
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
@@ -105,23 +97,35 @@ msgstr ""
 "slackbuild-ове\n"
 
 #, c-format
-msgid "MD5SUM mismatch for %s\n"
-msgstr "MD5SUM несъответствие за %s\n"
+msgid "build-only and fetch-only options are mutually exclusive\n"
+msgstr "build-only и fetch-only се изключват взаимно\n"
+
+msgid "Failed to chdir to build directory"
+msgstr "Неуспех на chdir в директорията за изграждане"
 
 #, c-format
-msgid "Mismatch between download files and md5sums\n"
-msgstr "Несъответствие между изтеглените файлове и md5sum-ите\n"
+msgid "Unable to find all specified slackbuilds.\n"
+msgstr "Неуспех при търсенето на посочените slackbuild-ове.\n"
 
 #, c-format
-msgid "Missing slackbuild: %s requires %s\n"
-msgstr "Липсва slackbuild: %s изисква %s\n"
+msgid "FETCH: %s\n"
+msgstr "ИЗВЛИЧАНЕ: %s\n"
 
 #, c-format
-msgid "No BUILDDIR specified in the configuration\n"
-msgstr "BUILDDIR не е зададен в конфигурацията\n"
+msgid "BUILD: %s\n"
+msgstr "ИЗГРАДИ: %s\n"
 
-msgid "Options"
-msgstr "Опции"
+#, c-format
+msgid "INSTALL: %s\n"
+msgstr "ИНСТАЛИРАЙ: %s\n"
+
+#, c-format
+msgid "SlackBuild Name: %s\n"
+msgstr "SlackBuild Име: %s\n"
+
+#, c-format
+msgid "SlackBuild Version: %s\n"
+msgstr "SlackBuild Версия: %s\n"
 
 #, c-format
 msgid "SlackBuild Category: %s\n"
@@ -136,94 +140,129 @@ msgid "SlackBuild Files:\n"
 msgstr "SlackBuild Файлове:\n"
 
 #, c-format
-msgid "SlackBuild Name: %s\n"
-msgstr "SlackBuild Име: %s\n"
-
-#, c-format
 msgid "SlackBuild Requires: %s\n"
 msgstr "SlackBuild Изисква: %s\n"
 
 #, c-format
-msgid "SlackBuild Version: %s\n"
-msgstr "SlackBuild Версия: %s\n"
-
-#, c-format
-msgid "The following dependent slackbuilds will be built and installed:\n"
-msgstr "Следните зависими slackbuild-ове ще бъдат изградени и инсталирани:\n"
+msgid "Done\n"
+msgstr "Готово\n"
 
 #, c-format
 msgid "The following packages will be %s:\n"
 msgstr "Следните пакети ще бъдат %s:\n"
 
+msgid "installed"
+msgstr "инсталиран"
+
+msgid "built"
+msgstr "изгради"
+
+msgid "fetched"
+msgstr "извлечен"
+
 #, c-format
-msgid "Unable to find all specified slackbuilds.\n"
-msgstr "Неуспех при търсенето на посочените slackbuild-ове.\n"
+msgid "The following dependent slackbuilds will be built and installed:\n"
+msgstr "Следните зависими slackbuild-ове ще бъдат изградени и инсталирани:\n"
+
+msgid "Do you want to continue? [y/N] "
+msgstr "Желаете ли да продължите? [y(да)/N(НЕ)] "
+
+#, c-format
+msgid "Abort.\n"
+msgstr "Прекъсване.\n"
+
+#, c-format
+msgid "Failed to read %s\n"
+msgstr "Неуспех при четене %s\n"
+
+#, c-format
+msgid "No BUILDDIR specified in the configuration\n"
+msgstr "BUILDDIR не е зададен в конфигурацията\n"
+
+#, c-format
+msgid "BUILDDIR too long\n"
+msgstr ""
+
+#, c-format
+msgid "Fetching slackbuild list from %s..."
+msgstr "Извличане на slackbuild лист от %s..."
+
+#, c-format
+msgid "Cached\n"
+msgstr "Кеширан\n"
+
+#, c-format
+msgid "Download failed: %s\n"
+msgstr "Изтеглянето се провали: %s\n"
+
+#, c-format
+msgid "Refusing to overwrite cache with incomplete list\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to open %s for writing\n"
+msgstr "Неуспех при отваряне на %s за четене\n"
+
+#, fuzzy, c-format
+msgid "Failed to read %s: empty or corrupt gzip\n"
+msgstr "Неуспех при четене %s\n"
+
+#, c-format
+msgid "Run --update to fetch the slackbuild list first\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to open %s for reading\n"
+msgstr "Неуспех при отваряне на %s за четене\n"
+
+#, c-format
+msgid "Failed to chdir to %s\n"
+msgstr "Неуспех на chdir в %s\n"
+
+#, c-format
+msgid "Fetching %s..."
+msgstr "Извличане %s..."
+
+#, c-format
+msgid "Failed\n"
+msgstr "Неуспех\n"
+
+#, c-format
+msgid "Mismatch between download files and md5sums\n"
+msgstr "Несъответствие между изтеглените файлове и md5sum-ите\n"
+
+#, c-format
+msgid "Invalid download URL: %s\n"
+msgstr ""
+
+#, c-format
+msgid "MD5SUM mismatch for %s\n"
+msgstr "MD5SUM несъответствие за %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to open the README for %s\n"
+msgstr "Неуспех при отваряне на %s за четене\n"
+
+#, c-format
+msgid "Failed to open current directory\n"
+msgstr "Неуспех при отваряне на сегашната директория\n"
+
+#, fuzzy, c-format
+msgid "Failed to construct script name\n"
+msgstr "Неуспех при конструирането на команден низ\n"
 
 #, c-format
 msgid "Unable to find generated package\n"
 msgstr "Неуспех при търсенето на генерирания пакет\n"
 
-#, c-format
-msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
-msgstr "Употреба: %s [опция(и)] [действие] [slackbuild(-ове)]\n"
-
-msgid "applicable only to --upgrade-all"
-msgstr "приложимо само при --upgrade-all"
+#, fuzzy, c-format
+msgid "Circular dependency: %s requires %s\n"
+msgstr "Липсва slackbuild: %s изисква %s\n"
 
 #, c-format
-msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr "build-only и fetch-only се изключват взаимно\n"
+msgid "Missing slackbuild: %s requires %s\n"
+msgstr "Липсва slackbuild: %s изисква %s\n"
 
-msgid "built"
-msgstr "изгради"
-
-msgid "clean build directory"
-msgstr "изчисти директорията за изграждане"
-
-msgid "do not look for dependencies"
-msgstr "не търси зависимости"
-
-msgid "do not prompt"
-msgstr "не питай"
-
-msgid "fetch, build, and install the specified slackbuild(s)"
-msgstr "извлечи, изгради и инсталирай посочения slackbuild(-ове)"
-
-msgid "fetched"
-msgstr "извлечен"
-
-msgid "installed"
-msgstr "инсталиран"
-
-msgid "list available slackbuilds"
-msgstr "покажи наличните slackbuild-ове"
-
-msgid "only fetch and build the specified slackbuild(s)"
-msgstr "само извлечи и изгради посочените slackbuild(-ове)"
-
-msgid "only fetch the specified slackbuild(s)"
-msgstr "само извлечи посочените slackbuild(-ове)"
-
-msgid "run specified command on generated package"
-msgstr "изпълни посочената команда на вече генериран пакет"
-
-msgid "search available slackbuilds"
-msgstr "търси наличните slackbuild-ове"
-
-msgid "show specified slackbuilds"
-msgstr "покажи посочените slackbuild-ове"
-
-msgid "show what will be done"
-msgstr "покажи какво ще се направи"
-
-msgid "skip if available via slapt-get, applicable only to --upgrade-all"
-msgstr ""
-
-msgid "update local cache of remote slackbuilds"
-msgstr "обнови локалната кеш памет на отделни slackbuild-ове"
-
-msgid "upgrade all installed slackbuilds"
-msgstr "обнови всички инсталирани slackbuild-ове"
-
-msgid "use the specified configuration file"
-msgstr "използвай посоченият конфигурационен файл"
+#, fuzzy, c-format
+msgid "Unknown slackbuild: %s\n"
+msgstr "SlackBuild Име: %s\n"

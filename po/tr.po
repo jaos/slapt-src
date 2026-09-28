@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-31 17:58-0400\n"
+"POT-Creation-Date: 2026-10-05 18:34-0400\n"
 "PO-Revision-Date: 2012-09-17 22:00+0000\n"
 "Last-Translator: Onur ÖZDEMİR, 2016\n"
 "Language-Team: Turkish (http://app.transifex.com/jaos/slapt-get/language/"
@@ -20,106 +20,110 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #, c-format
-msgid "%s - A SlackBuild utility\n"
-msgstr "%s SlackBuild aracı\n"
-
-#, c-format
 msgid "%s version %s\n"
 msgstr "%s sürüm %s\n"
 
 #, c-format
-msgid "Abort.\n"
-msgstr "İptal.\n"
+msgid "%s - A SlackBuild utility\n"
+msgstr "%s SlackBuild aracı\n"
 
 #, c-format
-msgid "BUILD: %s\n"
-msgstr "İNŞA: %s\n"
-
-#, c-format
-msgid "Cached\n"
-msgstr "Zulalandı\n"
-
-msgid "Do you want to continue? [y/N] "
-msgstr "Devam etmek ister misiniz? [y/N] "
-
-#, c-format
-msgid "Done\n"
-msgstr "Bitti\n"
-
-#, c-format
-msgid "Download failed: %s\n"
-msgstr "İndirme başarısız: %s\n"
-
-#, c-format
-msgid "FETCH: %s\n"
+msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
 msgstr ""
 
-#, c-format
-msgid "Failed\n"
-msgstr "Başarısız\n"
+msgid "update local cache of remote slackbuilds"
+msgstr "uzak slackbuild'ların yerel önbelleğini güncelleme"
 
-#, c-format
-msgid "Failed to chdir to %s\n"
-msgstr "Başarısız chdir %s\n"
-
-msgid "Failed to chdir to build directory"
+msgid "upgrade all installed slackbuilds"
 msgstr ""
 
-#, c-format
-msgid "Failed to construct command string\n"
-msgstr "Komut dizisi oluşturma başarısız\n"
+msgid "list available slackbuilds"
+msgstr "kullanılabilir slackbuild'ları listele"
+
+msgid "clean build directory"
+msgstr "inşa dizinini temizle"
+
+msgid "search available slackbuilds"
+msgstr "kullanılabilir slackbuild'ları ara"
+
+msgid "show specified slackbuilds"
+msgstr "belirtilen slackbuild'ları göster"
+
+msgid "fetch, build, and install the specified slackbuild(s)"
+msgstr ""
+
+msgid "only fetch and build the specified slackbuild(s)"
+msgstr ""
+
+msgid "only fetch the specified slackbuild(s)"
+msgstr ""
+
+msgid "Options"
+msgstr "Opsiyonlar"
+
+msgid "do not prompt"
+msgstr ""
+
+msgid "show what will be done"
+msgstr "ne yapılacağını göster"
+
+msgid "use the specified configuration file"
+msgstr "belirtilen yapılandırma dosyasını kullanın."
+
+msgid "do not look for dependencies"
+msgstr "bağımlılıkları gözardı et"
+
+msgid "run specified command on generated package"
+msgstr "üretilen pakette belirtilen komutu çalıştır"
+
+msgid "applicable only to --upgrade-all"
+msgstr ""
+
+msgid "skip if available via slapt-get, applicable only to --upgrade-all"
+msgstr ""
 
 #, c-format
 msgid "Failed to create build directory [%s]\n"
 msgstr "İnşa klasörü oluşturma başarısız [%s]\n"
 
 #, c-format
-msgid "Failed to open %s for reading\n"
-msgstr "%s okuma için açılamadı\n"
-
-#, c-format
-msgid "Failed to open current directory\n"
-msgstr "Geçerli dizin açılamadı\n"
-
-#, c-format
-msgid "Failed to read %s\n"
-msgstr "%s okuma başarısız\n"
-
-#. TODO support file resume
-#, c-format
-msgid "Fetching %s..."
+msgid "Specify only one action\n"
 msgstr ""
-
-#, c-format
-msgid "Fetching slackbuild list from %s..."
-msgstr ""
-
-#, c-format
-msgid "INSTALL: %s\n"
-msgstr "KUR: %s\n"
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
 msgstr ""
 
 #, c-format
-msgid "MD5SUM mismatch for %s\n"
+msgid "build-only and fetch-only options are mutually exclusive\n"
+msgstr ""
+
+msgid "Failed to chdir to build directory"
 msgstr ""
 
 #, c-format
-msgid "Mismatch between download files and md5sums\n"
+msgid "Unable to find all specified slackbuilds.\n"
+msgstr "Belirtilen tüm slackbuild'ları bulamadı.\n"
+
+#, c-format
+msgid "FETCH: %s\n"
 msgstr ""
 
 #, c-format
-msgid "Missing slackbuild: %s requires %s\n"
-msgstr ""
+msgid "BUILD: %s\n"
+msgstr "İNŞA: %s\n"
 
 #, c-format
-msgid "No BUILDDIR specified in the configuration\n"
-msgstr ""
+msgid "INSTALL: %s\n"
+msgstr "KUR: %s\n"
 
-msgid "Options"
-msgstr "Opsiyonlar"
+#, c-format
+msgid "SlackBuild Name: %s\n"
+msgstr "SlackBuild Adı: %s\n"
+
+#, c-format
+msgid "SlackBuild Version: %s\n"
+msgstr "SlackBuild Versiyonu: %s\n"
 
 #, c-format
 msgid "SlackBuild Category: %s\n"
@@ -134,94 +138,129 @@ msgid "SlackBuild Files:\n"
 msgstr "SlackBuild Dosyaları:\n"
 
 #, c-format
-msgid "SlackBuild Name: %s\n"
-msgstr "SlackBuild Adı: %s\n"
-
-#, c-format
 msgid "SlackBuild Requires: %s\n"
 msgstr "SlackBuild Gereksinimleri: %s\n"
 
 #, c-format
-msgid "SlackBuild Version: %s\n"
-msgstr "SlackBuild Versiyonu: %s\n"
-
-#, c-format
-msgid "The following dependent slackbuilds will be built and installed:\n"
-msgstr ""
+msgid "Done\n"
+msgstr "Bitti\n"
 
 #, c-format
 msgid "The following packages will be %s:\n"
 msgstr ""
 
+msgid "installed"
+msgstr "kurulmuş"
+
+msgid "built"
+msgstr "inşa edilmiş"
+
+msgid "fetched"
+msgstr ""
+
 #, c-format
-msgid "Unable to find all specified slackbuilds.\n"
-msgstr "Belirtilen tüm slackbuild'ları bulamadı.\n"
+msgid "The following dependent slackbuilds will be built and installed:\n"
+msgstr ""
+
+msgid "Do you want to continue? [y/N] "
+msgstr "Devam etmek ister misiniz? [y/N] "
+
+#, c-format
+msgid "Abort.\n"
+msgstr "İptal.\n"
+
+#, c-format
+msgid "Failed to read %s\n"
+msgstr "%s okuma başarısız\n"
+
+#, c-format
+msgid "No BUILDDIR specified in the configuration\n"
+msgstr ""
+
+#, c-format
+msgid "BUILDDIR too long\n"
+msgstr ""
+
+#, c-format
+msgid "Fetching slackbuild list from %s..."
+msgstr ""
+
+#, c-format
+msgid "Cached\n"
+msgstr "Zulalandı\n"
+
+#, c-format
+msgid "Download failed: %s\n"
+msgstr "İndirme başarısız: %s\n"
+
+#, c-format
+msgid "Refusing to overwrite cache with incomplete list\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to open %s for writing\n"
+msgstr "%s okuma için açılamadı\n"
+
+#, fuzzy, c-format
+msgid "Failed to read %s: empty or corrupt gzip\n"
+msgstr "%s okuma başarısız\n"
+
+#, c-format
+msgid "Run --update to fetch the slackbuild list first\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to open %s for reading\n"
+msgstr "%s okuma için açılamadı\n"
+
+#, c-format
+msgid "Failed to chdir to %s\n"
+msgstr "Başarısız chdir %s\n"
+
+#, c-format
+msgid "Fetching %s..."
+msgstr ""
+
+#, c-format
+msgid "Failed\n"
+msgstr "Başarısız\n"
+
+#, c-format
+msgid "Mismatch between download files and md5sums\n"
+msgstr ""
+
+#, c-format
+msgid "Invalid download URL: %s\n"
+msgstr ""
+
+#, c-format
+msgid "MD5SUM mismatch for %s\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to open the README for %s\n"
+msgstr "%s okuma için açılamadı\n"
+
+#, c-format
+msgid "Failed to open current directory\n"
+msgstr "Geçerli dizin açılamadı\n"
+
+#, fuzzy, c-format
+msgid "Failed to construct script name\n"
+msgstr "Komut dizisi oluşturma başarısız\n"
 
 #, c-format
 msgid "Unable to find generated package\n"
 msgstr "Oluşturulan paket bulunamadı\n"
 
 #, c-format
-msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
-msgstr ""
-
-msgid "applicable only to --upgrade-all"
+msgid "Circular dependency: %s requires %s\n"
 msgstr ""
 
 #, c-format
-msgid "build-only and fetch-only options are mutually exclusive\n"
+msgid "Missing slackbuild: %s requires %s\n"
 msgstr ""
 
-msgid "built"
-msgstr "inşa edilmiş"
-
-msgid "clean build directory"
-msgstr "inşa dizinini temizle"
-
-msgid "do not look for dependencies"
-msgstr "bağımlılıkları gözardı et"
-
-msgid "do not prompt"
-msgstr ""
-
-msgid "fetch, build, and install the specified slackbuild(s)"
-msgstr ""
-
-msgid "fetched"
-msgstr ""
-
-msgid "installed"
-msgstr "kurulmuş"
-
-msgid "list available slackbuilds"
-msgstr "kullanılabilir slackbuild'ları listele"
-
-msgid "only fetch and build the specified slackbuild(s)"
-msgstr ""
-
-msgid "only fetch the specified slackbuild(s)"
-msgstr ""
-
-msgid "run specified command on generated package"
-msgstr "üretilen pakette belirtilen komutu çalıştır"
-
-msgid "search available slackbuilds"
-msgstr "kullanılabilir slackbuild'ları ara"
-
-msgid "show specified slackbuilds"
-msgstr "belirtilen slackbuild'ları göster"
-
-msgid "show what will be done"
-msgstr "ne yapılacağını göster"
-
-msgid "skip if available via slapt-get, applicable only to --upgrade-all"
-msgstr ""
-
-msgid "update local cache of remote slackbuilds"
-msgstr "uzak slackbuild'ların yerel önbelleğini güncelleme"
-
-msgid "upgrade all installed slackbuilds"
-msgstr ""
-
-msgid "use the specified configuration file"
-msgstr "belirtilen yapılandırma dosyasını kullanın."
+#, fuzzy, c-format
+msgid "Unknown slackbuild: %s\n"
+msgstr "SlackBuild Adı: %s\n"

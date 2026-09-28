@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-31 17:58-0400\n"
+"POT-Creation-Date: 2026-10-05 18:34-0400\n"
 "PO-Revision-Date: 2012-09-17 22:00+0000\n"
 "Last-Translator: Panwar108 <caspian7pena@gmail.com>, 2020\n"
 "Language-Team: Hindi (India) (http://app.transifex.com/jaos/slapt-get/"
@@ -20,106 +20,110 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
-msgid "%s - A SlackBuild utility\n"
-msgstr "%s - स्लैकबिल्ड साधन\n"
-
-#, c-format
 msgid "%s version %s\n"
 msgstr "%sसंस्करण%s\n"
 
 #, c-format
-msgid "Abort.\n"
-msgstr "निरस्त करें।\n"
+msgid "%s - A SlackBuild utility\n"
+msgstr "%s - स्लैकबिल्ड साधन\n"
 
 #, c-format
-msgid "BUILD: %s\n"
-msgstr "बिल्ड : %s\n"
+msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
+msgstr "उपयोग : %s [विकल्प] [कार्य] [स्लैकबिल्ड]\n"
 
-#, c-format
-msgid "Cached\n"
-msgstr "कैश किया गया\n"
+msgid "update local cache of remote slackbuilds"
+msgstr "दूरस्थ स्लैकबिल्ड की लोकल कैश अपडेट करें"
 
-msgid "Do you want to continue? [y/N] "
-msgstr "जारी रखना चाहते हैं? [y/N]"
+msgid "upgrade all installed slackbuilds"
+msgstr "सभी इंस्टॉल स्लैकबिल्ड अपग्रेड करें"
 
-#, c-format
-msgid "Done\n"
-msgstr "पूर्ण हुआ\n"
+msgid "list available slackbuilds"
+msgstr "उपलब्ध स्लैकबिल्ड सूचीबद्ध करें"
 
-#, c-format
-msgid "Download failed: %s\n"
-msgstr "डाउनलोड विफल : %s\n"
+msgid "clean build directory"
+msgstr "बिल्ड डायरेक्टरी से अनावश्यक वस्तुएँ हटाएँ"
 
-#, c-format
-msgid "FETCH: %s\n"
-msgstr "प्राप्त : %s\n"
+msgid "search available slackbuilds"
+msgstr "उपलब्ध स्लैकबिल्ड खोजें"
 
-#, c-format
-msgid "Failed\n"
-msgstr "विफल\n"
+msgid "show specified slackbuilds"
+msgstr "निर्दिष्ट स्लैकबिल्ड दिखाएँ"
 
-#, c-format
-msgid "Failed to chdir to %s\n"
-msgstr "%s हेतु chdir करने में विफल\n"
+msgid "fetch, build, and install the specified slackbuild(s)"
+msgstr "निर्दिष्ट स्लैकबिल्ड प्राप्त, बिल्ड व इंस्टॉल करें"
 
-msgid "Failed to chdir to build directory"
-msgstr "बिल्ड डायरेक्टरी हेतु chdir करने में विफल"
+msgid "only fetch and build the specified slackbuild(s)"
+msgstr "केवल निर्दिष्ट स्लैकबिल्ड प्राप्त व बिल्ड करें"
 
-#, c-format
-msgid "Failed to construct command string\n"
-msgstr "कमांड वाक्यांश बनाने में विफल\n"
+msgid "only fetch the specified slackbuild(s)"
+msgstr "केवल निर्दिष्ट स्लैकबिल्ड प्राप्त करें"
+
+msgid "Options"
+msgstr "विकल्प"
+
+msgid "do not prompt"
+msgstr "संकेत न करें"
+
+msgid "show what will be done"
+msgstr "होने वाले कार्य दिखाएँ"
+
+msgid "use the specified configuration file"
+msgstr "निर्दिष्ट विन्यास फ़ाइल उपयोग करें"
+
+msgid "do not look for dependencies"
+msgstr "आश्रित पैकेज न खोजें"
+
+msgid "run specified command on generated package"
+msgstr "बनाए गए पैकेज हेतु निर्दिष्ट कमांड निष्पादित करें"
+
+msgid "applicable only to --upgrade-all"
+msgstr "केवल --upgrade-all पर लागू"
+
+msgid "skip if available via slapt-get, applicable only to --upgrade-all"
+msgstr ""
 
 #, c-format
 msgid "Failed to create build directory [%s]\n"
 msgstr "बिल्ड डायरेक्टरी बनाने में विफल [%s]\n"
 
 #, c-format
-msgid "Failed to open %s for reading\n"
-msgstr "रीड हेतु %s खोलने में विफल\n"
-
-#, c-format
-msgid "Failed to open current directory\n"
-msgstr "वर्तमान डायरेक्टरी खोलने में विफल\n"
-
-#, c-format
-msgid "Failed to read %s\n"
-msgstr "%s  रीड करने में विफल\n"
-
-#. TODO support file resume
-#, c-format
-msgid "Fetching %s..."
-msgstr "%s प्राप्त हो रहा है ..."
-
-#, c-format
-msgid "Fetching slackbuild list from %s..."
-msgstr "%s से स्लैकबिल्ड सूची प्राप्त हो रही है ..."
-
-#, c-format
-msgid "INSTALL: %s\n"
-msgstr "इंस्टॉल : %s\n"
+msgid "Specify only one action\n"
+msgstr ""
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
 msgstr "सभी स्लैकबिल्ड अपग्रेड करते समय एकल पैकेज स्वीकार्य नहीं है\n"
 
 #, c-format
-msgid "MD5SUM mismatch for %s\n"
-msgstr "%s हेतु एमडी5 सम मेल नहीं खाता\n"
+msgid "build-only and fetch-only options are mutually exclusive\n"
+msgstr "केवल- बिल्ड व केवल-प्राप्त परस्पर अपवर्जी हैं\n"
+
+msgid "Failed to chdir to build directory"
+msgstr "बिल्ड डायरेक्टरी हेतु chdir करने में विफल"
 
 #, c-format
-msgid "Mismatch between download files and md5sums\n"
-msgstr "डाउनलोड फ़ाइलें व एमडी5 सम मेल नहीं खाते\n"
+msgid "Unable to find all specified slackbuilds.\n"
+msgstr "सभी निर्दिष्ट स्लैकबिल्ड प्राप्त करने में विफल।\n"
 
 #, c-format
-msgid "Missing slackbuild: %s requires %s\n"
-msgstr "अनुपस्थित स्लैकबिल्ड : %s हेतु आवश्यक %s\n"
+msgid "FETCH: %s\n"
+msgstr "प्राप्त : %s\n"
 
 #, c-format
-msgid "No BUILDDIR specified in the configuration\n"
-msgstr "विन्यास में कोई BUILDDIR निर्दिष्ट नहीं\n"
+msgid "BUILD: %s\n"
+msgstr "बिल्ड : %s\n"
 
-msgid "Options"
-msgstr "विकल्प"
+#, c-format
+msgid "INSTALL: %s\n"
+msgstr "इंस्टॉल : %s\n"
+
+#, c-format
+msgid "SlackBuild Name: %s\n"
+msgstr "स्लैकबिल्ड नाम : %s\n"
+
+#, c-format
+msgid "SlackBuild Version: %s\n"
+msgstr "स्लैकबिल्ड संस्करण : %s\n"
 
 #, c-format
 msgid "SlackBuild Category: %s\n"
@@ -134,94 +138,129 @@ msgid "SlackBuild Files:\n"
 msgstr "स्लैकबिल्ड फ़ाइलें : \n"
 
 #, c-format
-msgid "SlackBuild Name: %s\n"
-msgstr "स्लैकबिल्ड नाम : %s\n"
-
-#, c-format
 msgid "SlackBuild Requires: %s\n"
 msgstr "स्लैकबिल्ड हेतु आवश्यक : %s\n"
 
 #, c-format
-msgid "SlackBuild Version: %s\n"
-msgstr "स्लैकबिल्ड संस्करण : %s\n"
-
-#, c-format
-msgid "The following dependent slackbuilds will be built and installed:\n"
-msgstr "निम्नलिखित आश्रित पैकेज स्लैकबिल्ड बिल्ड कर इंस्टॉल होंगे :\n"
+msgid "Done\n"
+msgstr "पूर्ण हुआ\n"
 
 #, c-format
 msgid "The following packages will be %s:\n"
 msgstr "निम्नलिखित पैकेज %s होंगे :\n"
 
+msgid "installed"
+msgstr "इंस्टॉल किए"
+
+msgid "built"
+msgstr "बिल्ड किया गया"
+
+msgid "fetched"
+msgstr "प्राप्त किए"
+
 #, c-format
-msgid "Unable to find all specified slackbuilds.\n"
-msgstr "सभी निर्दिष्ट स्लैकबिल्ड प्राप्त करने में विफल।\n"
+msgid "The following dependent slackbuilds will be built and installed:\n"
+msgstr "निम्नलिखित आश्रित पैकेज स्लैकबिल्ड बिल्ड कर इंस्टॉल होंगे :\n"
+
+msgid "Do you want to continue? [y/N] "
+msgstr "जारी रखना चाहते हैं? [y/N]"
+
+#, c-format
+msgid "Abort.\n"
+msgstr "निरस्त करें।\n"
+
+#, c-format
+msgid "Failed to read %s\n"
+msgstr "%s  रीड करने में विफल\n"
+
+#, c-format
+msgid "No BUILDDIR specified in the configuration\n"
+msgstr "विन्यास में कोई BUILDDIR निर्दिष्ट नहीं\n"
+
+#, c-format
+msgid "BUILDDIR too long\n"
+msgstr ""
+
+#, c-format
+msgid "Fetching slackbuild list from %s..."
+msgstr "%s से स्लैकबिल्ड सूची प्राप्त हो रही है ..."
+
+#, c-format
+msgid "Cached\n"
+msgstr "कैश किया गया\n"
+
+#, c-format
+msgid "Download failed: %s\n"
+msgstr "डाउनलोड विफल : %s\n"
+
+#, c-format
+msgid "Refusing to overwrite cache with incomplete list\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to open %s for writing\n"
+msgstr "रीड हेतु %s खोलने में विफल\n"
+
+#, fuzzy, c-format
+msgid "Failed to read %s: empty or corrupt gzip\n"
+msgstr "%s  रीड करने में विफल\n"
+
+#, c-format
+msgid "Run --update to fetch the slackbuild list first\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to open %s for reading\n"
+msgstr "रीड हेतु %s खोलने में विफल\n"
+
+#, c-format
+msgid "Failed to chdir to %s\n"
+msgstr "%s हेतु chdir करने में विफल\n"
+
+#, c-format
+msgid "Fetching %s..."
+msgstr "%s प्राप्त हो रहा है ..."
+
+#, c-format
+msgid "Failed\n"
+msgstr "विफल\n"
+
+#, c-format
+msgid "Mismatch between download files and md5sums\n"
+msgstr "डाउनलोड फ़ाइलें व एमडी5 सम मेल नहीं खाते\n"
+
+#, c-format
+msgid "Invalid download URL: %s\n"
+msgstr ""
+
+#, c-format
+msgid "MD5SUM mismatch for %s\n"
+msgstr "%s हेतु एमडी5 सम मेल नहीं खाता\n"
+
+#, fuzzy, c-format
+msgid "Failed to open the README for %s\n"
+msgstr "रीड हेतु %s खोलने में विफल\n"
+
+#, c-format
+msgid "Failed to open current directory\n"
+msgstr "वर्तमान डायरेक्टरी खोलने में विफल\n"
+
+#, fuzzy, c-format
+msgid "Failed to construct script name\n"
+msgstr "कमांड वाक्यांश बनाने में विफल\n"
 
 #, c-format
 msgid "Unable to find generated package\n"
 msgstr "बनाया गया पैकेज खोजने में विफल\n"
 
-#, c-format
-msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
-msgstr "उपयोग : %s [विकल्प] [कार्य] [स्लैकबिल्ड]\n"
-
-msgid "applicable only to --upgrade-all"
-msgstr "केवल --upgrade-all पर लागू"
+#, fuzzy, c-format
+msgid "Circular dependency: %s requires %s\n"
+msgstr "अनुपस्थित स्लैकबिल्ड : %s हेतु आवश्यक %s\n"
 
 #, c-format
-msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr "केवल- बिल्ड व केवल-प्राप्त परस्पर अपवर्जी हैं\n"
+msgid "Missing slackbuild: %s requires %s\n"
+msgstr "अनुपस्थित स्लैकबिल्ड : %s हेतु आवश्यक %s\n"
 
-msgid "built"
-msgstr "बिल्ड किया गया"
-
-msgid "clean build directory"
-msgstr "बिल्ड डायरेक्टरी से अनावश्यक वस्तुएँ हटाएँ"
-
-msgid "do not look for dependencies"
-msgstr "आश्रित पैकेज न खोजें"
-
-msgid "do not prompt"
-msgstr "संकेत न करें"
-
-msgid "fetch, build, and install the specified slackbuild(s)"
-msgstr "निर्दिष्ट स्लैकबिल्ड प्राप्त, बिल्ड व इंस्टॉल करें"
-
-msgid "fetched"
-msgstr "प्राप्त किए"
-
-msgid "installed"
-msgstr "इंस्टॉल किए"
-
-msgid "list available slackbuilds"
-msgstr "उपलब्ध स्लैकबिल्ड सूचीबद्ध करें"
-
-msgid "only fetch and build the specified slackbuild(s)"
-msgstr "केवल निर्दिष्ट स्लैकबिल्ड प्राप्त व बिल्ड करें"
-
-msgid "only fetch the specified slackbuild(s)"
-msgstr "केवल निर्दिष्ट स्लैकबिल्ड प्राप्त करें"
-
-msgid "run specified command on generated package"
-msgstr "बनाए गए पैकेज हेतु निर्दिष्ट कमांड निष्पादित करें"
-
-msgid "search available slackbuilds"
-msgstr "उपलब्ध स्लैकबिल्ड खोजें"
-
-msgid "show specified slackbuilds"
-msgstr "निर्दिष्ट स्लैकबिल्ड दिखाएँ"
-
-msgid "show what will be done"
-msgstr "होने वाले कार्य दिखाएँ"
-
-msgid "skip if available via slapt-get, applicable only to --upgrade-all"
-msgstr ""
-
-msgid "update local cache of remote slackbuilds"
-msgstr "दूरस्थ स्लैकबिल्ड की लोकल कैश अपडेट करें"
-
-msgid "upgrade all installed slackbuilds"
-msgstr "सभी इंस्टॉल स्लैकबिल्ड अपग्रेड करें"
-
-msgid "use the specified configuration file"
-msgstr "निर्दिष्ट विन्यास फ़ाइल उपयोग करें"
+#, fuzzy, c-format
+msgid "Unknown slackbuild: %s\n"
+msgstr "स्लैकबिल्ड नाम : %s\n"

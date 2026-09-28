@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-31 17:58-0400\n"
+"POT-Creation-Date: 2026-10-05 18:34-0400\n"
 "PO-Revision-Date: 2012-09-17 22:00+0000\n"
 "Last-Translator: Peter Polonkai <polesz at nedudu dot hu>, 2010\n"
 "Language-Team: Hungarian (http://app.transifex.com/jaos/slapt-get/language/"
@@ -20,83 +20,75 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
-msgid "%s - A SlackBuild utility\n"
-msgstr "%s - A SlackBuild segédprogram\n"
-
-#, c-format
 msgid "%s version %s\n"
 msgstr "%s verzió %s\n"
 
 #, c-format
-msgid "Abort.\n"
-msgstr "Megszakítva.\n"
+msgid "%s - A SlackBuild utility\n"
+msgstr "%s - A SlackBuild segédprogram\n"
 
 #, c-format
-msgid "BUILD: %s\n"
+msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
+msgstr "Használat: %s [opció(k) [művelet] [slackbuild csomag(ok)]\n"
+
+msgid "update local cache of remote slackbuilds"
+msgstr "helyi tároló frissítése a távol slackbuild csomagokból"
+
+msgid "upgrade all installed slackbuilds"
 msgstr ""
 
-#, c-format
-msgid "Cached\n"
-msgstr "Tárolt\n"
+msgid "list available slackbuilds"
+msgstr "elérhető slackbuild csomagok listája"
 
-msgid "Do you want to continue? [y/N] "
-msgstr "Valóban folytatni akarja? [y/N]"
+msgid "clean build directory"
+msgstr "fordítási könyvtár tisztítása"
 
-#, c-format
-msgid "Done\n"
-msgstr "Kész\n"
+msgid "search available slackbuilds"
+msgstr "elérhető slackbuild csomagok keresése"
 
-#, c-format
-msgid "Download failed: %s\n"
-msgstr "Letöltés sikertelen: %s\n"
+msgid "show specified slackbuilds"
+msgstr "meghatározott slackbuild csomagok mutatása"
 
-#, c-format
-msgid "FETCH: %s\n"
+msgid "fetch, build, and install the specified slackbuild(s)"
+msgstr ""
+"a meghatározott slackbuild csomag(ok) letöltése, fordítása és telepítése"
+
+msgid "only fetch and build the specified slackbuild(s)"
+msgstr "a meghatározott slackbuild csomag(ok) csak letöltése és fordítása"
+
+msgid "only fetch the specified slackbuild(s)"
+msgstr "a meghatározott slackbuild csomag(ok) csak letöltése"
+
+msgid "Options"
 msgstr ""
 
-#, c-format
-msgid "Failed\n"
-msgstr "Sikertelen\n"
+msgid "do not prompt"
+msgstr "nem kérdez"
 
-#, c-format
-msgid "Failed to chdir to %s\n"
-msgstr "Sikertelen chdir ide: %s\n"
-
-msgid "Failed to chdir to build directory"
-msgstr "Nem sikerült a fordítási könyvtárba lépni"
-
-#, c-format
-msgid "Failed to construct command string\n"
+msgid "show what will be done"
 msgstr ""
-"Nem sikerült a parancs végrehajtásához szükséges szöveg összeállítása\n"
+
+msgid "use the specified configuration file"
+msgstr "használni kívánt konfigurációs állomány meghatározása"
+
+msgid "do not look for dependencies"
+msgstr "ne figyelje a függőségeket"
+
+msgid "run specified command on generated package"
+msgstr "meghatározott parancsok futtatása az elkészített csomagon"
+
+msgid "applicable only to --upgrade-all"
+msgstr ""
+
+msgid "skip if available via slapt-get, applicable only to --upgrade-all"
+msgstr ""
 
 #, c-format
 msgid "Failed to create build directory [%s]\n"
 msgstr "A fordítási könyvtár létrehozása sikertelen [%s]\n"
 
 #, c-format
-msgid "Failed to open %s for reading\n"
-msgstr "Sikertelen a következő megnyitása olvasásra %s\n"
-
-#, c-format
-msgid "Failed to open current directory\n"
-msgstr "Az aktuális könyvtár megnyitása sikertelen\n"
-
-#, c-format
-msgid "Failed to read %s\n"
-msgstr "%s olvasása nem sikerült\n"
-
-#. TODO support file resume
-#, c-format
-msgid "Fetching %s..."
-msgstr "%s letöltése... "
-
-#, c-format
-msgid "Fetching slackbuild list from %s..."
-msgstr "Slackbuild csomagok listájának olvasása innét %s..."
-
-#, c-format
-msgid "INSTALL: %s\n"
+msgid "Specify only one action\n"
 msgstr ""
 
 #, c-format
@@ -104,23 +96,35 @@ msgid "Individual packages not accepted when upgrading all slackbuilds\n"
 msgstr ""
 
 #, c-format
-msgid "MD5SUM mismatch for %s\n"
-msgstr "MD5SUM eltérő ehhez %s\n"
-
-#, c-format
-msgid "Mismatch between download files and md5sums\n"
-msgstr "A letöltött fájlok és md5sum összegek eltérnek\n"
-
-#, c-format
-msgid "Missing slackbuild: %s requires %s\n"
-msgstr "Hiányzó slackbuild csoamg: %s szükséges ehhez %s\n"
-
-#, c-format
-msgid "No BUILDDIR specified in the configuration\n"
-msgstr "Nincs BUILDDIR meghatározva a konfigurációban\n"
-
-msgid "Options"
+msgid "build-only and fetch-only options are mutually exclusive\n"
 msgstr ""
+
+msgid "Failed to chdir to build directory"
+msgstr "Nem sikerült a fordítási könyvtárba lépni"
+
+#, c-format
+msgid "Unable to find all specified slackbuilds.\n"
+msgstr "Nem található az összes megadott slackbuild csomag.\n"
+
+#, c-format
+msgid "FETCH: %s\n"
+msgstr ""
+
+#, c-format
+msgid "BUILD: %s\n"
+msgstr ""
+
+#, c-format
+msgid "INSTALL: %s\n"
+msgstr ""
+
+#, c-format
+msgid "SlackBuild Name: %s\n"
+msgstr "SlackBuild Név: %s\n"
+
+#, c-format
+msgid "SlackBuild Version: %s\n"
+msgstr "SlackBuild Verzió: %s\n"
 
 #, c-format
 msgid "SlackBuild Category: %s\n"
@@ -135,95 +139,130 @@ msgid "SlackBuild Files:\n"
 msgstr "SlackBuild Fájlok:\n"
 
 #, c-format
-msgid "SlackBuild Name: %s\n"
-msgstr "SlackBuild Név: %s\n"
-
-#, c-format
 msgid "SlackBuild Requires: %s\n"
 msgstr "SlackBuild Szükséges: %s\n"
 
 #, c-format
-msgid "SlackBuild Version: %s\n"
-msgstr "SlackBuild Verzió: %s\n"
-
-#, c-format
-msgid "The following dependent slackbuilds will be built and installed:\n"
-msgstr "A következő függő slackbuild csomagok lesznek fordítva és telepítve:\n"
+msgid "Done\n"
+msgstr "Kész\n"
 
 #, c-format
 msgid "The following packages will be %s:\n"
 msgstr "A következő csomagok lesznek %s:\n"
 
+msgid "installed"
+msgstr "telepített"
+
+msgid "built"
+msgstr "lefordított"
+
+msgid "fetched"
+msgstr "fogadott"
+
 #, c-format
-msgid "Unable to find all specified slackbuilds.\n"
-msgstr "Nem található az összes megadott slackbuild csomag.\n"
+msgid "The following dependent slackbuilds will be built and installed:\n"
+msgstr "A következő függő slackbuild csomagok lesznek fordítva és telepítve:\n"
+
+msgid "Do you want to continue? [y/N] "
+msgstr "Valóban folytatni akarja? [y/N]"
+
+#, c-format
+msgid "Abort.\n"
+msgstr "Megszakítva.\n"
+
+#, c-format
+msgid "Failed to read %s\n"
+msgstr "%s olvasása nem sikerült\n"
+
+#, c-format
+msgid "No BUILDDIR specified in the configuration\n"
+msgstr "Nincs BUILDDIR meghatározva a konfigurációban\n"
+
+#, c-format
+msgid "BUILDDIR too long\n"
+msgstr ""
+
+#, c-format
+msgid "Fetching slackbuild list from %s..."
+msgstr "Slackbuild csomagok listájának olvasása innét %s..."
+
+#, c-format
+msgid "Cached\n"
+msgstr "Tárolt\n"
+
+#, c-format
+msgid "Download failed: %s\n"
+msgstr "Letöltés sikertelen: %s\n"
+
+#, c-format
+msgid "Refusing to overwrite cache with incomplete list\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to open %s for writing\n"
+msgstr "Sikertelen a következő megnyitása olvasásra %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to read %s: empty or corrupt gzip\n"
+msgstr "%s olvasása nem sikerült\n"
+
+#, c-format
+msgid "Run --update to fetch the slackbuild list first\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to open %s for reading\n"
+msgstr "Sikertelen a következő megnyitása olvasásra %s\n"
+
+#, c-format
+msgid "Failed to chdir to %s\n"
+msgstr "Sikertelen chdir ide: %s\n"
+
+#, c-format
+msgid "Fetching %s..."
+msgstr "%s letöltése... "
+
+#, c-format
+msgid "Failed\n"
+msgstr "Sikertelen\n"
+
+#, c-format
+msgid "Mismatch between download files and md5sums\n"
+msgstr "A letöltött fájlok és md5sum összegek eltérnek\n"
+
+#, c-format
+msgid "Invalid download URL: %s\n"
+msgstr ""
+
+#, c-format
+msgid "MD5SUM mismatch for %s\n"
+msgstr "MD5SUM eltérő ehhez %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to open the README for %s\n"
+msgstr "Sikertelen a következő megnyitása olvasásra %s\n"
+
+#, c-format
+msgid "Failed to open current directory\n"
+msgstr "Az aktuális könyvtár megnyitása sikertelen\n"
+
+#, fuzzy, c-format
+msgid "Failed to construct script name\n"
+msgstr ""
+"Nem sikerült a parancs végrehajtásához szükséges szöveg összeállítása\n"
 
 #, c-format
 msgid "Unable to find generated package\n"
 msgstr "Nem található a lefordított csomag\n"
 
-#, c-format
-msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
-msgstr "Használat: %s [opció(k) [művelet] [slackbuild csomag(ok)]\n"
-
-msgid "applicable only to --upgrade-all"
-msgstr ""
+#, fuzzy, c-format
+msgid "Circular dependency: %s requires %s\n"
+msgstr "Hiányzó slackbuild csoamg: %s szükséges ehhez %s\n"
 
 #, c-format
-msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr ""
+msgid "Missing slackbuild: %s requires %s\n"
+msgstr "Hiányzó slackbuild csoamg: %s szükséges ehhez %s\n"
 
-msgid "built"
-msgstr "lefordított"
-
-msgid "clean build directory"
-msgstr "fordítási könyvtár tisztítása"
-
-msgid "do not look for dependencies"
-msgstr "ne figyelje a függőségeket"
-
-msgid "do not prompt"
-msgstr "nem kérdez"
-
-msgid "fetch, build, and install the specified slackbuild(s)"
-msgstr ""
-"a meghatározott slackbuild csomag(ok) letöltése, fordítása és telepítése"
-
-msgid "fetched"
-msgstr "fogadott"
-
-msgid "installed"
-msgstr "telepített"
-
-msgid "list available slackbuilds"
-msgstr "elérhető slackbuild csomagok listája"
-
-msgid "only fetch and build the specified slackbuild(s)"
-msgstr "a meghatározott slackbuild csomag(ok) csak letöltése és fordítása"
-
-msgid "only fetch the specified slackbuild(s)"
-msgstr "a meghatározott slackbuild csomag(ok) csak letöltése"
-
-msgid "run specified command on generated package"
-msgstr "meghatározott parancsok futtatása az elkészített csomagon"
-
-msgid "search available slackbuilds"
-msgstr "elérhető slackbuild csomagok keresése"
-
-msgid "show specified slackbuilds"
-msgstr "meghatározott slackbuild csomagok mutatása"
-
-msgid "show what will be done"
-msgstr ""
-
-msgid "skip if available via slapt-get, applicable only to --upgrade-all"
-msgstr ""
-
-msgid "update local cache of remote slackbuilds"
-msgstr "helyi tároló frissítése a távol slackbuild csomagokból"
-
-msgid "upgrade all installed slackbuilds"
-msgstr ""
-
-msgid "use the specified configuration file"
-msgstr "használni kívánt konfigurációs állomány meghatározása"
+#, fuzzy, c-format
+msgid "Unknown slackbuild: %s\n"
+msgstr "SlackBuild Név: %s\n"

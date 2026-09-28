@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-31 17:58-0400\n"
+"POT-Creation-Date: 2026-10-05 18:34-0400\n"
 "PO-Revision-Date: 2012-09-17 22:00+0000\n"
 "Last-Translator: gapan <vlahavas@gmail.com>, 2012,2022\n"
 "Language-Team: Greek (http://app.transifex.com/jaos/slapt-get/language/el/)\n"
@@ -22,83 +22,75 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, c-format
-msgid "%s - A SlackBuild utility\n"
-msgstr "%s - Ένα εργαλείο για αρχεία SlackBuild\n"
-
-#, c-format
 msgid "%s version %s\n"
 msgstr "%s έκδοση %s\n"
 
 #, c-format
-msgid "Abort.\n"
-msgstr "Ακύρωση.\n"
+msgid "%s - A SlackBuild utility\n"
+msgstr "%s - Ένα εργαλείο για αρχεία SlackBuild\n"
 
 #, c-format
-msgid "BUILD: %s\n"
-msgstr "ΔΗΜΙΟΥΡΓΙΑ: %s\n"
+msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
+msgstr "Χρήση: %s [επιλογή(ες)] [ενέργεια] [slackbuild(s)]\n"
 
-#, c-format
-msgid "Cached\n"
-msgstr "Στη μνήμη\n"
+msgid "update local cache of remote slackbuilds"
+msgstr "ενημέρωση τοπικής αποθήκης απομακρυσμένων slackbuilds"
 
-msgid "Do you want to continue? [y/N] "
-msgstr "Θέλετε να συνεχίσετε; [y/N]"
+msgid "upgrade all installed slackbuilds"
+msgstr "αναβάθμιση όλων των εγκατεστημένων slackbuild"
 
-#, c-format
-msgid "Done\n"
-msgstr "Έτοιμο\n"
+msgid "list available slackbuilds"
+msgstr "εμφάνιση όλων των διαθέσιμων slackbuild"
 
-#, c-format
-msgid "Download failed: %s\n"
-msgstr "Η λήψη του αρχείου απέτυχε: %s\n"
+msgid "clean build directory"
+msgstr "καθαρισμός καταλόγου εργασίας"
 
-#, c-format
-msgid "FETCH: %s\n"
-msgstr "ΛΗΨΗ: %s\n"
+msgid "search available slackbuilds"
+msgstr "αναζήτηση στα διαθέσιμα slackbuilds"
 
-#, c-format
-msgid "Failed\n"
-msgstr "Αποτυχία\n"
+msgid "show specified slackbuilds"
+msgstr "εμφάνιση ζητούμενο slackbuild"
 
-#, c-format
-msgid "Failed to chdir to %s\n"
-msgstr "Αποτυχία αλλαγής καταλόγους στο %s\n"
+msgid "fetch, build, and install the specified slackbuild(s)"
+msgstr "λήψη, δημιουργία και εγκατάσταση των πακέτων από τα slackbuild"
 
-msgid "Failed to chdir to build directory"
-msgstr "Αδυναμία αλλαγής τρέχοντος καταλόγου στο κατάλογο εργασίας"
+msgid "only fetch and build the specified slackbuild(s)"
+msgstr "μόνο λήψη και δημιουργία των πακέτων από τα slackbuild"
 
-#, c-format
-msgid "Failed to construct command string\n"
-msgstr "Αδυναμία δημιουργίας εντολής\n"
+msgid "only fetch the specified slackbuild(s)"
+msgstr "μόνο λήψη των slackbuild(s)"
+
+msgid "Options"
+msgstr "Επιλογές"
+
+msgid "do not prompt"
+msgstr "χωρίς προτροπή"
+
+msgid "show what will be done"
+msgstr "εμφάνιση του τι πρόκειται να συμβεί"
+
+msgid "use the specified configuration file"
+msgstr "προσδιορίστε εναλλακτική τοποθεσία για το αρχείο ρυθμίσεων"
+
+msgid "do not look for dependencies"
+msgstr "παράλειψη ελέγχου απαιτούμενων πακέτων"
+
+msgid "run specified command on generated package"
+msgstr "εκτέλεση της προσδιοριζόμενης εντολής στο πακέτο που δημιουργείται"
+
+msgid "applicable only to --upgrade-all"
+msgstr "έχει εφαρμογή μόνο στο --upgrade-all"
+
+msgid "skip if available via slapt-get, applicable only to --upgrade-all"
+msgstr ""
 
 #, c-format
 msgid "Failed to create build directory [%s]\n"
 msgstr "Αδυναμία δημιουργίας του καταλόγου εργασίας [%s]\n"
 
 #, c-format
-msgid "Failed to open %s for reading\n"
-msgstr "Αποτυχία κατά το άνοιγμα του %s για ανάγνωση\n"
-
-#, c-format
-msgid "Failed to open current directory\n"
-msgstr "Αδυναμία ανοίγματος του τρέχοντος καταλόγου\n"
-
-#, c-format
-msgid "Failed to read %s\n"
-msgstr "Αδυναμία ανάγνωσης %s\n"
-
-#. TODO support file resume
-#, c-format
-msgid "Fetching %s..."
-msgstr "Λήψη του %s..."
-
-#, c-format
-msgid "Fetching slackbuild list from %s..."
-msgstr "Λήψη της λίστας slackbuild από το %s..."
-
-#, c-format
-msgid "INSTALL: %s\n"
-msgstr "ΕΓΚΑΤΑΣΤΑΣΗ: %s\n"
+msgid "Specify only one action\n"
+msgstr ""
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
@@ -107,23 +99,36 @@ msgstr ""
 "slackbuild\n"
 
 #, c-format
-msgid "MD5SUM mismatch for %s\n"
-msgstr "Αποτυχία στον έλεγχο MD5SUM για το %s\n"
+msgid "build-only and fetch-only options are mutually exclusive\n"
+msgstr ""
+"οι επιλογές για μόνο δημιουργία και μόνο λήψη είναι αμοιβαία αποκλειόμενες\n"
+
+msgid "Failed to chdir to build directory"
+msgstr "Αδυναμία αλλαγής τρέχοντος καταλόγου στο κατάλογο εργασίας"
 
 #, c-format
-msgid "Mismatch between download files and md5sums\n"
-msgstr "Τα ληφθέντα αρχεία και τα αρχεία md5sum δεν ταιριάζουν\n"
+msgid "Unable to find all specified slackbuilds.\n"
+msgstr "Αδυναμία εύρεσης όλων των slackbuilds.\n"
 
 #, c-format
-msgid "Missing slackbuild: %s requires %s\n"
-msgstr "Αδυναμία εύρεσης του slackbuild: το %s απαιτεί το %s\n"
+msgid "FETCH: %s\n"
+msgstr "ΛΗΨΗ: %s\n"
 
 #, c-format
-msgid "No BUILDDIR specified in the configuration\n"
-msgstr "Δεν έχει προσδιοριστεί το BUILDDIR στις ρυθμίσεις\n"
+msgid "BUILD: %s\n"
+msgstr "ΔΗΜΙΟΥΡΓΙΑ: %s\n"
 
-msgid "Options"
-msgstr "Επιλογές"
+#, c-format
+msgid "INSTALL: %s\n"
+msgstr "ΕΓΚΑΤΑΣΤΑΣΗ: %s\n"
+
+#, c-format
+msgid "SlackBuild Name: %s\n"
+msgstr "Όνομα SlackBuild: %s\n"
+
+#, c-format
+msgid "SlackBuild Version: %s\n"
+msgstr "Έκδοση SlackBuild: %s\n"
 
 #, c-format
 msgid "SlackBuild Category: %s\n"
@@ -138,96 +143,130 @@ msgid "SlackBuild Files:\n"
 msgstr "Αρχεία SlackBuild:\n"
 
 #, c-format
-msgid "SlackBuild Name: %s\n"
-msgstr "Όνομα SlackBuild: %s\n"
-
-#, c-format
 msgid "SlackBuild Requires: %s\n"
 msgstr "Εξαρτήσεις Slackbuild: %s\n"
 
 #, c-format
-msgid "SlackBuild Version: %s\n"
-msgstr "Έκδοση SlackBuild: %s\n"
+msgid "Done\n"
+msgstr "Έτοιμο\n"
+
+#, c-format
+msgid "The following packages will be %s:\n"
+msgstr "τα ακόλουθα πακέτα θα %s:\n"
+
+msgid "installed"
+msgstr "εγκατασταθούν"
+
+msgid "built"
+msgstr "δημιουργηθούν"
+
+msgid "fetched"
+msgstr "ληφθούν"
 
 #, c-format
 msgid "The following dependent slackbuilds will be built and installed:\n"
 msgstr ""
 "Οι ακόλουθες slackbuild εξαρτήσεις θα δημιουργηθούν και θα εγκατασταθούν:\n"
 
-#, c-format
-msgid "The following packages will be %s:\n"
-msgstr "τα ακόλουθα πακέτα θα %s:\n"
+msgid "Do you want to continue? [y/N] "
+msgstr "Θέλετε να συνεχίσετε; [y/N]"
 
 #, c-format
-msgid "Unable to find all specified slackbuilds.\n"
-msgstr "Αδυναμία εύρεσης όλων των slackbuilds.\n"
+msgid "Abort.\n"
+msgstr "Ακύρωση.\n"
+
+#, c-format
+msgid "Failed to read %s\n"
+msgstr "Αδυναμία ανάγνωσης %s\n"
+
+#, c-format
+msgid "No BUILDDIR specified in the configuration\n"
+msgstr "Δεν έχει προσδιοριστεί το BUILDDIR στις ρυθμίσεις\n"
+
+#, c-format
+msgid "BUILDDIR too long\n"
+msgstr ""
+
+#, c-format
+msgid "Fetching slackbuild list from %s..."
+msgstr "Λήψη της λίστας slackbuild από το %s..."
+
+#, c-format
+msgid "Cached\n"
+msgstr "Στη μνήμη\n"
+
+#, c-format
+msgid "Download failed: %s\n"
+msgstr "Η λήψη του αρχείου απέτυχε: %s\n"
+
+#, c-format
+msgid "Refusing to overwrite cache with incomplete list\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to open %s for writing\n"
+msgstr "Αποτυχία κατά το άνοιγμα του %s για ανάγνωση\n"
+
+#, fuzzy, c-format
+msgid "Failed to read %s: empty or corrupt gzip\n"
+msgstr "Αδυναμία ανάγνωσης %s\n"
+
+#, c-format
+msgid "Run --update to fetch the slackbuild list first\n"
+msgstr ""
+
+#, c-format
+msgid "Failed to open %s for reading\n"
+msgstr "Αποτυχία κατά το άνοιγμα του %s για ανάγνωση\n"
+
+#, c-format
+msgid "Failed to chdir to %s\n"
+msgstr "Αποτυχία αλλαγής καταλόγους στο %s\n"
+
+#, c-format
+msgid "Fetching %s..."
+msgstr "Λήψη του %s..."
+
+#, c-format
+msgid "Failed\n"
+msgstr "Αποτυχία\n"
+
+#, c-format
+msgid "Mismatch between download files and md5sums\n"
+msgstr "Τα ληφθέντα αρχεία και τα αρχεία md5sum δεν ταιριάζουν\n"
+
+#, c-format
+msgid "Invalid download URL: %s\n"
+msgstr ""
+
+#, c-format
+msgid "MD5SUM mismatch for %s\n"
+msgstr "Αποτυχία στον έλεγχο MD5SUM για το %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to open the README for %s\n"
+msgstr "Αποτυχία κατά το άνοιγμα του %s για ανάγνωση\n"
+
+#, c-format
+msgid "Failed to open current directory\n"
+msgstr "Αδυναμία ανοίγματος του τρέχοντος καταλόγου\n"
+
+#, fuzzy, c-format
+msgid "Failed to construct script name\n"
+msgstr "Αδυναμία δημιουργίας εντολής\n"
 
 #, c-format
 msgid "Unable to find generated package\n"
 msgstr "Αδυναμία εύρεσης του πακέτου που δημιουργήθηκε\n"
 
-#, c-format
-msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
-msgstr "Χρήση: %s [επιλογή(ες)] [ενέργεια] [slackbuild(s)]\n"
-
-msgid "applicable only to --upgrade-all"
-msgstr "έχει εφαρμογή μόνο στο --upgrade-all"
+#, fuzzy, c-format
+msgid "Circular dependency: %s requires %s\n"
+msgstr "Αδυναμία εύρεσης του slackbuild: το %s απαιτεί το %s\n"
 
 #, c-format
-msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr ""
-"οι επιλογές για μόνο δημιουργία και μόνο λήψη είναι αμοιβαία αποκλειόμενες\n"
+msgid "Missing slackbuild: %s requires %s\n"
+msgstr "Αδυναμία εύρεσης του slackbuild: το %s απαιτεί το %s\n"
 
-msgid "built"
-msgstr "δημιουργηθούν"
-
-msgid "clean build directory"
-msgstr "καθαρισμός καταλόγου εργασίας"
-
-msgid "do not look for dependencies"
-msgstr "παράλειψη ελέγχου απαιτούμενων πακέτων"
-
-msgid "do not prompt"
-msgstr "χωρίς προτροπή"
-
-msgid "fetch, build, and install the specified slackbuild(s)"
-msgstr "λήψη, δημιουργία και εγκατάσταση των πακέτων από τα slackbuild"
-
-msgid "fetched"
-msgstr "ληφθούν"
-
-msgid "installed"
-msgstr "εγκατασταθούν"
-
-msgid "list available slackbuilds"
-msgstr "εμφάνιση όλων των διαθέσιμων slackbuild"
-
-msgid "only fetch and build the specified slackbuild(s)"
-msgstr "μόνο λήψη και δημιουργία των πακέτων από τα slackbuild"
-
-msgid "only fetch the specified slackbuild(s)"
-msgstr "μόνο λήψη των slackbuild(s)"
-
-msgid "run specified command on generated package"
-msgstr "εκτέλεση της προσδιοριζόμενης εντολής στο πακέτο που δημιουργείται"
-
-msgid "search available slackbuilds"
-msgstr "αναζήτηση στα διαθέσιμα slackbuilds"
-
-msgid "show specified slackbuilds"
-msgstr "εμφάνιση ζητούμενο slackbuild"
-
-msgid "show what will be done"
-msgstr "εμφάνιση του τι πρόκειται να συμβεί"
-
-msgid "skip if available via slapt-get, applicable only to --upgrade-all"
-msgstr ""
-
-msgid "update local cache of remote slackbuilds"
-msgstr "ενημέρωση τοπικής αποθήκης απομακρυσμένων slackbuilds"
-
-msgid "upgrade all installed slackbuilds"
-msgstr "αναβάθμιση όλων των εγκατεστημένων slackbuild"
-
-msgid "use the specified configuration file"
-msgstr "προσδιορίστε εναλλακτική τοποθεσία για το αρχείο ρυθμίσεων"
+#, fuzzy, c-format
+msgid "Unknown slackbuild: %s\n"
+msgstr "Όνομα SlackBuild: %s\n"
