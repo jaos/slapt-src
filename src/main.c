@@ -481,6 +481,9 @@ int main(int argc, char *argv[])
         ;
         slapt_vector_t_foreach(const char *, show_name, names) {
             slapt_vector_t *parts = slapt_parse_delimited_list(show_name, ':');
+            if (parts->size == 0)
+                continue;
+
             const char *name = parts->items[0];
             const char *ver = NULL;
 
@@ -553,6 +556,9 @@ static int show_summary(slapt_vector_t *sbs, slapt_vector_t *names, int action, 
 
     slapt_vector_t_foreach(const char *, sb_name, names) {
         slapt_vector_t *parts = slapt_parse_delimited_list(sb_name, ':');
+        if (parts->size == 0)
+            continue;
+
         const char *name = parts->items[0];
         const size_t name_len = strlen(name);
 
