@@ -18,6 +18,7 @@
 
 #define _GNU_SOURCE
 #include <ctype.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
 #include "source.h"
 #include "config.h"
@@ -907,6 +908,20 @@ static char *_get_pkg_filename(const char *pkgtag)
     return filename;
 }
 
+/* slackbuild scripts rely on bash constructs (trap ERR, [[ ]]), which the
+ * /bin/sh of a non-slackware host may reject, so prefer bash over sh when
+ * it is present and runnable */
+static const char *slapt_src_script_runner(void)
+{
+    struct stat bash_st;
+
+    if (stat("/bin/bash", &bash_st) == 0 && S_ISREG(bash_st.st_mode)
+        && (bash_st.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH)) != 0) {
+        return "/bin/bash";
+    }
+    return "sh";
+}
+
 bool slapt_src_build_slackbuild(const slapt_src_config *config, const slapt_src_slackbuild *sb)
 {
     if (chdir(sb->location) != 0) {
@@ -965,7 +980,7 @@ bool slapt_src_build_slackbuild(const slapt_src_config *config, const slapt_src_
         build_argv[build_argc++] = (char *)"fakeroot";
         build_argv[build_argc++] = (char *)"--";
 #endif
-        build_argv[build_argc++] = (char *)"sh";
+        build_argv[build_argc++] = (char *) slapt_src_script_runner();
         build_argv[build_argc++] = script;
     }
     build_argv[build_argc] = NULL;
