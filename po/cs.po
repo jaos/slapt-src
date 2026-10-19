@@ -1,25 +1,25 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the slapt-src package.
-#
+# 
 # Translators:
 # Appukonrad <appukonrad@gmail.com>, 2013
+# Appukonrad <appukonrad@gmail.com>, 2013
 # Appukonrad <appukonrad@gmail.com>, 2013-2014
-# Michal Várady <miko.vaji@gmail.com>, 2015,2017
+# Michal Várady <miko.vaji@gmail.com>, 2015,2017,2026
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-05 18:34-0400\n"
 "PO-Revision-Date: 2012-09-17 22:00+0000\n"
-"Last-Translator: Michal Várady <miko.vaji@gmail.com>, 2015,2017\n"
+"Last-Translator: Michal Várady <miko.vaji@gmail.com>, 2015,2017,2026\n"
 "Language-Team: Czech (http://app.transifex.com/jaos/slapt-get/language/cs/)\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
-"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 #, c-format
 msgid "%s version %s\n"
@@ -27,16 +27,14 @@ msgstr "%s verze %s\n"
 
 #, c-format
 msgid "%s - A SlackBuild utility\n"
-msgstr ""
-"%s - Nástroj SlackBuild\n"
-"\n"
+msgstr "%s - Nástroj pro SlackBuild\n"
 
 #, c-format
 msgid "Usage: %s [option(s)] [action] [slackbuild(s)]\n"
 msgstr "Použití: %s [volby] [akce] [slackbuild(y)]\n"
 
 msgid "update local cache of remote slackbuilds"
-msgstr "aktualizovat místní mezipaměť vzdálených SlackBuildů"
+msgstr "aktualizovat místní mezipaměť vzdálených seznamů SlackBuildů"
 
 msgid "upgrade all installed slackbuilds"
 msgstr "upgradovat všechny nainstalované SlackBuildy"
@@ -54,16 +52,16 @@ msgid "show specified slackbuilds"
 msgstr "zobrazit uvedené SlackBuildy"
 
 msgid "fetch, build, and install the specified slackbuild(s)"
-msgstr "načte, sestaví a nainstaluje specifikované slackbuildy"
+msgstr "stáhnout, sestavit a nainstalovat zadané SlackBuildy"
 
 msgid "only fetch and build the specified slackbuild(s)"
-msgstr "pouze stáhnout a sestavit specifikované slackbuildy"
+msgstr "pouze stáhnout a sestavit zadané SlackBuildy"
 
 msgid "only fetch the specified slackbuild(s)"
-msgstr "pouze stáhnout specifikované slackbuildy"
+msgstr "pouze stáhnout zadané SlackBuildy"
 
 msgid "Options"
-msgstr "Možnosti"
+msgstr "Přepínače"
 
 msgid "do not prompt"
 msgstr "neptat se"
@@ -78,13 +76,13 @@ msgid "do not look for dependencies"
 msgstr "nehledat závislosti"
 
 msgid "run specified command on generated package"
-msgstr "spustit na vygenerovaném balíčku specifikovaný příkaz"
+msgstr "spustit na vygenerovaném balíčku zadaný příkaz"
 
 msgid "applicable only to --upgrade-all"
 msgstr "použitelné pouze pro volbu --upgrade-all"
 
 msgid "skip if available via slapt-get, applicable only to --upgrade-all"
-msgstr ""
+msgstr "přeskočit, pokud je dostupné přes slapt-get; použitelné pouze pro --upgrade-all"
 
 #, c-format
 msgid "Failed to create build directory [%s]\n"
@@ -92,27 +90,26 @@ msgstr "Nepodařilo se vytvořit sestavovací adresář [%s]\n"
 
 #, c-format
 msgid "Specify only one action\n"
-msgstr ""
+msgstr "Zadejte pouze jednu akci\n"
 
 #, c-format
 msgid "Individual packages not accepted when upgrading all slackbuilds\n"
-msgstr ""
-"Při upgradování všech SlackBuildů nejsou jednotlivé balíčky akceptovány\n"
+msgstr "Při upgradování všech SlackBuildů nelze zadávat jednotlivé balíčky\n"
 
 #, c-format
 msgid "build-only and fetch-only options are mutually exclusive\n"
-msgstr "volby build-only a fetch-only se vzájemně vylučují\n"
+msgstr "přepínače build-only a fetch-only se vzájemně vylučují\n"
 
 msgid "Failed to chdir to build directory"
 msgstr "Nepodařilo se změnit adresář na sestavovací adresář"
 
 #, c-format
 msgid "Unable to find all specified slackbuilds.\n"
-msgstr "Nelze najít všechny specifikované slackbuildy.\n"
+msgstr "Nelze najít všechny zadané SlackBuildy.\n"
 
 #, c-format
 msgid "FETCH: %s\n"
-msgstr "NAČTENÍ: %s\n"
+msgstr "STAŽENÍ: %s\n"
 
 #, c-format
 msgid "BUILD: %s\n"
@@ -161,7 +158,7 @@ msgid "built"
 msgstr "sestaveno"
 
 msgid "fetched"
-msgstr "načteno"
+msgstr "staženo"
 
 #, c-format
 msgid "The following dependent slackbuilds will be built and installed:\n"
@@ -184,15 +181,15 @@ msgstr "V konfiguraci není specifikován adresář BUILDDIR\n"
 
 #, c-format
 msgid "BUILDDIR too long\n"
-msgstr ""
+msgstr "BUILDDIR je příliš dlouhý\n"
 
 #, c-format
 msgid "Fetching slackbuild list from %s..."
-msgstr "Načítání seznamu SlackBuildů z %s..."
+msgstr "Stahování seznamu SlackBuildů z %s..."
 
 #, c-format
 msgid "Cached\n"
-msgstr "Ve vyrovnávací paměti\n"
+msgstr "V mezipaměti\n"
 
 #, c-format
 msgid "Download failed: %s\n"
@@ -200,19 +197,19 @@ msgstr "Stažení se nezdařilo: %s\n"
 
 #, c-format
 msgid "Refusing to overwrite cache with incomplete list\n"
-msgstr ""
+msgstr "Odmítá se přepsání mezipaměti neúplným seznamem\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open %s for writing\n"
-msgstr "Nepodařilo se otevřít %s pro čtení\n"
+msgstr "Nepodařilo se otevřít %s pro zápis\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to read %s: empty or corrupt gzip\n"
-msgstr "Nepodařilo se přečíst %s\n"
+msgstr "Nepodařilo se přečíst %s: prázdný nebo poškozený soubor gzip\n"
 
 #, c-format
 msgid "Run --update to fetch the slackbuild list first\n"
-msgstr ""
+msgstr "Nejprve spusťte --update a stáhněte seznam SlackBuildů\n"
 
 #, c-format
 msgid "Failed to open %s for reading\n"
@@ -224,7 +221,7 @@ msgstr "Nepodařilo se změnit adresář na: %s\n"
 
 #, c-format
 msgid "Fetching %s..."
-msgstr "Načítání %s..."
+msgstr "Stahování %s..."
 
 #, c-format
 msgid "Failed\n"
@@ -232,40 +229,40 @@ msgstr "Nepodařilo se\n"
 
 #, c-format
 msgid "Mismatch between download files and md5sums\n"
-msgstr "Mezi staženými soubory a MD5SUM není shoda\n"
+msgstr "Stažené soubory neodpovídají součtům MD5\n"
 
 #, c-format
 msgid "Invalid download URL: %s\n"
-msgstr ""
+msgstr "Neplatná adresa URL pro stažení: %s\n"
 
 #, c-format
 msgid "MD5SUM mismatch for %s\n"
 msgstr "MD5SUM pro %s se neshoduje\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open the README for %s\n"
-msgstr "Nepodařilo se otevřít %s pro čtení\n"
+msgstr "Nepodařilo se otevřít soubor README pro %s\n"
 
 #, c-format
 msgid "Failed to open current directory\n"
 msgstr "Nepodařilo se otevřít aktuální adresář\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to construct script name\n"
-msgstr "Nepodařilo se sestavit řetězec příkazů\n"
+msgstr "Nepodařilo se sestavit název skriptu\n"
 
 #, c-format
 msgid "Unable to find generated package\n"
-msgstr "Nelze najít vygenerované balíčky\n"
+msgstr "Nelze najít vygenerovaný balíček\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Circular dependency: %s requires %s\n"
-msgstr "Chybějících SlackBuild: %s vyžaduje %s\n"
+msgstr "Cyklická závislost: %s vyžaduje %s\n"
 
 #, c-format
 msgid "Missing slackbuild: %s requires %s\n"
-msgstr "Chybějících SlackBuild: %s vyžaduje %s\n"
+msgstr "Chybějící SlackBuild: %s vyžaduje %s\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown slackbuild: %s\n"
-msgstr "Název SlackBuild: %s\n"
+msgstr "Neznámý SlackBuild: %s\n"
