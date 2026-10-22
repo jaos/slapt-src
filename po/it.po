@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-05 18:34-0400\n"
+"POT-Creation-Date: 2026-10-18 22:44-0400\n"
 "PO-Revision-Date: 2012-09-17 22:00+0000\n"
 "Last-Translator: Antonio Sardei <laplume@libero.it>, 2016,2018\n"
 "Language-Team: Italian (http://app.transifex.com/jaos/slapt-get/language/"
@@ -202,15 +202,13 @@ msgstr "Scaricamento fallito: %s\n"
 msgid "Refusing to overwrite cache with incomplete list\n"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open %s for writing\n"
 msgstr ""
-"Errore nell'apertura in lettura di %s\n"
-"\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to read %s: empty or corrupt gzip\n"
-msgstr "Errore nella lettura di %s\n"
+msgstr ""
 
 #, c-format
 msgid "Run --update to fetch the slackbuild list first\n"
@@ -246,32 +244,30 @@ msgstr ""
 msgid "MD5SUM mismatch for %s\n"
 msgstr "MD5SUM non coincidente per %s\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open the README for %s\n"
 msgstr ""
-"Errore nell'apertura in lettura di %s\n"
-"\n"
 
 #, c-format
 msgid "Failed to open current directory\n"
 msgstr "Errore nell'apertura della directory corrente\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to construct script name\n"
-msgstr "Errore nella composizione della stringa di comando\n"
+msgstr ""
 
 #, c-format
 msgid "Unable to find generated package\n"
 msgstr "Impossibile ritrovare il pacchetto generato\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Circular dependency: %s requires %s\n"
-msgstr "Slackbuild mancante: %s richiede %s\n"
+msgstr ""
 
 #, c-format
 msgid "Missing slackbuild: %s requires %s\n"
 msgstr "Slackbuild mancante: %s richiede %s\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown slackbuild: %s\n"
-msgstr "Nome dello SlackBuild: %s\n"
+msgstr ""

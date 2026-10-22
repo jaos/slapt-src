@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-05 18:34-0400\n"
+"POT-Creation-Date: 2026-10-18 22:44-0400\n"
 "PO-Revision-Date: 2012-09-17 22:00+0000\n"
 "Last-Translator: Ingemar Karlsson <ingemar@ingk.se>, "
 "2012,2015,2017,2021,2023\n"
@@ -201,13 +201,13 @@ msgstr "Nedladdning misslyckades: %s\n"
 msgid "Refusing to overwrite cache with incomplete list\n"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open %s for writing\n"
-msgstr "Det gick inte att öppna %s för läsning\n"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to read %s: empty or corrupt gzip\n"
-msgstr "Det gick inte att läsa %s\n"
+msgstr ""
 
 #, c-format
 msgid "Run --update to fetch the slackbuild list first\n"
@@ -241,30 +241,30 @@ msgstr ""
 msgid "MD5SUM mismatch for %s\n"
 msgstr "Md5SUM mismatch för %s\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open the README for %s\n"
-msgstr "Det gick inte att öppna %s för läsning\n"
+msgstr ""
 
 #, c-format
 msgid "Failed to open current directory\n"
 msgstr "Det gick inte att öppna aktuell katalog\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to construct script name\n"
-msgstr "Det gick inte att konstruera kommandosträng\n"
+msgstr ""
 
 #, c-format
 msgid "Unable to find generated package\n"
 msgstr "Kunde inte hitta genererade paket\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Circular dependency: %s requires %s\n"
-msgstr "Saknad slackbuild: %s kräver %s\n"
+msgstr ""
 
 #, c-format
 msgid "Missing slackbuild: %s requires %s\n"
 msgstr "Saknad slackbuild: %s kräver %s\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown slackbuild: %s\n"
-msgstr "SlackBuild Namn: %s\n"
+msgstr ""

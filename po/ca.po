@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the slapt-src package.
 #
 # Translators:
-# Davidmp <medipas@gmail.com>, 2016,2018
+# Davidmp <medipas@gmail.com>, 2016,2018,2023
 # Davidmp <medipas@gmail.com>, 2016,2018,2023
 msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-05 18:34-0400\n"
+"POT-Creation-Date: 2026-10-18 22:44-0400\n"
 "PO-Revision-Date: 2012-09-17 22:00+0000\n"
 "Last-Translator: Davidmp <medipas@gmail.com>, 2016,2018,2023\n"
 "Language-Team: Catalan (http://app.transifex.com/jaos/slapt-get/language/"
@@ -201,13 +201,13 @@ msgstr "Ha fallat la baixada: %s\n"
 msgid "Refusing to overwrite cache with incomplete list\n"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open %s for writing\n"
-msgstr "Ha fallat obrir %s per a la lectura.\n"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to read %s: empty or corrupt gzip\n"
-msgstr "Ha fallat llegir %s\n"
+msgstr ""
 
 #, c-format
 msgid "Run --update to fetch the slackbuild list first\n"
@@ -241,30 +241,30 @@ msgstr ""
 msgid "MD5SUM mismatch for %s\n"
 msgstr "No coincidència d'MD5SUM per a %s\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open the README for %s\n"
-msgstr "Ha fallat obrir %s per a la lectura.\n"
+msgstr ""
 
 #, c-format
 msgid "Failed to open current directory\n"
 msgstr "Ha fallat obrir el directori actual.\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to construct script name\n"
-msgstr "Ha fallat construir la cadena d'ordres\n"
+msgstr ""
 
 #, c-format
 msgid "Unable to find generated package\n"
 msgstr "No es pot trobar el paquet generat\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Circular dependency: %s requires %s\n"
-msgstr "Falta un slackbuild: %s requereix %s\n"
+msgstr ""
 
 #, c-format
 msgid "Missing slackbuild: %s requires %s\n"
 msgstr "Falta un slackbuild: %s requereix %s\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown slackbuild: %s\n"
-msgstr "Nom de l'SlackBuild: %s\n"
+msgstr ""

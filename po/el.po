@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-05 18:34-0400\n"
+"POT-Creation-Date: 2026-10-18 22:44-0400\n"
 "PO-Revision-Date: 2012-09-17 22:00+0000\n"
 "Last-Translator: gapan <vlahavas@gmail.com>, 2012,2022\n"
 "Language-Team: Greek (http://app.transifex.com/jaos/slapt-get/language/el/)\n"
@@ -203,13 +203,13 @@ msgstr "Η λήψη του αρχείου απέτυχε: %s\n"
 msgid "Refusing to overwrite cache with incomplete list\n"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open %s for writing\n"
-msgstr "Αποτυχία κατά το άνοιγμα του %s για ανάγνωση\n"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to read %s: empty or corrupt gzip\n"
-msgstr "Αδυναμία ανάγνωσης %s\n"
+msgstr ""
 
 #, c-format
 msgid "Run --update to fetch the slackbuild list first\n"
@@ -243,30 +243,30 @@ msgstr ""
 msgid "MD5SUM mismatch for %s\n"
 msgstr "Αποτυχία στον έλεγχο MD5SUM για το %s\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open the README for %s\n"
-msgstr "Αποτυχία κατά το άνοιγμα του %s για ανάγνωση\n"
+msgstr ""
 
 #, c-format
 msgid "Failed to open current directory\n"
 msgstr "Αδυναμία ανοίγματος του τρέχοντος καταλόγου\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to construct script name\n"
-msgstr "Αδυναμία δημιουργίας εντολής\n"
+msgstr ""
 
 #, c-format
 msgid "Unable to find generated package\n"
 msgstr "Αδυναμία εύρεσης του πακέτου που δημιουργήθηκε\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Circular dependency: %s requires %s\n"
-msgstr "Αδυναμία εύρεσης του slackbuild: το %s απαιτεί το %s\n"
+msgstr ""
 
 #, c-format
 msgid "Missing slackbuild: %s requires %s\n"
 msgstr "Αδυναμία εύρεσης του slackbuild: το %s απαιτεί το %s\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown slackbuild: %s\n"
-msgstr "Όνομα SlackBuild: %s\n"
+msgstr ""

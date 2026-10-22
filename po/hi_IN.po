@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-05 18:34-0400\n"
+"POT-Creation-Date: 2026-10-18 22:44-0400\n"
 "PO-Revision-Date: 2012-09-17 22:00+0000\n"
 "Last-Translator: Panwar108 <caspian7pena@gmail.com>, 2020\n"
 "Language-Team: Hindi (India) (http://app.transifex.com/jaos/slapt-get/"
@@ -197,13 +197,13 @@ msgstr "डाउनलोड विफल : %s\n"
 msgid "Refusing to overwrite cache with incomplete list\n"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open %s for writing\n"
-msgstr "रीड हेतु %s खोलने में विफल\n"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to read %s: empty or corrupt gzip\n"
-msgstr "%s  रीड करने में विफल\n"
+msgstr ""
 
 #, c-format
 msgid "Run --update to fetch the slackbuild list first\n"
@@ -237,30 +237,30 @@ msgstr ""
 msgid "MD5SUM mismatch for %s\n"
 msgstr "%s हेतु एमडी5 सम मेल नहीं खाता\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open the README for %s\n"
-msgstr "रीड हेतु %s खोलने में विफल\n"
+msgstr ""
 
 #, c-format
 msgid "Failed to open current directory\n"
 msgstr "वर्तमान डायरेक्टरी खोलने में विफल\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to construct script name\n"
-msgstr "कमांड वाक्यांश बनाने में विफल\n"
+msgstr ""
 
 #, c-format
 msgid "Unable to find generated package\n"
 msgstr "बनाया गया पैकेज खोजने में विफल\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Circular dependency: %s requires %s\n"
-msgstr "अनुपस्थित स्लैकबिल्ड : %s हेतु आवश्यक %s\n"
+msgstr ""
 
 #, c-format
 msgid "Missing slackbuild: %s requires %s\n"
 msgstr "अनुपस्थित स्लैकबिल्ड : %s हेतु आवश्यक %s\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown slackbuild: %s\n"
-msgstr "स्लैकबिल्ड नाम : %s\n"
+msgstr ""

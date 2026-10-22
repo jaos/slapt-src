@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: slapt-get\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-05 18:34-0400\n"
+"POT-Creation-Date: 2026-10-18 22:44-0400\n"
 "PO-Revision-Date: 2012-09-17 22:00+0000\n"
 "Last-Translator: Georgi Georgiev <georgiev_1994@abv.bg>, 2016,2018\n"
 "Language-Team: Bulgarian (http://app.transifex.com/jaos/slapt-get/language/"
@@ -199,13 +199,13 @@ msgstr "Изтеглянето се провали: %s\n"
 msgid "Refusing to overwrite cache with incomplete list\n"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open %s for writing\n"
-msgstr "Неуспех при отваряне на %s за четене\n"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to read %s: empty or corrupt gzip\n"
-msgstr "Неуспех при четене %s\n"
+msgstr ""
 
 #, c-format
 msgid "Run --update to fetch the slackbuild list first\n"
@@ -239,30 +239,30 @@ msgstr ""
 msgid "MD5SUM mismatch for %s\n"
 msgstr "MD5SUM несъответствие за %s\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open the README for %s\n"
-msgstr "Неуспех при отваряне на %s за четене\n"
+msgstr ""
 
 #, c-format
 msgid "Failed to open current directory\n"
 msgstr "Неуспех при отваряне на сегашната директория\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to construct script name\n"
-msgstr "Неуспех при конструирането на команден низ\n"
+msgstr ""
 
 #, c-format
 msgid "Unable to find generated package\n"
 msgstr "Неуспех при търсенето на генерирания пакет\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Circular dependency: %s requires %s\n"
-msgstr "Липсва slackbuild: %s изисква %s\n"
+msgstr ""
 
 #, c-format
 msgid "Missing slackbuild: %s requires %s\n"
 msgstr "Липсва slackbuild: %s изисква %s\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown slackbuild: %s\n"
-msgstr "SlackBuild Име: %s\n"
+msgstr ""
